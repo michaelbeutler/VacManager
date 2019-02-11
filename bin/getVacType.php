@@ -6,7 +6,7 @@ $response->description = 'internal server error';
 include_once('dbconnect.php');
 $conn = openConnection();
 
-$sql = "SELECT * FROM `tbl_employer`;";
+$sql = "SELECT * FROM `tbl_vacation_type`;";
 $result = $conn->query($sql);
 
 if ($result->num_rows > 0) {
@@ -18,12 +18,12 @@ if ($result->num_rows > 0) {
 
     $response->code = 200;
     $response->description = 'success';
-    $response->employer = $results;
+    $response->types = $results;
 } else {
     // 0 results
     $response->code = 201;
-    $response->description = 'no employer found (create new)';
-    $response->employer = null;
+    $response->description = 'no types found (create new)';
+    $response->types = null;
 }
 
 echo json_encode($response);

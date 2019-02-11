@@ -130,7 +130,7 @@ if (!check_login()) {
                 </div>
                 <div class="col-lg-3 col-sm-6">
                     <div class="widget-panel widget-style-2 white-bg">
-                        <i class="ion-checkmark text-success"></i>
+                        <i class="ion-checkmark text-success" id="vacDaysLeftIcon"></i>
                         <h2 class="m-0 counter" id="vacDaysLeftPanel">ERR</h2>
                         <div>Vacation days left this year</div>
                     </div>

@@ -3,6 +3,9 @@ $(document).ready(function () {
         if (data.code == 200) {
             $('#vacDaysUsedPanel').text(data.used);
             $('#vacDaysLeftPanel').text(data.left);
+            if (data.left <= 0) {
+                $('#vacDaysLeftIcon').addClass();
+            }
         }
     });
 });

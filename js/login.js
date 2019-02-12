@@ -15,11 +15,18 @@ $(document).ready(function () {
         }
     });
 
+    function isNullOrEmpty(value) {
+        return !(typeof value === "string" && value.length > 0);
+    }
+
+    function showMessage(msg) {
+        $('.message-box').html('<p class="text-danger">' + msg + '</p>');
+    }
+
     $('#formLogin').submit(function (e) {
         e.preventDefault();
 
-        var valid = true;
-        if (valid) {
+        if (!isNullOrEmpty($('#username').val()) && !isNullOrEmpty($('#password').val())) {
             $.ajax({
                 type: "GET",
                 dataType: 'json',
@@ -37,17 +44,24 @@ $(document).ready(function () {
                             window.location.replace("index.php");
                             break;
                         case 203:
-                            alert(data.description);
+                            $('.form-group-username').addClass('has-error');
+                            $('.form-group-password').addClass('has-error');
+                            showMessage(data.description);
                             break;
                         case 205:
                             $.Notification.notify('error', 'bottom right', 'Banned', data.description);
                             break;
                         default:
                             console.error(data.description);
+                            $.Notification.notify('error', 'bottom right', 'ERROR', data.description);
                             break;
                     }
                 }
             });
+        } else {
+            $('.form-group-username').addClass('has-warning');
+            $('.form-group-password').addClass('has-warning');
+            showMessage('Please enter username and password.');
         }
 
         return false;

@@ -17,8 +17,8 @@ if (isset($_GET['username'], $_GET['password'])) {
     $result = $conn->query($sql);
 
     if ($result->num_rows < 1) {
-        $response->code = 204;
-        $response->description = "no account with username <" . $form_username . ">";
+        $response->code = 203;
+        $response->description = 'Username and/or password incorrect.';
     } else {
         $sql = "SELECT `tbl_user`.`id` AS 'UID', `tbl_user`.`username`, `tbl_user`.`salt`, `tbl_user`.`password`, `tbl_user`.`tbl_class_id`, `tbl_user`.`tbl_employer_id`, `tbl_employer`.`id` AS 'EID', `tbl_employer`.`name`, `tbl_employer`.`shortname`, `tbl_user`.`ban` FROM `tbl_user` LEFT JOIN `tbl_employer` ON `tbl_user`.`tbl_employer_id` = `tbl_employer`.`id` WHERE `username`='" . $form_username . "'";
         $result = $conn->query($sql);
@@ -50,8 +50,7 @@ if (isset($_GET['username'], $_GET['password'])) {
             } else {
                 // wrong password
                 $response->code = 203;
-                $response->description = 'login invalid';
-                $response->debug = $db_password . '</>' . $password . '</>' . $salt;
+                $response->description = 'Username and/or password incorrect.';
             }
         }
     }

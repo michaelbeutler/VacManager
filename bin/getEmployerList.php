@@ -13,7 +13,7 @@ if ($result->num_rows > 0) {
     // output data of each row
     $results = array();
     while($row = $result->fetch_assoc()) {
-        $results[] = $row;
+       $results[] = $row;
     }
 
     $response->code = 200;

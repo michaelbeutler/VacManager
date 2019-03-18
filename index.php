@@ -289,7 +289,14 @@ if (!check_login()) {
     <script src="js/getContingent.js"></script>
     <script src="js/index.js"></script>
 
+    <script src="https://unpkg.com/lodash"></script>
     <script src="js/class.js"></script>
+
+    <script>
+        $(document).ready(function(){
+            getClassEvents(<?php echo $_SESSION['user_class']; ?>);
+        });
+    </script>
 </body>
 
 </html>

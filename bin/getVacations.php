@@ -31,6 +31,7 @@ if ($result->num_rows > 0) {
             $event->color = 'yellow';
             $event->textColor = 'black';
         }
+        $event->description = $event->title;
 
         $events[] = $event;
     }

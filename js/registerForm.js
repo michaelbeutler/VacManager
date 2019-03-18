@@ -63,6 +63,7 @@ $(document).ready(function () {
         var iclassLongname = $('#class').find(':selected').data('longname');
         var iclassName = $('#class').find(':selected').data('name');
         var employer = $('#employer').val();
+        var currentVacDays = $('#currentVacDays').val();
 
         function callback(data) {
             switch (data.code) {
@@ -97,7 +98,8 @@ $(document).ready(function () {
                     "inputClassId": iclass,
                     "inputClassLongname": iclassLongname,
                     "inputClassName": iclassName,
-                    "inputEmployerId": employer
+                    "inputEmployerId": employer,
+                    "inputCurrentVacDays": currentVacDays
                 },
                 contentType: "application/json; charset=utf-8",
                 success: function (data) {

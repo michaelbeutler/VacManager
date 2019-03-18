@@ -5,7 +5,7 @@ $response->description = 'internal server error';
 
 // Check if all parameters given
 if (isset($_GET['inputFirstname'], $_GET['inputLastname'], $_GET['inputPassword'], $_GET['inputRepeatPassword'],  $_GET['inputStartWork'],
-    $_GET['inputEndWork'], $_GET['inputClassId'], $_GET['inputEmployerId'])) {
+    $_GET['inputEndWork'], $_GET['inputClassId'], $_GET['inputEmployerId'], $_GET['inputCurrentVacDays'])) {
 
     // Username and personal data
     $form_firstname = htmlspecialchars($_GET['inputFirstname']);
@@ -22,6 +22,7 @@ if (isset($_GET['inputFirstname'], $_GET['inputLastname'], $_GET['inputPassword'
     // Class and employer
     $form_class_id = htmlspecialchars($_GET['inputClassId']);
     $form_employer_id = htmlspecialchars($_GET['inputEmployerId']);
+    $form_vac_days = htmlspecialchars($_GET['inputCurrentVacDays']);
 
     include_once('dbconnect.php');
     $conn = openConnection();
@@ -66,6 +67,12 @@ if (isset($_GET['inputFirstname'], $_GET['inputLastname'], $_GET['inputPassword'
                     $response->code = 953;
                     $response->description = "Execute failed: (" . $stmt->errno . ") " . $stmt->error;
                 } else {
+                    $sql = "SELECT `id` FROM `tbl_user` WHERE `username`='" . $_GET['inputUsername'] ."'";
+                    $result = $conn->query($sql);
+                    while($row = $result->fetch_assoc()) {
+                        $sql = "INSERT INTO `tbl_contingent` (`year`, `basis`, `tbl_user_id`) VALUES (" . date('Y') . "," . $form_vac_days . "," . $row['id'] . ")";
+                        $result = $conn->query($sql);
+                    } 
                     $stmt->close();
                     $conn->close();
                     $response->code = 200;

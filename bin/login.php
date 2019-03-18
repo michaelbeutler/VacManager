@@ -9,7 +9,6 @@ if (isset($_GET['username'], $_GET['password'])) {
     $form_username = htmlspecialchars($_GET['username']);
     $form_password = htmlspecialchars($_GET['password']);
 
-
     include_once('dbconnect.php');
     $conn = openConnection();
 

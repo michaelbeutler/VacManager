@@ -288,6 +288,8 @@ if (!check_login()) {
 
     <script src="js/getContingent.js"></script>
     <script src="js/index.js"></script>
+
+    <script src="js/class.js"></script>
 </body>
 
 </html>

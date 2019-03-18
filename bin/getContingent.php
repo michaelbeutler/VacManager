@@ -28,6 +28,7 @@ if ($result->num_rows < 1) {
         $contingent = floatval($row['basis']);
     }
 
+    /*
     $sql = "SELECT * FROM `tbl_vacation` WHERE `tbl_vacation_type_id`=1 AND YEAR(`start`)='". date('Y') ."' AND `canceled`=0 AND `tbl_user_id`=". $_SESSION['user_id'];
     $result = $conn->query($sql);
     require_once('functions.php');
@@ -36,13 +37,13 @@ if ($result->num_rows < 1) {
             $used_days += 0.5;
         }
         $used_days += countBusinessDays(new DateTime($row['start']), new DateTime($row['end']));
-    }
+    }*/
 
-    /*$sql = "SELECT SUM(`num`) AS 'USED DAYS' FROM `tbl_vacation` WHERE `tbl_vacation_type_id`=1 AND YEAR(`start`)='". date('Y') ."' AND `canceled`=0 AND `tbl_user_id`=". $_SESSION['user_id'];
+    $sql = "SELECT SUM(`num`) AS 'USED DAYS' FROM `tbl_vacation` WHERE `tbl_vacation_type_id`=1 AND YEAR(`start`)='". date('Y') ."' AND `canceled`=0 AND `tbl_user_id`=". $_SESSION['user_id'];
     $result = $conn->query($sql);
     while($row = $result->fetch_assoc()) {
         $used_days = floatval($row['USED DAYS']);
-    }*/
+    }
 
     $response->code = 200;
     $response->description = 'success';

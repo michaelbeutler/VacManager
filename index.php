@@ -200,18 +200,19 @@ if (!check_login()) {
                 aria-hidden="true" style="display: none;">
                 <div class="modal-dialog">
                     <div class="modal-content">
+                    <form class="form-horizontal" role="form" id="addVacForm" action="#">
                         <div class="modal-header">
                             <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
                             <h4 class="modal-title">Add Vacation</h4>
                         </div>
                         <div class="modal-body">
-                            <form class="form-horizontal" role="form">
+                            
 
                                 <div class="row">
                                     <div class="col-12 form-group">
                                         <label class="col-md-2 control-label">Description</label>
                                         <div class="col-md-10">
-                                            <input type="text" class="form-control" value="">
+                                            <input id="addVacDescription" type="text" class="form-control" value="">
                                         </div>
                                     </div>
                                 </div>
@@ -219,13 +220,21 @@ if (!check_login()) {
                                     <div class="col-6 form-group">
                                         <label class="col-md-2 control-label">Start</label>
                                         <div class="col-md-10">
-                                            <input type="date" class="form-control" value="">
+                                            <input id="addVacStart" type="date" class="form-control" value="">
                                         </div>
                                     </div>
                                     <div class="col-6 form-group">
                                         <label class="col-md-2 control-label">End</label>
                                         <div class="col-md-10">
-                                            <input type="date" class="form-control" value="">
+                                            <input id="addVacEnd" type="date" class="form-control" value="">
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="col-12 form-group">
+                                        <label class="col-md-2 control-label">Number of Days</label>
+                                        <div class="col-md-10">
+                                            <input id="addVacNumDay" type="number" class="form-control" value="1.0">
                                         </div>
                                     </div>
                                 </div>
@@ -233,21 +242,22 @@ if (!check_login()) {
                                     <div class="col-12 form-group">
                                         <label class="col-md-2 control-label">Type</label>
                                         <div class="col-md-10">
-                                            <select class="form-control">
-                                                <option>Ferien</option>
-                                                <option>Militär</option>
+                                            <select class="form-control" id="addVacType">
+                                                <option value="1">Ferien</option>
+                                                <option value="3">Militär</option>
                                             </select>
 
                                         </div>
                                     </div>
                                 </div>
 
-                            </form>
+                            
                         </div>
                         <div class="modal-footer">
                             <button type="button" class="btn btn-white" data-dismiss="modal">Close</button>
-                            <button type="button" class="btn btn-info">Save changes</button>
+                            <button type="submit" class="btn btn-info">Save changes</button>
                         </div>
+                        </form>
                     </div>
                 </div>
             </div><!-- /.modal -->
@@ -287,6 +297,8 @@ if (!check_login()) {
     <script src="js/jquery.app.js"></script>
 
     <script src="js/getContingent.js"></script>
+    <script src="js/vacType.js"></script>
+    <script src="js/addVac.js"></script>
     <script src="js/index.js"></script>
 
     <script src="https://unpkg.com/lodash"></script>

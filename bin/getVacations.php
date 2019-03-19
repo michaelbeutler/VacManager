@@ -22,8 +22,15 @@ if ($result->num_rows > 0) {
             $event->allDay = false;
         } else {
             $event->allDay = true;
+            $row['end'] = date('Y-m-d H:m:s', strtotime($row['end']. ' + 1 days'));
         }
-        $event->end = $row['end'];
+
+        if (substr($row['end'], 11,20) == "00:00:00") {
+            $event->end = substr_replace($row['end'],"23:59:59",11,20);
+        } else {
+            $event->end = $row['end'];
+        }
+        
 
         if ($row['tbl_vacation_type_id'] == 1) {
             $event->color = 'blue';

@@ -69,8 +69,10 @@ if (!check_login()) {
         <nav class="navigation">
             <ul class="list-unstyled">
                 <li class="active"><a href="index.php"><i class="ion-home"></i> <span class="nav-label">Dashboard</span></a></li>
-                <li><a href="index.php"><i class="ion-calendar"></i> <span class="nav-label">Calendar</span></a></li>
-                <li><a href="index.php"><i class="fa fa-star"></i> <span class="nav-label">Vacation</span></a></li>
+                <li><a href="calendar.php"><i class="ion-calendar"></i> <span class="nav-label">Calendar</span></a></li>
+                <li><a href="vac.php"><i class="fa fa-star"></i> <span class="nav-label">Vacation</span></a></li>
+                <li><a href="chart.php"><i class="ion-stats-bars"></i> <span class="nav-label">Charts</span></a></li>
+                <li><a href="account.php"><i class="fa fa-lock"></i> <span class="nav-label">Account</span></a></li>
             </ul>
         </nav>
 
@@ -159,7 +161,7 @@ if (!check_login()) {
                 <div class="col-md-5">
                     <div class="panel panel-default">
                         <div class="panel-heading">
-                            <h3 class="panel-title">Striped rows Table</h3>
+                            <h3 class="panel-title">Vacation</h3>
                         </div>
                         <div class="panel-body">
                             <div class="row">
@@ -167,19 +169,14 @@ if (!check_login()) {
                                     <table class="table table-striped" id="vacationTable">
                                         <thead>
                                             <tr>
+                                                <th>#</th>
                                                 <th>Description</th>
                                                 <th>Start</th>
                                                 <th>End</th>
                                                 <th>Days</th>
                                             </tr>
                                         </thead>
-                                        <tbody>
-                                            <tr>
-                                                <td>Ferien</td>
-                                                <td>01.01.2019</td>
-                                                <td>15.01.2019</td>
-                                                <td>14</td>
-                                            </tr>
+                                        <tbody id="vacList">
                                         </tbody>
                                     </table>
                                 </div>
@@ -297,6 +294,7 @@ if (!check_login()) {
     <script src="js/jquery.app.js"></script>
 
     <script src="js/getContingent.js"></script>
+    <script src="js/vacationList.js"></script>
     <script src="js/vacType.js"></script>
     <script src="js/addVac.js"></script>
     <script src="js/index.js"></script>

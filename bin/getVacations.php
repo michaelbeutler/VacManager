@@ -9,13 +9,15 @@ $events = array();
 include_once('dbconnect.php');
 $conn = openConnection();
 //echo $_SESSION['user_id'];
-$sql = "SELECT * FROM `tbl_vacation` WHERE `tbl_user_id`=". $_SESSION['user_id'];
+$sql = "SELECT * FROM `tbl_vacation` WHERE `tbl_user_id`=". $_SESSION['user_id'] . " ORDER BY `start` DESC";
 $result = $conn->query($sql);
 
 if ($result->num_rows > 0) {
     // output data of each row
     while($row = $result->fetch_assoc()) {
         $event = (object)array();
+        $event->id = $row['id'];
+        $event->days = $row['num'];
         $event->title = $row['description'] . ' - ' . $row['num'] . ' Day(s)';
         $event->start = $row['start'];
         if ($row['num'] < 1.0) {

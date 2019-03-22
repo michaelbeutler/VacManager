@@ -16,7 +16,7 @@ if (!check_login()) {
 
     <link rel="shortcut icon" href="img/favicon_1.ico">
 
-    <title>iperka - Vacation</title>
+    <title>iperka - Account</title>
 
     <!-- Bootstrap core CSS -->
     <link href="css/bootstrap.min.css" rel="stylesheet">
@@ -62,10 +62,10 @@ if (!check_login()) {
             <ul class="list-unstyled">
                 <li><a href="index.php"><i class="ion-home"></i> <span class="nav-label">Dashboard</span></a></li>
                 <li><a href="calendar.php"><i class="ion-calendar"></i> <span class="nav-label">Calendar</span></a></li>
-                <li class="active"><a href="vac.php"><i class="fa fa-star"></i> <span
-                            class="nav-label">Vacation</span></a></li>
+                <li><a href="vac.php"><i class="fa fa-star"></i> <span class="nav-label">Vacation</span></a></li>
                 <li><a href="chart.php"><i class="ion-stats-bars"></i> <span class="nav-label">Charts</span></a></li>
-                <li><a href="account.php"><i class="fa fa-lock"></i> <span class="nav-label">Account</span></a></li>
+                <li class="active"><a href="account.php"><i class="fa fa-lock"></i> <span
+                            class="nav-label">Account</span></a></li>
             </ul>
         </nav>
 
@@ -117,23 +117,32 @@ if (!check_login()) {
                 <div class="col-md-12">
                     <div class="panel panel-default">
                         <div class="panel-heading">
-                            <h3 class="panel-title">Vacation</h3>
+                            <h3 class="panel-title">Account</h3>
                         </div>
                         <div class="panel-body">
-                            <div class="col-md-12 col-sm-12 col-xs-12">
-                                <table class="table table-hover">
-                                    <thead>
-                                        <tr>
-                                            <th>#</th>
-                                            <th>Description</th>
-                                            <th>Start</th>
-                                            <th>End</th>
-                                            <th>Days</th>
-                                        </tr>
-                                    </thead>
-                                    <tbody id="vacList">
-                                    </tbody>
-                                </table>
+                            <div class="row">
+                                <div class="col-lg-4">
+                                    <!-- Start Profile Widget -->
+                                    <div class="profile-widget text-center">
+                                        <div class="bg-info bg-profile"></div>
+                                        <img src="img/profile.png" class="thumb-lg img-circle img-thumbnail" alt="img">
+                                        <h3><?php echo $_SESSION['user_username']; ?></h3>
+                                        <p><i class="fa fa-map-marker"></i> <?php echo $_SESSION['employer_name']; ?></p>
+                                        <br>
+                                    </div>
+                                    <!-- End Profile Widget -->
+                                </div>
+                                <div class="col-lg-8">
+                                    <form role="form" id="formChangePassword">
+                                        <div class="form-group">
+                                            <label for="passwordChangePassword">New Password</label>
+                                            <input type="password" class="form-control" id="passwordChangePassword" placeholder="Password">
+                                            <br>
+                                            <input type="password" class="form-control" id="repeatChangePassword" placeholder="Repeat">
+                                        </div>
+                                        <button type="submit" class="btn btn-primary">Save</button>
+                                    </form>
+                                </div>
                             </div>
                         </div>
                     </div>
@@ -165,7 +174,9 @@ if (!check_login()) {
     <script src="js/wow.min.js"></script>
     <script src="js/jquery.nicescroll.js" type="text/javascript"></script>
     <script src="js/jquery.app.js"></script>
-    <script src="js/vacationList.js"></script>
+    <script src="js/sha512.js"></script>
+    <script src="js/account.js"></script>
+    <script src="js/class.js"></script>
 
     <script>
         $(document).ready(function () {

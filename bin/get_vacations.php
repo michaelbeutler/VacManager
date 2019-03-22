@@ -1,5 +1,5 @@
 <?php
-require('checkLogin.php');
+require('check_login.php');
 if (!check_login()) {
     die();
 }

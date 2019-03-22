@@ -2,7 +2,7 @@ function loadVacType(callback) {
     $.ajax({
         type: "POST",
         dataType: 'jsonp',
-        url: "./bin/getVacType.php",
+        url: "./bin/get_vacation_type.php",
         async: true,
         contentType: "application/json; charset=utf-8",
         success: function (data) {

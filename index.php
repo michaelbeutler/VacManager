@@ -1,5 +1,5 @@
 <?php
-require('bin/checkLogin.php');
+require('bin/check_login.php');
 if (!check_login()) {
     header("Location: login.html");
     die();
@@ -296,7 +296,7 @@ if (!check_login()) {
     <script src="js/getContingent.js"></script>
     <script src="js/vacationList.js"></script>
     <script src="js/vacType.js"></script>
-    <script src="js/addVac.js"></script>
+    <script src="js/addVacation.js"></script>
     <script src="js/index.js"></script>
 
     <script src="https://unpkg.com/lodash"></script>

@@ -62,7 +62,7 @@
 
                     // your event source
                     {
-                        url: './bin/getVacations.php', // use the `url` property
+                        url: './bin/get_vacations.php', // use the `url` property
                     }
 
                     // any other sources...

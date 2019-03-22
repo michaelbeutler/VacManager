@@ -1,5 +1,5 @@
 <?php
-require('checkLogin.php');
+require('check_login.php');
 if (!check_login()) {
     die();
 }
@@ -27,17 +27,6 @@ if ($result->num_rows < 1) {
     while($row = $result->fetch_assoc()) {
         $contingent = floatval($row['basis']);
     }
-
-    /*
-    $sql = "SELECT * FROM `tbl_vacation` WHERE `tbl_vacation_type_id`=1 AND YEAR(`start`)='". date('Y') ."' AND `canceled`=0 AND `tbl_user_id`=". $_SESSION['user_id'];
-    $result = $conn->query($sql);
-    require_once('functions.php');
-    while($row = $result->fetch_assoc()) {
-        if ($row['num'] < 1) {
-            $used_days += 0.5;
-        }
-        $used_days += countBusinessDays(new DateTime($row['start']), new DateTime($row['end']));
-    }*/
 
     $sql = "SELECT SUM(`num`) AS 'USED DAYS' FROM `tbl_vacation` WHERE `tbl_vacation_type_id`=1 AND YEAR(`start`)='". date('Y') ."' AND `canceled`=0 AND `tbl_user_id`=". $_SESSION['user_id'];
     $result = $conn->query($sql);

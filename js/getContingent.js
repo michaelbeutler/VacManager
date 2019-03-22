@@ -2,7 +2,7 @@ function getContingent(year, callback) {
     $.ajax({
         type: "GET",
         dataType: 'json',
-        url: "./bin/getContingent.php",
+        url: "./bin/get_contingent.php",
         async: true,
         data: {
             "year": year

@@ -22,7 +22,7 @@ $(document).ready(function(){
             $.ajax({
                 type: "GET",
                 dataType: 'json',
-                url: "./bin/changePassword.php",
+                url: "./bin/change_password.php",
                 async: true,
                 data: {
                     "password": SHA512(password),

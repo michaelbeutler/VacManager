@@ -166,6 +166,7 @@ if (!check_login()) {
     <script src="js/jquery.nicescroll.js" type="text/javascript"></script>
     <script src="js/jquery.app.js"></script>
     <script src="js/vacationList.js"></script>
+    <script src="js/vacationListFunction.js"></script>
 
     <script>
         $(document).ready(function () {

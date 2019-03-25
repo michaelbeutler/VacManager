@@ -41,7 +41,7 @@ if ($result->num_rows > 0) {
             $event->textColor = 'black';
         }
         $event->description = $event->title;
-        $event->url = 'vac.php?id='. $row['id'];
+        $event->url = 'vacation.php?id='. $row['id'];
 
         $events[] = $event;
     }

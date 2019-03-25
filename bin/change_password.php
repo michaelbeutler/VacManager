@@ -1,5 +1,5 @@
 <?php
-require('checkLogin.php');
+require('check_login.php');
 
 $response = (object)array();
 $response->code = 500;

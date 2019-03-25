@@ -1,5 +1,5 @@
 <?php
-require('bin/checkLogin.php');
+require('bin/check_login.php');
 if (!check_login()) {
     header("Location: login.html");
     die();

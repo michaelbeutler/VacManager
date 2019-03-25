@@ -1,4 +1,3 @@
-
 $(document).ready(function () {
     refreshDashboard();
     loadVacType(function (data) {

@@ -34,14 +34,19 @@ $(document).ready(function () {
                 async: true,
                 data: {
                     "username": $('#username').val(),
-                    "password": SHA512($('#password').val())
+                    "password": SHA512($('#password').val()),
+                    "next": getQueryVariable('next')
                 },
                 contentType: "application/json; charset=utf-8",
                 success: function (data) {
                     switch (data.code) {
                         case 200:
                             // success
-                            window.location.replace("index.php");
+                            if (data.url !== null && data.url !== undefined && data.url !== "false") {
+                                window.location.replace(data.url);
+                            } else {
+                                window.location.replace("index.php");
+                            }   
                             break;
                         case 203:
                             $('.form-group-username').addClass('has-error');
@@ -67,3 +72,14 @@ $(document).ready(function () {
         return false;
     });
 });
+
+function getQueryVariable(variable)
+{
+       var query = window.location.search.substring(1);
+       var vars = query.split("&");
+       for (var i=0;i<vars.length;i++) {
+               var pair = vars[i].split("=");
+               if(pair[0] == variable){return pair[1];}
+       }
+       return(false);
+}

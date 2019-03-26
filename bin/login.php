@@ -6,6 +6,10 @@ $response->description = 'internal server error';
 // Check if all parameters given
 if (isset($_GET['username'], $_GET['password'])) {
 
+    if (isset($_GET['next']) && $_GET['next'] !== "undefined") {
+        $response->url = $_GET['next'];
+    }
+
     $form_username = htmlspecialchars($_GET['username']);
     $form_password = htmlspecialchars($_GET['password']);
 

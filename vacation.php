@@ -1,8 +1,12 @@
 <?php
 require('bin/check_login.php');
 if (!check_login()) {
-    header("Location: login.html");
+    header("Location: login.html?next=vacation.php");
     die();
+}
+$id = 0;
+if (isset($_GET['id'])) {
+    $id = $_GET['id'];
 }
 ?>
 <!DOCTYPE html>
@@ -167,12 +171,6 @@ if (!check_login()) {
     <script src="js/jquery.app.js"></script>
     <script src="js/vacationList.js"></script>
     <script src="js/vacationListFunction.js"></script>
-
-    <script>
-        $(document).ready(function () {
-            getClassEvents(<? php echo $_SESSION['user_class']; ?>);
-        });
-    </script>
 
     <!-- Global site tag (gtag.js) - Google Analytics -->
     <script async src="https://www.googletagmanager.com/gtag/js?id=UA-136503205-1"></script>

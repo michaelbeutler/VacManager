@@ -1,7 +1,7 @@
 <?php
 require('bin/check_login.php');
 if (!check_login()) {
-    header("Location: login.html");
+    header("Location: login.html?next=calendar.php");
     die();
 }
 ?>

@@ -12,6 +12,9 @@ function loadClassForm(id, callback) {
 }
 
 function getClassEvents(id) {
+    if (id == 0) {
+        return;
+    }
     for (var year = new Date().getFullYear() - 1; year < new Date().getFullYear() + 1; year++) {
         for (var i = 1; i < 52; i++) {
             $.ajax({

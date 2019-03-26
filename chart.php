@@ -16,7 +16,7 @@ if (!check_login()) {
 
     <link rel="shortcut icon" href="img/favicon_1.ico">
 
-    <title>iperka - Account</title>
+    <title>iperka - Chart</title>
 
     <!-- Bootstrap core CSS -->
     <link href="css/bootstrap.min.css" rel="stylesheet">
@@ -61,10 +61,10 @@ if (!check_login()) {
         <nav class="navigation">
             <ul class="list-unstyled">
                 <li><a href="index.php"><i class="ion-home"></i> <span class="nav-label">Dashboard</span></a></li>
-                <li><a href="calendar.php"><i class="ion-calendar"></i> <span class="nav-label">Calendar</span></a></li>
+                <li><a href="calendar.php"><i class="ion-calendar"></i> <span class="badge badge-warning float-right">NEW</span><span class="nav-label">Calendar</span></a></li>
                 <li><a href="vacation.php"><i class="fa fa-star"></i> <span class="nav-label">Vacation</span></a></li>
-                <li class="active"><a href="chart.php"><i class="ion-stats-bars"></i> <span class="nav-label">Charts</span></a></li>
-                <li><a href="account.php"><i class="fa fa-lock"></i> <span
+                <li class="active"><a href="chart.php"><i class="ion-stats-bars"></i> <span class="badge badge-warning float-right">NEW</span><span class="nav-label">Charts</span></a></li>
+                <li><a href="account.php"><i class="fa fa-lock"></i> <span class="badge badge-warning float-right">NEW</span><span
                             class="nav-label">Account</span></a></li>
             </ul>
         </nav>

@@ -16,10 +16,14 @@ if (!check_login()) {
 
     <link rel="shortcut icon" href="img/favicon_1.ico">
 
-    <title>iperka - Account</title>
+    <title>iperka - Calendar</title>
 
     <!-- Bootstrap core CSS -->
     <link href="css/bootstrap.min.css" rel="stylesheet">
+    <link href="css/bootstrap-reset.css" rel="stylesheet">
+
+    <!--calendar css-->
+    <link href="assets/fullcalendar/fullcalendar.css" rel="stylesheet" />
     <link href="css/bootstrap-reset.css" rel="stylesheet">
 
     <!--Animation css-->
@@ -61,10 +65,10 @@ if (!check_login()) {
         <nav class="navigation">
             <ul class="list-unstyled">
                 <li><a href="index.php"><i class="ion-home"></i> <span class="nav-label">Dashboard</span></a></li>
-                <li><a href="calendar.php"><i class="ion-calendar"></i> <span class="badge badge-warning float-right">NEW</span><span class="nav-label">Calendar</span></a></li>
+                <li class="active"><a href="calendar.php"><i class="ion-calendar"></i> <span class="badge badge-warning float-right">NEW</span><span class="nav-label">Calendar</span></a></li>
                 <li><a href="vacation.php"><i class="fa fa-star"></i> <span class="nav-label">Vacation</span></a></li>
                 <li><a href="chart.php"><i class="ion-stats-bars"></i> <span class="badge badge-warning float-right">NEW</span><span class="nav-label">Charts</span></a></li>
-                <li class="active"><a href="account.php"><i class="fa fa-lock"></i> <span class="badge badge-warning float-right">NEW</span><span
+                <li><a href="account.php"><i class="fa fa-lock"></i> <span class="badge badge-warning float-right">NEW</span><span
                             class="nav-label">Account</span></a></li>
             </ul>
         </nav>
@@ -117,44 +121,10 @@ if (!check_login()) {
                 <div class="col-md-12">
                     <div class="panel panel-default">
                         <div class="panel-heading">
-                            <h3 class="panel-title">Account</h3>
+                            <h3 class="panel-title">Calendar</h3>
                         </div>
                         <div class="panel-body">
-                            <div class="row">
-                                <div class="col-lg-4">
-                                    <!-- Start Profile Widget -->
-                                    <div class="profile-widget text-center">
-                                        <div class="bg-info bg-profile"></div>
-                                        <img src="img/profile.png" class="thumb-lg img-circle img-thumbnail" alt="img">
-                                        <h3><?php echo $_SESSION['user_username']; ?></h3>
-                                        <p><i class="fa fa-map-marker"></i> <?php echo $_SESSION['employer_name']; ?></p>
-                                        <br>
-                                    </div>
-                                    <!-- End Profile Widget -->
-                                </div>
-                                <div class="col-lg-8">
-                                    <div class="row">
-                                        <div class="col-lg-12">
-                                            <form role="form" id="formChangePassword">
-                                                <div class="form-group">
-                                                    <label for="passwordChangePassword">New Password</label>
-                                                    <input type="password" class="form-control" id="passwordChangePassword" placeholder="Password">
-                                                    <br>
-                                                    <input type="password" class="form-control" id="repeatChangePassword" placeholder="Repeat">
-                                                </div>
-                                                <button type="submit" class="btn btn-primary">Save</button>
-                                            </form>
-                                        </div>
-                                    </div>
-                                    <br>
-                                    <div class="row">
-                                        <div class="col-lg-12">
-                                            <input type="checkbox" class="custom-control-input" id="loadClassEvents" <?php if($_SESSION['loadClassEvents'] == 1) {echo 'checked';} ?>>
-                                            <label class="custom-control-label text-xs" for="loadClassEvents"> Load class events (performance increase)</label>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
+                            <div id='calendar'></div>
                         </div>
                     </div>
                 </div>
@@ -176,17 +146,37 @@ if (!check_login()) {
     <!-- Main Content Ends -->
 
 
-
-
     <script src="js/jquery.js"></script>
     <script src="js/jquery-ui-1.10.1.custom.min.js"></script>
     <script src="js/pace.min.js"></script>
     <script src="js/bootstrap.min.js"></script>
     <script src="js/wow.min.js"></script>
     <script src="js/jquery.nicescroll.js" type="text/javascript"></script>
+
+    <script src="assets/fullcalendar/moment.min.js"></script>
+    <script src="assets/fullcalendar/fullcalendar.min.js"></script>
+    <!--dragging calendar event-->
+
+    <script src="assets/fullcalendar/calendar-init.js"></script>
+
     <script src="js/jquery.app.js"></script>
-    <script src="js/sha512.js"></script>
-    <script src="js/account.js"></script>
+
+    <script src="js/getContingent.js"></script>
+    <script src="https://unpkg.com/lodash"></script>
+    <script src="js/class.js"></script>
+
+    <script>
+        $(document).ready(function(){
+            <?php if(isset($_SESSION['loadClassEvents'])) {
+                if ($_SESSION['loadClassEvents'] == 1) {
+                    ?>
+                    getClassEvents(<?php echo $_SESSION['user_class']; ?>);
+                    <?php
+                }
+            }
+            ?>
+        });
+    </script>
 
     <!-- Global site tag (gtag.js) - Google Analytics -->
     <script async src="https://www.googletagmanager.com/gtag/js?id=UA-136503205-1"></script>

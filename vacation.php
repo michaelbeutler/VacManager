@@ -61,11 +61,11 @@ if (!check_login()) {
         <nav class="navigation">
             <ul class="list-unstyled">
                 <li><a href="index.php"><i class="ion-home"></i> <span class="nav-label">Dashboard</span></a></li>
-                <li><a href="calendar.php"><i class="ion-calendar"></i> <span class="nav-label">Calendar</span></a></li>
+                <li><a href="calendar.php"><i class="ion-calendar"></i> <span class="badge badge-warning float-right">NEW</span><span class="nav-label">Calendar</span></a></li>
                 <li class="active"><a href="vac.php"><i class="fa fa-star"></i> <span
                             class="nav-label">Vacation</span></a></li>
-                <li><a href="chart.php"><i class="ion-stats-bars"></i> <span class="nav-label">Charts</span></a></li>
-                <li><a href="account.php"><i class="fa fa-lock"></i> <span class="nav-label">Account</span></a></li>
+                <li><a href="chart.php"><i class="ion-stats-bars"></i> <span class="badge badge-warning float-right">NEW</span><span class="nav-label">Charts</span></a></li>
+                <li><a href="account.php"><i class="fa fa-lock"></i> <span class="badge badge-warning float-right">NEW</span><span class="nav-label">Account</span></a></li>
             </ul>
         </nav>
 

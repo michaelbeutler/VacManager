@@ -1,7 +1,7 @@
-$(document).ready(function(){
-    $('#formChangePassword').submit(function(e){
+$(document).ready(function () {
+    $('#formChangePassword').submit(function (e) {
         e.preventDefault();
-        
+
         var password = $('#passwordChangePassword').val();
         var repeat = $('#repeatChangePassword').val()
 
@@ -36,5 +36,47 @@ $(document).ready(function(){
         }
 
         return false;
+    });
+
+    $('#loadClassEvents').click(function () {
+        var checked;
+        if($('#loadClassEvents').is(':checked')) {
+            checked = 1;
+        } else {
+            checked = 0;
+        }
+
+        function callback(data) {
+            switch (data.code) {
+                case 200:
+                    // success
+                    if (data.value == 0) {
+                        $('#loadClassEvents').prop("checked", false);
+                    } else {
+                        $('#loadClassEvents').prop("checked", true);
+                    }
+                    break;
+                default:
+                    alert(data.description);
+                    console.error(data.description);
+                    break;
+            }
+        }
+
+        $.ajax({
+            type: "GET",
+            dataType: 'json',
+            url: "./bin/user_preference.php",
+            async: true,
+            data: {
+                "option": "loadClassEvents",
+                "value": checked
+            },
+            contentType: "application/json; charset=utf-8",
+            success: function (data) {
+                callback(data);
+            }
+        });
+
     });
 });

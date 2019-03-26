@@ -50,7 +50,7 @@ if (!check_login()) {
 
         <!-- brand -->
         <div class="logo">
-            <a href="index.html" class="logo-expanded">
+            <a href="index.php" class="logo-expanded">
                 <i class="ion-social-buffer"></i>
                 <span class="nav-label">iperka.com</span>
             </a>

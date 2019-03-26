@@ -12,54 +12,61 @@ if (!check_login()) {
     if (isset($_GET['option'])) {
 
         $option = htmlspecialchars($_GET['option']);
-        if (isset($_GET['value'])) {
-            $value = htmlspecialchars($_GET['value']);
 
-            include_once('dbconnect.php');
-            $conn = openConnection();
-
-        if (!$stmt = $conn->prepare("UPDATE `tbl_user` SET `". $option ."`=? WHERE `id`=". $_SESSION['user_id'])) {
-                $response->code = 951;
-                $response->description = "prepare failed: (" . $conn->errno . ") " . $conn->error;
-            } else {
-                if (!$stmt->bind_param("i", $value)) {
-                    $response->code = 952;
-                    $response->description = "binding parameters failed: (" . $stmt->errno . ") " . $stmt->error;
-                } else {
-                    if (!$stmt->execute()) {
-                        $response->code = 953;
-                        $response->description = "Execute failed: (" . $stmt->errno . ") " . $stmt->error;
-                    } else {
-                        $stmt->close();
-                        $conn->close();
-                        $response->code = 200;
-                        $response->description = 'success';
-                        $response->value = $value;
-                        $_SESSION[$option] = $value;
-                    }   
-                }
-            }
+        if ($option !== "loadClassEvents") {
+            $response = (object)array();
+            $response->code = 450;
+            $response->description = 'not allowed';
         } else {
-            $sql = "SELECT `". $option ."` FROM `tbl_user`;";
-            $result = $conn->query($sql);
-
-            if ($result->num_rows > 0) {
-                // output data of each row
-                $results = array();
-                while($row = $result->fetch_assoc()) {
-                    $results[] = $row;
+            if (isset($_GET['value'])) {
+                $value = htmlspecialchars($_GET['value']);
+    
+                include_once('dbconnect.php');
+                $conn = openConnection();
+    
+            if (!$stmt = $conn->prepare("UPDATE `tbl_user` SET `". $option ."`=? WHERE `id`=". $_SESSION['user_id'])) {
+                    $response->code = 951;
+                    $response->description = "prepare failed: (" . $conn->errno . ") " . $conn->error;
+                } else {
+                    if (!$stmt->bind_param("i", $value)) {
+                        $response->code = 952;
+                        $response->description = "binding parameters failed: (" . $stmt->errno . ") " . $stmt->error;
+                    } else {
+                        if (!$stmt->execute()) {
+                            $response->code = 953;
+                            $response->description = "Execute failed: (" . $stmt->errno . ") " . $stmt->error;
+                        } else {
+                            $stmt->close();
+                            $conn->close();
+                            $response->code = 200;
+                            $response->description = 'success';
+                            $response->value = $value;
+                            $_SESSION[$option] = $value;
+                        }   
+                    }
                 }
-
-                $response->code = 200;
-                $response->description = 'success';
-                $response->option = $results;
             } else {
-                // 0 results
-                $response->code = 201;
-                $response->description = 'no types found (create new)';
-                $response->types = null;
+                $sql = "SELECT `". $option ."` FROM `tbl_user`;";
+                $result = $conn->query($sql);
+    
+                if ($result->num_rows > 0) {
+                    // output data of each row
+                    $results = array();
+                    while($row = $result->fetch_assoc()) {
+                        $results[] = $row;
+                    }
+    
+                    $response->code = 200;
+                    $response->description = 'success';
+                    $response->option = $results;
+                } else {
+                    // 0 results
+                    $response->code = 201;
+                    $response->description = 'no types found (create new)';
+                    $response->types = null;
+                }
             }
-        }
+        }   
     } else {
         // Parameters missing
         $response->code = 900;

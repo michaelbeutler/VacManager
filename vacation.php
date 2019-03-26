@@ -15,7 +15,7 @@ if (isset($_GET['id'])) {
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta name="description" content="Dashboard">
+    <meta name="description" content="Vacation List">
     <meta name="author" content="Michael Beutler">
 
     <link rel="shortcut icon" href="img/favicon_1.ico">

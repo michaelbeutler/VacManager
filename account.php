@@ -11,7 +11,7 @@ if (!check_login()) {
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta name="description" content="Dashboard">
+    <meta name="description" content="Account">
     <meta name="author" content="Michael Beutler">
 
     <link rel="shortcut icon" href="img/favicon_1.ico">
@@ -32,6 +32,10 @@ if (!check_login()) {
     <!-- Custom styles for this template -->
     <link href="css/style.css" rel="stylesheet">
     <link href="css/helper.css" rel="stylesheet">
+
+    <!-- Plugins css -->
+    <link href="assets/notifications/notification.css" rel="stylesheet" />
+    <link rel="stylesheet" href="assets/sweet-alert/sweet-alert.min.css">
 
 
     <!-- HTML5 shim and Respond.js IE8 support of HTML5 tooltipss and media queries -->
@@ -129,6 +133,7 @@ if (!check_login()) {
                                         <h3><?php echo $_SESSION['user_username']; ?></h3>
                                         <p><i class="fa fa-map-marker"></i> <?php echo $_SESSION['employer_name']; ?></p>
                                         <br>
+                                        <br>
                                     </div>
                                     <!-- End Profile Widget -->
                                 </div>
@@ -149,6 +154,8 @@ if (!check_login()) {
                                     <br>
                                     <div class="row">
                                         <div class="col-lg-12">
+                                            <hr>
+                                            <h5>Options</h5>
                                             <input type="checkbox" class="custom-control-input" id="loadClassEvents" <?php if($_SESSION['loadClassEvents'] == 1) {echo 'checked';} ?>>
                                             <label class="custom-control-label text-xs" for="loadClassEvents"> Load class events (performance increase)</label>
                                         </div>
@@ -185,6 +192,12 @@ if (!check_login()) {
     <script src="js/wow.min.js"></script>
     <script src="js/jquery.nicescroll.js" type="text/javascript"></script>
     <script src="js/jquery.app.js"></script>
+
+    <script src="assets/notifications/notify.min.js"></script>
+    <script src="assets/notifications/notify-metro.js"></script>
+    <script src="assets/notifications/notifications.js"></script>
+    <script src="assets/sweet-alert/sweet-alert.min.js"></script>
+    <script src="assets/sweet-alert/sweet-alert.init.js"></script>
     <script src="js/sha512.js"></script>
     <script src="js/account.js"></script>
 

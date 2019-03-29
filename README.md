@@ -1,6 +1,11 @@
 # :palm_tree: VacManager
 With this web app you can manage your vacation days and check how many days left.
 
+* manage your vacations :mag:
+* get a calendar overview :calendar:
+* analyize your vacations with charts :bar_chart:
+* always keep your contingent in mind :hourglass_flowing_sand:
+
 ## :package: Prerequisites
 
 * Apache2

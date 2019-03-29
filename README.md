@@ -1,7 +1,7 @@
 # :palm_tree: VacManager
 With this web app you can manage your vacation days and check how many days left.
 
-## Prerequisites
+## :package: Prerequisites
 
 * Apache2
 * PHP 7.2
@@ -9,7 +9,7 @@ With this web app you can manage your vacation days and check how many days left
 * Bootstrap
 * JQuery
 
-## Installation
+## :checkered_flag: Installation
 At first you have to clone the git reprository in your web directory:
 ```
 git clone https://github.com/MichiBeutler/VacManager.git
@@ -32,15 +32,15 @@ Insert the credentials in the [dbconnect.php](https://github.com/MichiBeutler/Va
 nano VacManager/bin/dbconfig.php
 ```
 
-## Built With
+## :books: Built With
 
 * [Bootstrap](https://getbootstrap.com/) - The web framework used
 
-## Authors
+## :octocat: Authors
 * **Michael Beutler** - *initial work* - [MichiBeutler](https://github.com/MichiBeutler)
 
 See also the list of [contributors](https://github.com/MichiBeutler/VacManager/graphs/contributors) who participated in this project.
 
-## License
+## :lock: License
 This project is licensed under the MIT License - see the [LICENSE.md](https://github.com/MichiBeutler/VacManager/blob/master/LICENSE) file for details
       

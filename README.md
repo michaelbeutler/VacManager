@@ -6,6 +6,11 @@ With this web app you can manage your vacation days and check how many days left
 * analyize your vacations with charts :bar_chart:
 * always keep your contingent in mind :hourglass_flowing_sand:
 
+## :checkered_flag: Getting started
+Install this app like discribed in the manual below, creat an account and get started.
+
+[Live Demo](http://iperka.com)
+
 ## :package: Prerequisites
 
 * Apache2
@@ -14,7 +19,7 @@ With this web app you can manage your vacation days and check how many days left
 * Bootstrap
 * JQuery
 
-## :checkered_flag: Installation
+## :rocket: Installation
 At first you have to clone the git reprository in your web directory:
 ```
 git clone https://github.com/MichiBeutler/VacManager.git

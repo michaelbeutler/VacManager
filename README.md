@@ -44,3 +44,5 @@ See also the list of [contributors](https://github.com/MichiBeutler/VacManager/g
 ## :lock: License
 This project is licensed under the MIT License - see the [LICENSE.md](https://github.com/MichiBeutler/VacManager/blob/master/LICENSE) file for details
       
+## :ok_hand: Acknowledgments
+* manage your vacations in your workplace :stuck_out_tongue_closed_eyes:

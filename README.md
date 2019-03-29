@@ -33,7 +33,7 @@ CREATE DATABASE `vac`;
 quit
 
 # import sql to created database
-mysql -u root vac < VacManager/sql/vac.sql
+mysql -u root vac < VacManager/vac.sql
 ```
 
 Now you have to create a user for the app to work.

@@ -23,7 +23,7 @@ if (isset($_GET['username'], $_GET['password'])) {
         $response->code = 203;
         $response->description = 'Username and/or password incorrect.';
     } else {
-        $sql = "SELECT `tbl_user`.`id` AS 'UID', `tbl_user`.`username`, `tbl_user`.`salt`, `tbl_user`.`password`, `tbl_user`.`tbl_class_id`, `tbl_user`.`tbl_employer_id`, `tbl_employer`.`id` AS 'EID', `tbl_employer`.`name`, `tbl_employer`.`shortname`, `tbl_user`.`ban`, `loadClassEvents` FROM `tbl_user` LEFT JOIN `tbl_employer` ON `tbl_user`.`tbl_employer_id` = `tbl_employer`.`id` WHERE `username`='" . $form_username . "'";
+        $sql = "SELECT `tbl_user`.`id` AS 'UID', `tbl_user`.`username`, `tbl_user`.`salt`, `tbl_user`.`password`, `tbl_user`.`tbl_class_id`, `tbl_user`.`tbl_employer_id`, `tbl_employer`.`id` AS 'EID', `tbl_employer`.`name`, `tbl_employer`.`shortname`, `tbl_user`.`ban`, `tbl_user`.`loadClassEvents`, `tbl_user`.`admin` FROM `tbl_user` LEFT JOIN `tbl_employer` ON `tbl_user`.`tbl_employer_id` = `tbl_employer`.`id` WHERE `username`='" . $form_username . "'";
         $result = $conn->query($sql);
         while($row = $result->fetch_assoc()) {
             $results[] = $row;
@@ -43,6 +43,7 @@ if (isset($_GET['username'], $_GET['password'])) {
                     $_SESSION['employer_name'] = $row['name'];
                     $_SESSION['employer_shortname'] = $row['shortname'];
                     $_SESSION['loadClassEvents'] = $row['loadClassEvents'];
+                    $_SESSION['admin'] = $row['admin'];
     
                     // success
                     $response->code = 200;

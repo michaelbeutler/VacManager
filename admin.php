@@ -1,12 +1,8 @@
 <?php
 require('bin/check_login.php');
-if (!check_login()) {
-    header("Location: login.html?next=vacation.php");
+if (!check_login(true)) {
+    header("Location: login.html?next=index.php");
     die();
-}
-$id = 0;
-if (isset($_GET['id'])) {
-    $id = $_GET['id'];
 }
 ?>
 <!DOCTYPE html>
@@ -15,12 +11,12 @@ if (isset($_GET['id'])) {
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta name="description" content="Vacation List">
+    <meta name="description" content="Admin">
     <meta name="author" content="Michael Beutler">
 
     <link rel="shortcut icon" href="img/favicon_1.ico">
 
-    <title>iperka - Vacation</title>
+    <title>iperka - Admin</title>
 
     <!-- Bootstrap core CSS -->
     <link href="css/bootstrap.min.css" rel="stylesheet">
@@ -36,6 +32,10 @@ if (isset($_GET['id'])) {
     <!-- Custom styles for this template -->
     <link href="css/style.css" rel="stylesheet">
     <link href="css/helper.css" rel="stylesheet">
+
+    <!-- Plugins css -->
+    <link href="assets/notifications/notification.css" rel="stylesheet" />
+    <link rel="stylesheet" href="assets/sweet-alert/sweet-alert.min.css">
 
 
     <!-- HTML5 shim and Respond.js IE8 support of HTML5 tooltipss and media queries -->
@@ -66,13 +66,11 @@ if (isset($_GET['id'])) {
             <ul class="list-unstyled">
                 <li><a href="index.php"><i class="ion-home"></i> <span class="nav-label">Dashboard</span></a></li>
                 <li><a href="calendar.php"><i class="ion-calendar"></i> <span class="badge badge-warning float-right">NEW</span><span class="nav-label">Calendar</span></a></li>
-                <li class="active"><a href="vac.php"><i class="fa fa-star"></i> <span
-                            class="nav-label">Vacation</span></a></li>
+                <li><a href="vacation.php"><i class="fa fa-star"></i> <span class="nav-label">Vacation</span></a></li>
                 <li><a href="chart.php"><i class="ion-stats-bars"></i> <span class="badge badge-warning float-right">NEW</span><span class="nav-label">Charts</span></a></li>
-                <li><a href="account.php"><i class="fa fa-lock"></i> <span class="badge badge-warning float-right">NEW</span><span class="nav-label">Account</span></a></li>
-                <?php if ($_SESSION['admin'] == 1) { echo '
-                <li><a href="admin.php"><i class="fa fa-gavel"></i> <span class="nav-label">Admin</span></a></li>
-                ';}?>
+                <li><a href="account.php"><i class="fa fa-lock"></i> <span class="badge badge-warning float-right">NEW</span><span
+                            class="nav-label">Account</span></a></li>
+                <li class="active"><a href="admin.php"><i class="fa fa-gavel"></i> <span class="nav-label">Admin</span></a></li>
             </ul>
         </nav>
 
@@ -124,24 +122,46 @@ if (isset($_GET['id'])) {
                 <div class="col-md-12">
                     <div class="panel panel-default">
                         <div class="panel-heading">
-                            <h3 class="panel-title">Vacation</h3>
+                            <h3 class="panel-title">Accounts</h3>
                         </div>
                         <div class="panel-body">
-                            <div class="col-md-12 col-sm-12 col-xs-12">
-                                <table class="table table-hover">
-                                    <thead>
-                                        <tr>
-                                            <th>#</th>
-                                            <th>Description</th>
-                                            <th>Start</th>
-                                            <th>End</th>
-                                            <th>Days</th>
-                                        </tr>
-                                    </thead>
-                                    <tbody id="vacList">
-                                    </tbody>
-                                </table>
-                            </div>
+                            <table class="table">
+                                <tr>
+                                    <th>ID</th>
+                                    <th>firstname</th>
+                                    <th>lastname</th>
+                                    <th>birthdate</th>
+                                    <th>create_time</th>
+                                    <th>update_time</th>
+                                    <th>ban</th>
+                                    <th>loadClassEvents</th>
+                                    <th>admin</th>
+                                </tr>
+                                <?php
+                                include_once('bin/dbconnect.php');
+                                $conn = openConnection();
+                                $sql = "SELECT * FROM `tbl_user` ORDER BY `id` ASC";
+                                $result = $conn->query($sql);
+                                
+                                if ($result->num_rows > 0) {
+                                    // output data of each row
+                                    while($row = $result->fetch_assoc()) {
+                                        echo 
+                                        '<tr>
+                                        <td>'.$row["id"].'</td>
+                                        <td>'.$row["firstname"].'</td>
+                                        <td>'.$row["lastname"].'</td>
+                                        <td>'.$row["birthdate"].'</td>
+                                        <td>'.$row["create_time"].'</td>
+                                        <td>'.$row["update_time"].'</td>
+                                        <td>'.$row["ban"].'</td>
+                                        <td>'.$row["loadClassEvents"].'</td>
+                                        <td>'.$row["admin"].'</td>
+                                        </tr>';
+                                    }
+                                }
+                                ?>
+                            </table>
                         </div>
                     </div>
                 </div>
@@ -172,8 +192,14 @@ if (isset($_GET['id'])) {
     <script src="js/wow.min.js"></script>
     <script src="js/jquery.nicescroll.js" type="text/javascript"></script>
     <script src="js/jquery.app.js"></script>
-    <script src="js/vacationList.js"></script>
-    <script src="js/vacationListFunction.js"></script>
+
+    <script src="assets/notifications/notify.min.js"></script>
+    <script src="assets/notifications/notify-metro.js"></script>
+    <script src="assets/notifications/notifications.js"></script>
+    <script src="assets/sweet-alert/sweet-alert.min.js"></script>
+    <script src="assets/sweet-alert/sweet-alert.init.js"></script>
+    <script src="js/sha512.js"></script>
+    <script src="js/account.js"></script>
 
     <!-- Global site tag (gtag.js) - Google Analytics -->
     <script async src="https://www.googletagmanager.com/gtag/js?id=UA-136503205-1"></script>

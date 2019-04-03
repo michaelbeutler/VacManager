@@ -48,6 +48,7 @@ CREATE TABLE `tbl_user` (
   `end_work` date NOT NULL,
   `ban` tinyint(4) NOT NULL DEFAULT '0',
   `loadClassEvents` tinyint(1) NOT NULL DEFAULT '0'
+  `admin` tinyint(1) NOT NULL DEFAULT '0'
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_german2_ci;
 
 CREATE TABLE `tbl_vacation` (

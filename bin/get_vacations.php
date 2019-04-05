@@ -9,7 +9,7 @@ $events = array();
 include_once('dbconnect.php');
 $conn = openConnection();
 //echo $_SESSION['user_id'];
-$sql = "SELECT * FROM `tbl_vacation` WHERE `tbl_user_id`=". $_SESSION['user_id'] . " ORDER BY `start` DESC";
+$sql = "SELECT * FROM `vacation` WHERE `user_id`=". $_SESSION['user_id'] . " ORDER BY `start` DESC";
 $result = $conn->query($sql);
 
 if ($result->num_rows > 0) {
@@ -17,10 +17,11 @@ if ($result->num_rows > 0) {
     while($row = $result->fetch_assoc()) {
         $event = (object)array();
         $event->id = $row['id'];
-        $event->days = $row['num'];
-        $event->title = $row['description'] . ' - ' . $row['num'] . ' Day(s)';
+        $event->days = $row['days'];
+        $event->title = $row['title'] . ' - ' . $row['days'] . ' Day(s)';
+        $event->description = $row['description'];
         $event->start = $row['start'];
-        if ($row['num'] < 1.0) {
+        if ($row['days'] < 1.0) {
             $event->allDay = false;
         } else {
             $event->allDay = true;
@@ -34,7 +35,7 @@ if ($result->num_rows > 0) {
         }
         
 
-        if ($row['tbl_vacation_type_id'] == 1) {
+        if ($row['vacation_type_id'] == 1) {
             $event->color = 'blue';
         } else {
             $event->color = 'yellow';

@@ -24,7 +24,7 @@ if (!check_login()) {
                 include_once('dbconnect.php');
                 $conn = openConnection();
     
-            if (!$stmt = $conn->prepare("UPDATE `tbl_user` SET `". $option ."`=? WHERE `id`=". $_SESSION['user_id'])) {
+            if (!$stmt = $conn->prepare("UPDATE `user` SET `". $option ."`=? WHERE `id`=". $_SESSION['user_id'])) {
                     $response->code = 951;
                     $response->description = "prepare failed: (" . $conn->errno . ") " . $conn->error;
                 } else {
@@ -46,7 +46,7 @@ if (!check_login()) {
                     }
                 }
             } else {
-                $sql = "SELECT `". $option ."` FROM `tbl_user`;";
+                $sql = "SELECT `". $option ."` FROM `user`;";
                 $result = $conn->query($sql);
     
                 if ($result->num_rows > 0) {

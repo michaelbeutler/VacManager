@@ -27,7 +27,7 @@ if (isset($_GET['title'], $_GET['start'], $_GET['end'], $_GET['numDays'],  $_GET
         $conn = openConnection();
     
         // prepare and bind
-        if (!$stmt = $conn->prepare("INSERT INTO `tbl_vacation` (`start`, `end`, `num`, `description`, `tbl_user_id`, `tbl_vacation_type_id`) VALUES (?, ?, ?, ?, ?, ?)")) {
+        if (!$stmt = $conn->prepare("INSERT INTO `vacation` (`start`, `end`, `days`, `description`, `user_id`, `vacation_type_id`) VALUES (?, ?, ?, ?, ?, ?)")) {
             $response->code = 951;
             $response->description = "prepare failed: (" . $conn->errno . ") " . $conn->error;
         } else {

@@ -11,7 +11,7 @@ function check_login($check_admin = NULL) {
         $conn = openConnection();
 
         // select user in database
-        $sql = "SELECT `password`, `admin` FROM `tbl_user` WHERE `id`='" . $_SESSION['user_id'] . "'";
+        $sql = "SELECT `password`, `admin` FROM `user` WHERE `id`='" . $_SESSION['user_id'] . "'";
 
         // check if execution was successfull
         if ($result = $conn->query($sql)) {

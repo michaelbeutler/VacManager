@@ -6,7 +6,7 @@ $response->description = 'internal server error';
 include_once('dbconnect.php');
 $conn = openConnection();
 
-$sql = "SELECT * FROM `tbl_employer`;";
+$sql = "SELECT * FROM `employer`;";
 $result = $conn->query($sql);
 
 if ($result->num_rows > 0) {

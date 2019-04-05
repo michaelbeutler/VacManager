@@ -6,10 +6,8 @@ $response->description = 'internal server error';
 // Check if all parameters given
 if (isset(
     $_GET['firstname'], $_GET['lastname'], 
-    $_GET['birthdate'], $_GET['username'], 
+    $_GET['username'], 
     $_GET['password'], $_GET['repeat'], 
-    $_GET['startWork'], $_GET['endWork'], 
-    $_GET['classId'], $_GET['classLongName'], 
     $_GET['className'], $_GET['employerId'], 
     $_GET['vacDays']
     )) {
@@ -17,7 +15,6 @@ if (isset(
     // personal data
     $firstname = htmlspecialchars($_GET['firstname']);
     $lastname = htmlspecialchars($_GET['lastname']);
-    $birthdate = htmlspecialchars($_GET['birthdate']);
     
     // credentials
     $username = htmlspecialchars($_GET['username']);
@@ -29,36 +26,19 @@ if (isset(
         $response->description = 'passwords dont match';
     } else {
         // employer
-        $start_work = htmlspecialchars($_GET['startWork']);
-        $end_work = htmlspecialchars($_GET['endWork']);
         $vac_days = htmlspecialchars($_GET['vacDays']);
         $employer_id = htmlspecialchars($_GET['employerId']);
-
-        // class
-        $class_id = htmlspecialchars($_GET['classId']);
-        $class_long_name = htmlspecialchars($_GET['classLongName']);
-        $class_name = htmlspecialchars($_GET['className']);
 
         // open db connection
         include_once('dbconnect.php');
         $conn = openConnection();
 
-        // check if class already exists
-        $sql = "SELECT * FROM `tbl_class` WHERE `id`=" . $class_id;
-        $result = $conn->query($sql);
-
-        if ($result->num_rows < 1) {
-            // if not, insert
-            $sql = "INSERT INTO `tbl_class` (`id`, `class_name`, `class_longname`) VALUES (". $class_id .", '". $class_name ."', '". $class_long_name ."');";
-            $conn->query($sql);
-        }
-
         // prepare and bind
-        if (!$stmt = $conn->prepare("INSERT INTO `tbl_user` (`firstname`, `lastname`, `birthdate`, `username`, `password`, `salt`, `tbl_class_id`, `tbl_employer_id`, `start_work`, `end_work`) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?)")) {
+        if (!$stmt = $conn->prepare("INSERT INTO `user` (`firstname`, `lastname`, `username`, `password`, `salt`, `employer_id`) VALUES (?, ?, ?, ?, ?, ?)")) {
             $response->code = 951;
             $response->description = "prepare failed: (" . $conn->errno . ") " . $conn->error;
         } else {
-            if (!$stmt->bind_param("ssssssiiss", $firstname, $lastname, $birthdate, $username, $password, $salt, $class_id, $employer_id, $start_work, $end_work)) {
+            if (!$stmt->bind_param("sssssi", $firstname, $lastname, $username, $password, $salt, $employer_id)) {
                 $response->code = 952;
                 $response->description = "binding parameters failed: (" . $stmt->errno . ") " . $stmt->error;
             } else {
@@ -66,13 +46,10 @@ if (isset(
                 $salt = hash('sha512', uniqid(openssl_random_pseudo_bytes(16), TRUE));
                     
                 // set parameters and execute
-                $birthdate =  date("Y-m-d", strtotime($birthdate));
                 $password = hash('sha512', $password . $salt);
-                $start_work = date("Y-m-d", strtotime($start_work));
-                $end_work = date("Y-m-d", strtotime($start_work));
 
                 // get accounts with same username
-                $sql = "SELECT * FROM `tbl_user` WHERE `username`='" . $username ."'";
+                $sql = "SELECT * FROM `user` WHERE `username`='" . $username ."'";
                 $result = $conn->query($sql);
 
                 // check if username already exists
@@ -83,7 +60,7 @@ if (isset(
                         $response->description = "Execute failed: (" . $stmt->errno . ") " . $stmt->error;
                     } else {
                         // get user id
-                        $sql = "SELECT `id`, `username` FROM `tbl_user` WHERE `username`='" . $username ."'";
+                        $sql = "SELECT `id`, `username` FROM `user` WHERE `username`='" . $username ."'";
                         if (!$result = $conn->query($sql)) {
                             // error while executing query
                             $response->code = 953;
@@ -92,7 +69,7 @@ if (isset(
                             if ($result->num_rows == 1) {
                                 // create contingent
                                 $row = $result->fetch_assoc();
-                                $sql = "INSERT INTO `tbl_contingent` (`year`, `basis`, `tbl_user_id`) VALUES (" . date('Y') . "," . $vac_days . "," . $row['id'] . ")";
+                                $sql = "INSERT INTO `contingent` (`year`, `contingent`, `user_id`) VALUES (" . date('Y') . "," . $vac_days . "," . $row['id'] . ")";
                                 $result = $conn->query($sql);
                                 
                             }

@@ -7,7 +7,7 @@ $(document).ready(function () {
                     var content = '<td>' + user.id + '</td>';
                     content += '<td>' + user.firstname + '</td>';
                     content += '<td>' + user.lastname + '</td>';
-                    content += '<td>' + user.create_time + '</td>';
+                    content += '<td>' + user.create_date + '</td>';
                     $('#tableUser tbody').append('<tr>' + content + '</tr>');
                 });
                 break;

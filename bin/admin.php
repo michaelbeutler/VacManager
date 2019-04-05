@@ -12,7 +12,7 @@ if (!check_login(true)) {
 } else {
 
     $conn = openConnection();
-    $sql = "SELECT * FROM `tbl_user`;";
+    $sql = "SELECT * FROM `user`;";
     $result = $conn->query($sql);
     
     if ($result->num_rows > 0) {

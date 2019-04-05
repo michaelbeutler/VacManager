@@ -62,8 +62,8 @@ if (!check_login()) {
                 } else {
                     // 0 results
                     $response->code = 201;
-                    $response->description = 'no types found (create new)';
-                    $response->types = null;
+                    $response->description = 'no options found (create new)';
+                    $response->option = null;
                 }
             }
         }   

@@ -125,42 +125,16 @@ if (!check_login(true)) {
                             <h3 class="panel-title">Accounts</h3>
                         </div>
                         <div class="panel-body">
-                            <table class="table">
-                                <tr>
-                                    <th>ID</th>
-                                    <th>firstname</th>
-                                    <th>lastname</th>
-                                    <th>birthdate</th>
-                                    <th>create_time</th>
-                                    <th>update_time</th>
-                                    <th>ban</th>
-                                    <th>loadClassEvents</th>
-                                    <th>admin</th>
-                                </tr>
-                                <?php
-                                include_once('bin/dbconnect.php');
-                                $conn = openConnection();
-                                $sql = "SELECT * FROM `tbl_user` ORDER BY `id` ASC";
-                                $result = $conn->query($sql);
-                                
-                                if ($result->num_rows > 0) {
-                                    // output data of each row
-                                    while($row = $result->fetch_assoc()) {
-                                        echo 
-                                        '<tr>
-                                        <td>'.$row["id"].'</td>
-                                        <td>'.$row["firstname"].'</td>
-                                        <td>'.$row["lastname"].'</td>
-                                        <td>'.$row["birthdate"].'</td>
-                                        <td>'.$row["create_time"].'</td>
-                                        <td>'.$row["update_time"].'</td>
-                                        <td>'.$row["ban"].'</td>
-                                        <td>'.$row["loadClassEvents"].'</td>
-                                        <td>'.$row["admin"].'</td>
-                                        </tr>';
-                                    }
-                                }
-                                ?>
+                            <table class="table table-hover" id="tableUser">
+                                <thead>
+                                    <tr>
+                                        <th>ID</th>
+                                        <th>Firstname</th>
+                                        <th>Lastname</th>
+                                        <th>Registration date</th>
+                                    </tr>
+                                </thead>
+                                <tbody></tbody>
                             </table>
                         </div>
                     </div>
@@ -199,7 +173,7 @@ if (!check_login(true)) {
     <script src="assets/sweet-alert/sweet-alert.min.js"></script>
     <script src="assets/sweet-alert/sweet-alert.init.js"></script>
     <script src="js/sha512.js"></script>
-    <script src="js/account.js"></script>
+    <script src="js/admin.js"></script>
 
     <!-- Global site tag (gtag.js) - Google Analytics -->
     <script async src="https://www.googletagmanager.com/gtag/js?id=UA-136503205-1"></script>

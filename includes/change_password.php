@@ -22,9 +22,9 @@ if (!check_login()) {
                 $response->code = 951;
                 $response->description = "prepare failed: (" . $conn->errno . ") " . $conn->error;
             } else {
-                if (!$stmt->includesd_param("ss", $password, $random_salt)) {
+                if (!$stmt->bind_param("ss", $password, $random_salt)) {
                     $response->code = 952;
-                    $response->description = "includesding parameters failed: (" . $stmt->errno . ") " . $stmt->error;
+                    $response->description = "binding parameters failed: (" . $stmt->errno . ") " . $stmt->error;
                 } else {
                     if (!$stmt->execute()) {
                         $response->code = 953;

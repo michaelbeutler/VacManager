@@ -26,14 +26,14 @@ if (isset($_GET['title'], $_GET['start'], $_GET['end'], $_GET['numDays'],  $_GET
         include_once('dbconnect.php');
         $conn = openConnection();
     
-        // prepare and includesd
+        // prepare and bind
         if (!$stmt = $conn->prepare("INSERT INTO `vacation` (`start`, `end`, `days`, `title`, `user_id`, `vacation_type_id`) VALUES (?, ?, ?, ?, ?, ?)")) {
             $response->code = 951;
             $response->description = "prepare failed: (" . $conn->errno . ") " . $conn->error;
         } else {
-            if (!$stmt->includesd_param("ssdsii", $bstart, $bend, $bnumDays, $btitle, $userId, $bvacType)) {
+            if (!$stmt->bind_param("ssdsii", $bstart, $bend, $bnumDays, $btitle, $userId, $bvacType)) {
                 $response->code = 952;
-                $response->description = "includesding parameters failed: (" . $stmt->errno . ") " . $stmt->error;
+                $response->description = "binding parameters failed: (" . $stmt->errno . ") " . $stmt->error;
             } else {
                 // set parameters and execute
                 $bstart = $start;

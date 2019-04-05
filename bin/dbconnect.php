@@ -3,7 +3,7 @@ function openConnection() {
     $hostname = "localhost";
     $username = "root";
     $password = "";
-    $database = "vac";
+    $database = "vac_manager";
 
     // Create connection
     $conn = new mysqli($hostname, $username, $password, $database);

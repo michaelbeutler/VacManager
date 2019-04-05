@@ -53,15 +53,9 @@ $(document).ready(function () {
 
         var firstname = $('#firstname').val();
         var lastname = $('#lastname').val();
-        var birthdate = $('#birthdate').val();
         var username = $('#username').val();
         var password1 = $('#password1').val();
         var password2 = $('#password2').val();
-        var workstart = $('#workstart').val();
-        var workend = $('#workend').val();
-        var iclass = $('#class').val();
-        var iclassLongname = $('#class').find(':selected').data('longname');
-        var iclassName = $('#class').find(':selected').data('name');
         var employer = $('#employer').val();
         var currentVacDays = $('#currentVacDays').val();
 
@@ -89,15 +83,9 @@ $(document).ready(function () {
                 data: {
                     "firstname": firstname,
                     "lastname": lastname,
-                    "birthdate": birthdate,
                     "username": username,
                     "password": SHA512(password1),
                     "repeat": SHA512(password2),
-                    "startWork": workstart,
-                    "endWork": workend,
-                    "classId": iclass,
-                    "classLongName": iclassLongname,
-                    "className": iclassName,
                     "employerId": employer,
                     "vacDays": currentVacDays
                 },

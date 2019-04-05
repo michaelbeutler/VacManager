@@ -16,14 +16,14 @@ if (isset($_GET['username'], $_GET['password'])) {
     include_once('dbconnect.php');
     $conn = openConnection();
 
-    $sql = "SELECT `username` FROM `tbl_user` WHERE `username`='" . $form_username . "'";
+    $sql = "SELECT `username` FROM `user` WHERE `username`='" . $form_username . "'";
     $result = $conn->query($sql);
 
     if ($result->num_rows < 1) {
         $response->code = 203;
         $response->description = 'Username and/or password incorrect.';
     } else {
-        $sql = "SELECT `tbl_user`.`id` AS 'UID', `tbl_user`.`username`, `tbl_user`.`salt`, `tbl_user`.`password`, `tbl_user`.`tbl_class_id`, `tbl_user`.`tbl_employer_id`, `tbl_employer`.`id` AS 'EID', `tbl_employer`.`name`, `tbl_employer`.`shortname`, `tbl_user`.`ban`, `tbl_user`.`loadClassEvents`, `tbl_user`.`admin` FROM `tbl_user` LEFT JOIN `tbl_employer` ON `tbl_user`.`tbl_employer_id` = `tbl_employer`.`id` WHERE `username`='" . $form_username . "'";
+        $sql = "SELECT `user`.`id` AS 'user_id', `user`.`username`, `user`.`salt`, `user`.`password`, `user`.`employer_id`, `employer`.`name`, `employer`.`shortname`, `user`.`is_banned`, `user`.`admin` FROM `user` LEFT JOIN `employer` ON `user`.`employer_id` = `employer`.`id` WHERE `username`='" . $form_username . "'";
         $result = $conn->query($sql);
         while($row = $result->fetch_assoc()) {
             $results[] = $row;
@@ -32,17 +32,15 @@ if (isset($_GET['username'], $_GET['password'])) {
             $password = hash('sha512', $form_password . $salt);
 
             if ($password == $db_password) {
-                if ($row['ban'] == 0) {
+                if ($row['is_banned'] == 0) {
                     session_start();
                     //var_dump($row);
-                    $_SESSION['user_id'] = $row['UID'];
+                    $_SESSION['user_id'] = $row['user_id'];
                     $_SESSION['user_username'] = $row['username'];
                     $_SESSION['user_hash'] = $row['password'];
-                    $_SESSION['user_class'] = $row['tbl_class_id'];
-                    $_SESSION['user_employer_id'] = $row['tbl_employer_id'];
+                    $_SESSION['user_employer_id'] = $row['employer_id'];
                     $_SESSION['employer_name'] = $row['name'];
                     $_SESSION['employer_shortname'] = $row['shortname'];
-                    $_SESSION['loadClassEvents'] = $row['loadClassEvents'];
                     $_SESSION['admin'] = $row['admin'];
     
                     // success

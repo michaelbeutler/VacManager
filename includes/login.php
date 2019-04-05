@@ -23,7 +23,7 @@ if (isset($_GET['username'], $_GET['password'])) {
         $response->code = 203;
         $response->description = 'Username and/or password incorrect.';
     } else {
-        $sql = "SELECT `user`.`id` AS 'user_id', `user`.`username`, `user`.`salt`, `user`.`password`, `user`.`employer_id`, `employer`.`name`, `employer`.`shortname`, `user`.`is_banned`, `user`.`admin` FROM `user` LEFT JOIN `employer` ON `user`.`employer_id` = `employer`.`id` WHERE `username`='" . $form_username . "'";
+        $sql = "SELECT `user`.`id` AS 'user_id', `user`.`username`, `user`.`salt`, `user`.`password`, `user`.`employer_id`, `employer`.`name`, `employer`.`shortname`, `user`.`is_banned`, `user`.`admin` FROM `user` LEFT JOIN `employer` ON `user`.`employer_id` = `employer`.`id` WHERE `username`='" . $form_username . "' LIMIT 1;";
         $result = $conn->query($sql);
         while($row = $result->fetch_assoc()) {
             $results[] = $row;

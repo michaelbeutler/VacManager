@@ -30,7 +30,7 @@ $(document).ready(function () {
             $.ajax({
                 type: "GET",
                 dataType: 'json',
-                url: "./bin/login.php",
+                url: "./includes/login.php",
                 async: true,
                 data: {
                     "username": $('#username').val(),

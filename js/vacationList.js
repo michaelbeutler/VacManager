@@ -7,7 +7,7 @@ $(document).ready(function () {
     $.ajax({
         type: "GET",
         dataType: 'json',
-        url: "./bin/get_vacations.php",
+        url: "./includes/get_vacations.php",
         async: true,
         contentType: "application/json; charset=utf-8",
         success: function (data) {

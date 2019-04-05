@@ -3,91 +3,75 @@ $(document).ready(function () {
     getEmployerList(function (data) {
         switch (data.code) {
             case 200:
-                $('#employer').prop('disabled', false);
+                $('#selectEmployer').prop('disabled', false);
                 $(data.employer).each(function (index, element) {
-                    $('#employer').append('<option value="' + element.id + '">' + element.name + '</option>')
+                    $('#selectEmployer').append('<option value="' + element.id + '">' + element.name + '</option>')
                 });
                 break;
             case 201:
                 // 0 results
-                $('#employer').prop('disabled', true);
+                $('#selectEmployer').prop('disabled', true);
                 break;
             default:
-                $('#employer').prop('disabled', true);
+                $('#selectEmployer').prop('disabled', true);
                 console.error(data.description);
                 break;
-        }
-    });
-
-    $('#class').prop('disabled', true);
-    loadJobForm(function (data) {
-        $(data).each(function (index, element) {
-            $('#profession').append('<option value="' + element.beruf_id + '">' + element.beruf_name + '</option>')
-        });
-    });
-
-    $('#profession').change(function () {
-        $('#class').html('<option>...</option>');
-        if ($('#profession').val() != null && $('#profession').val() != '...') {
-            $('#class').prop('disabled', false);
-            loadClassForm($('#profession').val(), function (data) {
-                $(data).each(function (index, element) {
-                    $('#class').append('<option data-name="' + element.klasse_name + '" data-longname="' + element.klasse_longname + '" value="' + element.klasse_id + '">' + element.klasse_name + '</option>')
-                });
-            });
-        } else {
-            $('#class').prop('disabled', true);
-        }
-    })
-
-    $('#lastname, #firstname').change(function () {
-        if ($(this).val() == '') {
-            $('#username').val('vorname.nachname');
-        } else {
-            $('#username').val($('#firstname').val().toLowerCase() + "." + $('#lastname').val().toLowerCase());
         }
     });
 
     $('#formRegister').submit(function (e) {
         e.preventDefault();
 
-        var firstname = $('#firstname').val();
-        var lastname = $('#lastname').val();
-        var username = $('#username').val();
-        var password1 = $('#password1').val();
-        var password2 = $('#password2').val();
-        var employer = $('#employer').val();
-        var currentVacDays = $('#currentVacDays').val();
+        var firstname = $('#inputFirstname').val();
+        var lastname = $('#inputLastname').val();
+        var email = $('#inputEmail').val();
+        var password1 = $('#inputPassword').val();
+        var password2 = $('#inputRepeatPassword').val();
+        var employer = $('#selectEmployer').val();
+        //var currentVacDays = $('#currentVacDays').val();
 
         function callback(data) {
             switch (data.code) {
                 case 200:
                     // success
-                    window.location.replace("login.html");
+                    swal({
+                        title: "Good job!",
+                        text: "Your account is now online!",
+                        type: "success"
+                    }, function () {
+                        window.location.replace("login.html");
+                    })
+                    break;
+                case 210:
+                    // username already taken
+                    swal("Username already taken!", "Your username is already taken, pleas contact the administrator.", "warning");
+                    break;
+                case 901:
+                    // passwords do not match
+                    swal("Password", "Please check your password and confirm it again. They look not the same.", "warning");
                     break;
                 default:
-                    $('#modalBodyError').html('<h5>Code ' + data.code + '</h5><p>' + data.description + '</p>');
-                    $('#errorModalCenter').modal('show');
+                    swal("Error " + data.code, data.description, "warning")
                     console.error(data.description);
                     break;
             }
         }
 
-        var valid = true;
-        if (valid) {
+        if ($('#formRegister').valid() && employer !== "none" && $('input[type=checkbox]').prop('checked')) {
             $.ajax({
                 type: "GET",
                 dataType: 'json',
-                url: "./bin/register.php",
+                url: "./includes/register.php",
                 async: true,
                 data: {
                     "firstname": firstname,
                     "lastname": lastname,
-                    "username": username,
+                    "username": firstname.toLowerCase() + '.' + lastname.toLowerCase(),
+                    "email": email,
                     "password": SHA512(password1),
                     "repeat": SHA512(password2),
                     "employerId": employer,
-                    "vacDays": currentVacDays
+                    "vacDays": 25
                 },
                 contentType: "application/json; charset=utf-8",
                 success: function (data) {

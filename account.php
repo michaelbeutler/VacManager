@@ -1,5 +1,5 @@
 <?php
-require('bin/check_login.php');
+require('includes/check_login.php');
 if (!check_login()) {
     header("Location: login.html?next=account.php");
     die();
@@ -101,12 +101,12 @@ if (!check_login()) {
                         <span class="username">
                             <?php echo $_SESSION['user_username']; ?></span> <span class="caret"></span>
                     </a>
-                    <ul class="dropdown-menu extended pro-menu fadeInUp animated" tabindex="5003"
+                    <ul class="dropdown-menu extended pro-menu fadeInUp animated" taincludesdex="5003"
                         style="overflow: hidden; outline: none;">
                         <!-- <li><a href="profile.html"><i class="fa fa-briefcase"></i>Profile</a></li>
                             <li><a href="#"><i class="fa fa-cog"></i> Settings</a></li>
                             <li><a href="#"><i class="fa fa-bell"></i> Friends <span class="label label-info pull-right mail-info">5</span></a></li> -->
-                        <li><a href="bin/logout.php"><i class="fa fa-sign-out"></i> Log Out</a></li>
+                        <li><a href="includes/logout.php"><i class="fa fa-sign-out"></i> Log Out</a></li>
                     </ul>
                 </li>
                 <!-- user login dropdown end -->
@@ -152,15 +152,6 @@ if (!check_login()) {
                                                 </div>
                                                 <button type="submit" class="btn btn-primary">Save</button>
                                             </form>
-                                        </div>
-                                    </div>
-                                    <br>
-                                    <div class="row">
-                                        <div class="col-lg-12">
-                                            <hr>
-                                            <h5>Options</h5>
-                                            <input type="checkbox" class="custom-control-input" id="loadClassEvents" <?php if($_SESSION['loadClassEvents'] == 1) {echo 'checked';} ?>>
-                                            <label class="custom-control-label text-xs" for="loadClassEvents"> Load class events (performance increase)</label>
                                         </div>
                                     </div>
                                 </div>

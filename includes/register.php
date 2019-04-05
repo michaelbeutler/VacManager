@@ -6,9 +6,9 @@ $response->description = 'internal server error';
 // Check if all parameters given
 if (isset(
     $_GET['firstname'], $_GET['lastname'], 
-    $_GET['username'], 
+    $_GET['username'], $_GET['email'],
     $_GET['password'], $_GET['repeat'], 
-    $_GET['className'], $_GET['employerId'], 
+    $_GET['employerId'], 
     $_GET['vacDays']
     )) {
 
@@ -18,6 +18,7 @@ if (isset(
     
     // credentials
     $username = htmlspecialchars($_GET['username']);
+    $email = htmlspecialchars($_GET['email']);
     $password = htmlspecialchars($_GET['password']);
     $repeat = htmlspecialchars($_GET['repeat']);
 
@@ -34,11 +35,11 @@ if (isset(
         $conn = openConnection();
 
         // prepare and bind
-        if (!$stmt = $conn->prepare("INSERT INTO `user` (`firstname`, `lastname`, `username`, `password`, `salt`, `employer_id`) VALUES (?, ?, ?, ?, ?, ?)")) {
+        if (!$stmt = $conn->prepare("INSERT INTO `user` (`firstname`, `lastname`, `username`, `email`, `password`, `salt`, `employer_id`) VALUES (?, ?, ?, ?, ?, ?, ?)")) {
             $response->code = 951;
             $response->description = "prepare failed: (" . $conn->errno . ") " . $conn->error;
         } else {
-            if (!$stmt->bind_param("sssssi", $firstname, $lastname, $username, $password, $salt, $employer_id)) {
+            if (!$stmt->bind_param("ssssssi", $firstname, $lastname, $username, $email, $password, $salt, $employer_id)) {
                 $response->code = 952;
                 $response->description = "binding parameters failed: (" . $stmt->errno . ") " . $stmt->error;
             } else {

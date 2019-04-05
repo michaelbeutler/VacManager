@@ -1,5 +1,5 @@
 <?php
-require('bin/check_login.php');
+require('includes/check_login.php');
 if (!check_login()) {
     header("Location: login.html");
     die();
@@ -104,11 +104,11 @@ if (!check_login()) {
                         <span class="username">
                             <?php echo $_SESSION['user_username']; ?></span> <span class="caret"></span>
                     </a>
-                    <ul class="dropdown-menu extended pro-menu fadeInUp animated" tabindex="5003" style="overflow: hidden; outline: none;">
+                    <ul class="dropdown-menu extended pro-menu fadeInUp animated" taincludesdex="5003" style="overflow: hidden; outline: none;">
                         <!-- <li><a href="profile.html"><i class="fa fa-briefcase"></i>Profile</a></li>
                             <li><a href="#"><i class="fa fa-cog"></i> Settings</a></li>
                             <li><a href="#"><i class="fa fa-bell"></i> Friends <span class="label label-info pull-right mail-info">5</span></a></li> -->
-                        <li><a href="bin/logout.php"><i class="fa fa-sign-out"></i> Log Out</a></li>
+                        <li><a href="includes/logout.php"><i class="fa fa-sign-out"></i> Log Out</a></li>
                     </ul>
                 </li>
                 <!-- user login dropdown end -->
@@ -196,7 +196,7 @@ if (!check_login()) {
             </div>
             <!-- page end-->
 
-            <div id="vac-add-modal" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel"
+            <div id="vac-add-modal" class="modal fade" taincludesdex="-1" role="dialog" aria-labelledby="myModalLabel"
                 aria-hidden="true" style="display: none;">
                 <div class="modal-dialog">
                     <div class="modal-content">
@@ -303,20 +303,6 @@ if (!check_login()) {
     <script src="js/index.js"></script>
 
     <script src="https://unpkg.com/lodash"></script>
-    <script src="js/class.js"></script>
-
-    <script>
-        $(document).ready(function(){
-            <?php if(isset($_SESSION['loadClassEvents'])) {
-                if ($_SESSION['loadClassEvents'] == 1) {
-                    ?>
-                    getClassEvents(<?php echo $_SESSION['user_class']; ?>);
-                    <?php
-                }
-            }
-            ?>
-        });
-    </script>
 
     <!-- Global site tag (gtag.js) - Google Analytics -->
     <script async src="https://www.googletagmanager.com/gtag/js?id=UA-136503205-1"></script>
@@ -326,14 +312,6 @@ if (!check_login()) {
         gtag('js', new Date());
 
         gtag('config', 'UA-136503205-1');
-    </script>
-
-    <script async src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
-    <script>
-    (adsbygoogle = window.adsbygoogle || []).push({
-        google_ad_client: "ca-pub-9786069099496281",
-        enable_page_level_ads: true
-    });
     </script>
 
 </body>

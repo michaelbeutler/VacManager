@@ -28,9 +28,9 @@ if (!check_login()) {
                     $response->code = 951;
                     $response->description = "prepare failed: (" . $conn->errno . ") " . $conn->error;
                 } else {
-                    if (!$stmt->bind_param("i", $value)) {
+                    if (!$stmt->includesd_param("i", $value)) {
                         $response->code = 952;
-                        $response->description = "binding parameters failed: (" . $stmt->errno . ") " . $stmt->error;
+                        $response->description = "includesding parameters failed: (" . $stmt->errno . ") " . $stmt->error;
                     } else {
                         if (!$stmt->execute()) {
                             $response->code = 953;

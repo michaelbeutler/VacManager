@@ -21,10 +21,18 @@ if (!check_login(true)) {
         while($row = $result->fetch_assoc()) {
             $users[] = $row;
         }
+
+        $sql = "SELECT * FROM `employer`;";
+        $result = $conn->query($sql);
+        $employers = array();
+        while($row = $result->fetch_assoc()) {
+            $employers[] = $row;
+        }
     
         $response->code = 200;
         $response->description = 'success';
         $response->users = $users;
+        $response->employers = $employers;
         $conn->close();
     } else {
         // 0 results

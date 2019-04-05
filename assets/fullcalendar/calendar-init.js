@@ -62,51 +62,10 @@
 
                     // your event source
                     {
-                        url: './bin/get_vacations.php', // use the `url` property
+                        url: './includes/get_vacations.php', // use the `url` property
                     }
 
-                    // any other sources...
-
                 ]
-            });
-
-            /*Add new event*/
-            // Form to add new event
-
-            $("#add_event_form").on('submit', function (ev) {
-                ev.preventDefault();
-
-                var $event = $(this).find('.new-event-form'),
-                    event_name = $event.val();
-
-                if (event_name.length >= 3) {
-
-                    var newid = "new" + "" + Math.random().toString(36).substring(7);
-                    // Create Event Entry
-                    $("#external-events").append(
-                        '<div id="' + newid + '" class="fc-event">' + event_name + '</div>'
-                    );
-
-
-                    var eventObject = {
-                        title: $.trim($("#" + newid).text()) // use the element's text as the event title
-                    };
-
-                    // store the Event Object in the DOM element so we can get to it later
-                    $("#" + newid).data('eventObject', eventObject);
-
-                    // Reset draggable
-                    $("#" + newid).draggable({
-                        revert: true,
-                        revertDuration: 0,
-                        zIndex: 999
-                    });
-
-                    // Reset input
-                    $event.val('').focus();
-                } else {
-                    $event.focus();
-                }
             });
 
         }

@@ -9,8 +9,7 @@
     "use strict";
 
     var FormValidator = function() {
-        this.$commentForm = $("#commentForm"), //this could be any form, for example we are specifying the comment form
-        this.$signupForm = $("#signupForm"),
+        this.$signupForm = $("#formRegister"),
         this.$loginForm = $('#formLogin');
     };
 
@@ -22,7 +21,7 @@
         });
 
         // validate the comment form when it is submitted
-        this.$commentForm.validate();
+        this.$signupForm.validate();
 
         // validate login form when it is submitted
         this.$loginForm.validate({
@@ -41,10 +40,6 @@
             rules: {
                 firstname: "required",
                 lastname: "required",
-                username: {
-                    required: true,
-                    minlength: 2
-                },
                 password: {
                     required: true,
                     minlength: 5
@@ -58,19 +53,14 @@
                     required: true,
                     email: true
                 },
-                topic: {
-                    required: "#newsletter:checked",
-                    minlength: 2
+                employer: {
+                    required: true
                 },
                 agree: "required"
             },
             messages: {
                 firstname: "Please enter your firstname",
                 lastname: "Please enter your lastname",
-                username: {
-                    required: "Please enter a username",
-                    minlength: "Your username must consist of at least 2 characters"
-                },
                 password: {
                     required: "Please provide a password",
                     minlength: "Your password must be at least 5 characters long"

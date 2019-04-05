@@ -25,7 +25,7 @@ $(document).ready(function () {
         $.ajax({
             type: "GET",
             dataType: 'json',
-            url: "./bin/add_vacation.php",
+            url: "./includes/add_vacation.php",
             async: true,
             data: {
                 "title": description,

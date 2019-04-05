@@ -126,16 +126,16 @@ if (!check_login()) {
             <div class="row">
                 <div class="col-lg-3 col-sm-6">
                     <div class="widget-panel widget-style-2 white-bg">
-                        <i class="fa fa-star text-warning"></i>
-                        <h2 class="m-0 counter" id="vacDaysUsedPanel">ERR</h2>
-                        <div>Used vacation days this year</div>
+                        <i class="ion-checkmark text-success" id="vacDaysLeftIcon"></i>
+                        <h2 class="m-0 counter" id="vacDaysLeftPanel">ERR</h2>
+                        <div>Vacation days left this year</div>
                     </div>
                 </div>
                 <div class="col-lg-3 col-sm-6">
                     <div class="widget-panel widget-style-2 white-bg">
-                        <i class="ion-checkmark text-success" id="vacDaysLeftIcon"></i>
-                        <h2 class="m-0 counter" id="vacDaysLeftPanel">ERR</h2>
-                        <div>Vacation days left this year</div>
+                        <i class="fa fa-star text-warning"></i>
+                        <h2 class="m-0 counter" id="vacDaysUsedPanel">ERR</h2>
+                        <div>Used vacation days this year</div>
                     </div>
                 </div>
                 <div class="col-lg-3 col-sm-6">
@@ -242,9 +242,7 @@ if (!check_login()) {
                                     <div class="col-12 form-group">
                                         <label class="col-md-2 control-label">Type</label>
                                         <div class="col-md-10">
-                                            <select class="form-control" id="addVacType">
-                                                <option value="1">Ferien</option>
-                                                <option value="3">Militär</option>
+                                            <select class="form-control" id="vacationTypeSelection">
                                             </select>
 
                                         </div>
@@ -298,7 +296,7 @@ if (!check_login()) {
 
     <script src="js/getContingent.js"></script>
     <script src="js/vacationList.js"></script>
-    <script src="js/vacType.js"></script>
+
     <script src="js/addVacation.js"></script>
     <script src="js/index.js"></script>
 

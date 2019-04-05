@@ -1,8 +1,21 @@
 $(document).ready(function () {
     refreshDashboard();
-    loadVacType(function (data) {
-        console.log(data);
-        setVacTypes(data, $('#vacationTypeSelection'));
+    function callback(data) {
+        $('#vacationTypeSelection').html('');
+        $(data.types).each(function (index, type) {
+            $('#vacationTypeSelection').append('<option value="' + type.id + '">' + type.name + '</option>');
+        });
+    };
+
+    $.ajax({
+        type: "GET",
+        dataType: 'json',
+        url: "./includes/get_vacation_type.php",
+        async: true,
+        contentType: "application/json; charset=utf-8",
+        success: function (data) {
+            callback(data);
+        }
     });
 });
 

@@ -21,8 +21,22 @@ if (isset($_GET['request_id'])) {
     $result = $conn->query($sql);
 
     if ($conn->query($sql)) {
-        $response->code = 200;
-        $response->description = 'success';
+        include_once('mail.php');
+
+        $sql = "SELECT * FROM `vacation` LEFT JOIN `user` ON `vacation`.`user_id` = `user`.`user_id` WHERE `id`=". $_GET['request_id'] .";";
+        $result = $conn->query($sql);
+
+        if ($result->num_rows > 0) {
+            while($row = $result->fetch_assoc()) {
+                if (sendAcceptedVacationMail($row['email'], $row['firstname'], $row['lastname'], $row['start'], $row['end'], $_SESSION['user_username'])) {
+                    $response->code = 200;
+                    $response->description = 'success';
+                } else {
+                    $response->code = 201;
+                    $response->description = 'cant send mail';
+                }
+            }
+        }
     } else {
         // error while executing query
         $response->code = 953;

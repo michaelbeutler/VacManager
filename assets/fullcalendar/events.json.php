@@ -3,7 +3,7 @@
 	include_once '../../includes/functions.php';
 
 	sec_session_start();
-	$query = "SELECT * FROM calendar WHERE user_id='". $_SESSION['user_id'] ."'";
+	$query = "SELECT * FROM calendar WHERE user_id='". $_SESSION['user_id'] ."' AND accepted=1";
 	$result = $mysqli->query($query);
     while ($record = $result->fetch_assoc()) {
         $event_array[] = array(

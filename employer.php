@@ -1,8 +1,8 @@
 <?php
 require('includes/check_login.php');
 require('includes/check_employer_privileges.php');
-if (!check_login()) {
-    header("Location: login.html?next=chart.php");
+if (!check_login() || !check_employer_privileges($_SESSION['user_employer_id'], new Priv(Priv::GENERAL))) {
+    header("Location: login.html?next=index.php");
     die();
 }
 ?>
@@ -12,7 +12,7 @@ if (!check_login()) {
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta name="description" content="Charts">
+    <meta name="description" content="Employer">
     <meta name="author" content="Michael Beutler">
 
     <link rel="shortcut icon" href="img/favicon_1.ico">
@@ -130,12 +130,10 @@ if (!check_login()) {
                         <div class="panel-heading">
                             <h3 class="panel-title">Employer</h3>
                         </div>
-                        <div class="panel-body">
-                            <p>CAN_ACCEPT: <?php echo check_employer_privileges($_SESSION['user_employer_id'], new Priv(Priv::CAN_ACCEPT)); ?></p>
-                            <p>CAN_RENAME: <?php echo check_employer_privileges($_SESSION['user_employer_id'], new Priv(Priv::CAN_RENAME)); ?></p>
-                            <p>CAN_PRIV: <?php echo check_employer_privileges($_SESSION['user_employer_id'], new Priv(Priv::CAN_PRIV)); ?></p>
+                        <div class="panel-body" style="min-height: 500px;">
                             <?php if (check_employer_privileges($_SESSION['user_employer_id'], new Priv(Priv::CAN_ACCEPT))) echo '
                                 <br>
+                                <h4>'. $_SESSION['employer_name'] .' - Vacation requests</h4>
                                 <table class="table table-striped table-bordered" id="tableVacationRequests">
                                     <thead>
                                         <tr>
@@ -147,8 +145,13 @@ if (!check_login()) {
                                             <th></th>
                                         </tr>
                                     </thead>
-                                    <tbody></tbody>
+                                    <tbody>
+                                        <tr>
+                                            <td colspan="6">no requests pending</td>
+                                        </tr>
+                                    </tbody>
                                 </table>
+                                <br>
                             '; ?>
                         </div>
                     </div>

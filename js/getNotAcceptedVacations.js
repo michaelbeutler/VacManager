@@ -1,7 +1,10 @@
 $(document).ready(function () {
     function fillTable(data) {
+        if (data.requests.length > 0) {
+            $('#tableVacationRequests tbody').empty();
+        }
         $(data.requests).each(function (index, request) {
-            $('#tableVacationRequests').append('<tr id="request' + request.id + '"><td>' + request.username + '</td><td>' + request.title + '</td><td>' + request.start + ' - ' + request.end + '</td><td>' + request.days + '</td><td>' + request.create_date + '</td><td><button onclick="acceptVacation(' + request.id + ')" class="btn btn-success">Accept</button> <button onclick="refuseVacation(' + request.id + ')" class="btn btn-danger">Refuse</button></td></tr>')
+            $('#tableVacationRequests').find('tbody').append('<tr id="request' + request.id + '"><td>' + request.username + '</td><td>' + request.title + '</td><td>' + request.start + ' - ' + request.end + '</td><td>' + request.days + '</td><td>' + request.create_date + '</td><td><button onclick="acceptVacation(' + request.id + ')" class="btn btn-success">Accept</button> <button onclick="refuseVacation(' + request.id + ')" class="btn btn-danger">Refuse</button></td></tr>')
         });
     }
     $.ajax({

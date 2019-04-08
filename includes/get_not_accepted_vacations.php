@@ -31,10 +31,10 @@ if ($result->num_rows < 1) {
         $request->username = $row['username'];
         $request->employer_id = $row['employer_id'];
         $request->title = $row['title'];
-        $request->start = $row['start'];
-        $request->end = $row['end'];
+        $request->start = date_format(date_create($row['start']),"d.m.Y H:i");
+        $request->end = date_format(date_create($row['end']),"d.m.Y H:i");
         $request->days = $row['days'];
-        $request->create_date = $row['create_date'];
+        $request->create_date = date_format(date_create($row['create_date']),"d.m.Y H:i");
         $requests[] = $request;
     }
 

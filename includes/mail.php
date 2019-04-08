@@ -19,7 +19,7 @@ function sendAcceptedVacationMail($email, $firstname, $lastname, $start, $end, $
         $message = file_get_contents('../email-templates/accepted_vacation.html');
         $message = str_replace('%start%', $start, $message); 
         $message = str_replace('%end%', $end, $message);
-        $message = str_replace('%accepted_by%', $start, $accepted_by); 
+        $message = str_replace('%accepted_by%', $accepted_by, $message); 
 
         $mail->msgHTML($message);
         //Replace the plain text body with one created manually

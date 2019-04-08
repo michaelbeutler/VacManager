@@ -9,7 +9,7 @@ $events = array();
 include_once('dbconnect.php');
 $conn = openConnection();
 //echo $_SESSION['user_id'];
-$sql = "SELECT * FROM `vacation` WHERE `user_id`=". $_SESSION['user_id'] . " ORDER BY `start` DESC";
+$sql = "SELECT * FROM `vacation` WHERE `user_id`=". $_SESSION['user_id'] . " AND accepted=1 ORDER BY `start` DESC";
 $result = $conn->query($sql);
 
 if ($result->num_rows > 0) {

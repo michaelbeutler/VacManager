@@ -6,7 +6,7 @@ $(document).ready(function () {
         var start = $('#addVacStart').val();
         var end = $('#addVacEnd').val();
         var numDays = $('#addVacNumDay').val();
-        var vacType = $('#addVacType').val();
+        var vacType = $('#vacationTypeSelection').val();
 
         function callback(data) {
             switch (data.code) {

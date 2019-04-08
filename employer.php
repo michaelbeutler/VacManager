@@ -2,7 +2,7 @@
 require('includes/check_login.php');
 require('includes/check_employer_privileges.php');
 if (!check_login()) {
-    header("Location: login.html?next=calendar.php");
+    header("Location: login.html?next=chart.php");
     die();
 }
 ?>
@@ -12,19 +12,15 @@ if (!check_login()) {
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta name="description" content="Calendar">
+    <meta name="description" content="Charts">
     <meta name="author" content="Michael Beutler">
 
     <link rel="shortcut icon" href="img/favicon_1.ico">
 
-    <title>iperka - Calendar</title>
+    <title>iperka - Employer</title>
 
     <!-- Bootstrap core CSS -->
     <link href="css/bootstrap.min.css" rel="stylesheet">
-    <link href="css/bootstrap-reset.css" rel="stylesheet">
-
-    <!--calendar css-->
-    <link href="assets/fullcalendar/fullcalendar.css" rel="stylesheet" />
     <link href="css/bootstrap-reset.css" rel="stylesheet">
 
     <!--Animation css-->
@@ -33,6 +29,10 @@ if (!check_login()) {
     <!--Icon-fonts css-->
     <link href="assets/font-awesome/css/font-awesome.css" rel="stylesheet" />
     <link href="assets/ionicon/css/ionicons.min.css" rel="stylesheet" />
+
+    <!-- Plugins css -->
+    <link href="assets/notifications/notification.css" rel="stylesheet" />
+    <link rel="stylesheet" href="assets/sweet-alert/sweet-alert.min.css">
 
     <!-- Custom styles for this template -->
     <link href="css/style.css" rel="stylesheet">
@@ -66,11 +66,11 @@ if (!check_login()) {
         <nav class="navigation">
             <ul class="list-unstyled">
                 <li><a href="index.php"><i class="ion-home"></i> <span class="nav-label">Dashboard</span></a></li>
-                <li class="active"><a href="calendar.php"><i class="ion-calendar"></i> <span class="badge badge-warning float-right">NEW</span><span class="nav-label">Calendar</span></a></li>
+                <li><a href="calendar.php"><i class="ion-calendar"></i> <span class="badge badge-warning float-right">NEW</span><span class="nav-label">Calendar</span></a></li>
                 <li><a href="vacation.php"><i class="fa fa-star"></i> <span class="nav-label">Vacation</span></a></li>
                 <li><a href="chart.php"><i class="ion-stats-bars"></i> <span class="badge badge-warning float-right">NEW</span><span class="nav-label">Charts</span></a></li>
                 <?php if (check_employer_privileges($_SESSION['user_employer_id'], new Priv(Priv::GENERAL))) {
-                    echo '<li><a href="employer.php"><i class="fa fa-building"></i> <span class="badge badge-warning float-right">NEW</span><span class="nav-label">Employer</span></a></li>';
+                    echo '<li class="active"><a href="employer.php"><i class="fa fa-building"></i> <span class="badge badge-warning float-right">NEW</span><span class="nav-label">Employer</span></a></li>';
                 } ?>
                 <li><a href="account.php"><i class="fa fa-lock"></i> <span class="badge badge-warning float-right">NEW</span><span
                             class="nav-label">Account</span></a></li>
@@ -128,10 +128,28 @@ if (!check_login()) {
                 <div class="col-md-12">
                     <div class="panel panel-default">
                         <div class="panel-heading">
-                            <h3 class="panel-title">Calendar</h3>
+                            <h3 class="panel-title">Employer</h3>
                         </div>
                         <div class="panel-body">
-                            <div id='calendar'></div>
+                            <p>CAN_ACCEPT: <?php echo check_employer_privileges($_SESSION['user_employer_id'], new Priv(Priv::CAN_ACCEPT)); ?></p>
+                            <p>CAN_RENAME: <?php echo check_employer_privileges($_SESSION['user_employer_id'], new Priv(Priv::CAN_RENAME)); ?></p>
+                            <p>CAN_PRIV: <?php echo check_employer_privileges($_SESSION['user_employer_id'], new Priv(Priv::CAN_PRIV)); ?></p>
+                            <?php if (check_employer_privileges($_SESSION['user_employer_id'], new Priv(Priv::CAN_ACCEPT))) echo '
+                                <br>
+                                <table class="table table-striped table-bordered" id="tableVacationRequests">
+                                    <thead>
+                                        <tr>
+                                            <th>Username</th>
+                                            <th>Title</th>
+                                            <th>Date</th>
+                                            <th>Days</th>
+                                            <th>Request date</th>
+                                            <th></th>
+                                        </tr>
+                                    </thead>
+                                    <tbody></tbody>
+                                </table>
+                            '; ?>
                         </div>
                     </div>
                 </div>
@@ -159,31 +177,14 @@ if (!check_login()) {
     <script src="js/bootstrap.min.js"></script>
     <script src="js/wow.min.js"></script>
     <script src="js/jquery.nicescroll.js" type="text/javascript"></script>
-
-    <script src="assets/fullcalendar/moment.min.js"></script>
-    <script src="assets/fullcalendar/fullcalendar.min.js"></script>
-    <!--dragging calendar event-->
-
-    <script src="assets/fullcalendar/calendar-init.js"></script>
-
     <script src="js/jquery.app.js"></script>
+    <script src="assets/sweet-alert/sweet-alert.min.js"></script>
+    <script src="assets/sweet-alert/sweet-alert.init.js"></script>
 
-    <script src="js/getContingent.js"></script>
-    <script src="https://unpkg.com/lodash"></script>
-    <script src="js/class.js"></script>
+    <?php if (check_employer_privileges($_SESSION['user_employer_id'], new Priv(Priv::CAN_ACCEPT))) echo '
+        <script src="js/getNotAcceptedVacations.js"></script>
+    ';?>
 
-    <script>
-        $(document).ready(function(){
-            <?php if(isset($_SESSION['loadClassEvents'])) {
-                if ($_SESSION['loadClassEvents'] == 1) {
-                    ?>
-                    getClassEvents(<?php echo $_SESSION['user_class']; ?>);
-                    <?php
-                }
-            }
-            ?>
-        });
-    </script>
 
     <!-- Global site tag (gtag.js) - Google Analytics -->
     <script async src="https://www.googletagmanager.com/gtag/js?id=UA-136503205-1"></script>
@@ -193,14 +194,6 @@ if (!check_login()) {
         gtag('js', new Date());
 
         gtag('config', 'UA-136503205-1');
-    </script>
-
-    <script async src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
-    <script>
-        (adsbygoogle = window.adsbygoogle || []).push({
-            google_ad_client: "ca-pub-9786069099496281",
-            enable_page_level_ads: true
-        });
     </script>
 
 </body>

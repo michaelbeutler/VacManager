@@ -6,11 +6,9 @@ $response->code = 500;
 $response->description = 'internal server error';
 
 if (!check_login(true)) {
-    $response = (object)array();
     $response->code = 403;
     $response->description = 'not allowed'; 
 } else {
-
     $conn = openConnection();
     $sql = "SELECT * FROM `user`;";
     $result = $conn->query($sql);

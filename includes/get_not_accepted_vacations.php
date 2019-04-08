@@ -1,0 +1,48 @@
+<?php
+$response = (object)array();
+$response->code = 500;
+$response->description = 'internal server error';
+
+require('check_login.php');
+require('check_employer_privileges.php');
+if (!check_login() || !check_employer_privileges($_SESSION['user_employer_id'], new Priv(Priv::CAN_ACCEPT))) {
+    $response->code = 403;
+    $response->description = 'not allowed';
+    echo json_encode($response);
+    die();
+}
+
+include_once('dbconnect.php');
+$conn = openConnection();
+
+$sql = "SELECT `user`.`id`, `user`.`username`, `user`.`employer_id`, `vacation`.`id` AS 'VID', `vacation`.`title`, `vacation`.`start`, `vacation`.`end`, `vacation`.`days`, `vacation`.`create_date` FROM `user` LEFT JOIN `vacation` ON `user`.`id` = `vacation`.`user_id` WHERE `user`.`employer_id`=". $_SESSION['user_employer_id'] ." AND `vacation`.`accepted` = 0;";
+$result = $conn->query($sql);
+
+$requests = array();
+
+if ($result->num_rows < 1) {
+    $response->code = 250;
+    $response->description = 'no vacation request found';
+    $response->requests = null;
+} else {
+    $request = (object)array();
+    while($row = $result->fetch_assoc()) {
+        $request->id = $row['VID'];
+        $request->username = $row['username'];
+        $request->employer_id = $row['employer_id'];
+        $request->title = $row['title'];
+        $request->start = $row['start'];
+        $request->end = $row['end'];
+        $request->days = $row['days'];
+        $request->create_date = $row['create_date'];
+        $requests[] = $request;
+    }
+
+    $response->code = 200;
+    $response->description = 'success';
+    $response->requests = $requests;
+}
+
+echo json_encode($response);
+$conn->close();
+?>

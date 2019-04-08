@@ -14,7 +14,7 @@ if (!check_login() || !check_employer_privileges($_SESSION['user_employer_id'], 
 
 if (isset($_GET['request_id'])) {
 
-    include('dbconnect.php');
+    include_once('dbconnect.php');
     $conn = openConnection();
 
     $sql = "UPDATE `vacation` SET `accepted`=1, `user_id_accepted`=". $_SESSION['user_id'] ." WHERE `id`=". $_GET['request_id'] .";";
@@ -25,7 +25,7 @@ if (isset($_GET['request_id'])) {
 
         $sql = "SELECT * FROM `vacation` LEFT JOIN `user` ON `vacation`.`user_id` = `user`.`id` WHERE `vacation`.`id`=". $_GET['request_id'] .";";
         $result = $conn->query($sql);
-        
+
         if ($result->num_rows > 0) {
             while($row = $result->fetch_assoc()) {
                 if (sendAcceptedVacationMail($row['email'], $row['firstname'], $row['lastname'], $row['start'], $row['end'], $_SESSION['user_username'])) {

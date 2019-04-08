@@ -1,6 +1,6 @@
 <?php
 use PHPMailer\PHPMailer\PHPMailer;
-require '../vendor/autoload.php';
+require '../../vendor/autoload.php';
 //Create a new PHPMailer instance
 $mail = new PHPMailer;
 //Set who the message is to be sent from

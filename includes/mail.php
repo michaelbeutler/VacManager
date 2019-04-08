@@ -27,10 +27,9 @@ function sendAcceptedVacationMail($email, $firstname, $lastname, $start, $end, $
                 
         //send the message, check for errors
         if (!$mail->send()) {
-                echo "Mailer Error: " . $mail->ErrorInfo;
+                $mail->ErrorInfo;
                 return false;
         } else {
-                echo "Message sent!";
                 return true;
         }
 }

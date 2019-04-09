@@ -37,9 +37,9 @@ mysql -u root vac-manager < VacManager/sql/vacation_manager.sql
 ```
 
 Now you have to create a user for the app to work.
-Insert the credentials in the [dbconnect.php](https://github.com/MichiBeutler/VacManager/blob/master/bin/dbconnect.php)
+Insert the credentials in the [dbconnect.php](https://github.com/MichiBeutler/VacManager/blob/master/includes/dbconnect.php)
 ```
-nano VacManager/bin/dbconfig.php
+nano VacManager/includes/dbconfig.php
 ```
 
 ## :books: Built With

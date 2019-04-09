@@ -29,11 +29,11 @@ After this you have to import the SQL script
 ```
 # create a database
 mysql -u root
-CREATE DATABASE `vac`;
+CREATE DATABASE `vac-manager`;
 quit
 
 # import sql to created database
-mysql -u root vac < VacManager/vac.sql
+mysql -u root vac-manager < VacManager/sql/vacation_manager.sql
 ```
 
 Now you have to create a user for the app to work.

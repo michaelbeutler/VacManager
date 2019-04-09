@@ -19,7 +19,7 @@ if (!check_login()) {
 
     <title>iperka - Dashboard</title>
 
-
+    <link rel="stylesheet" href="css/loading.css">
 
 
     <!-- Bootstrap core CSS -->
@@ -33,10 +33,12 @@ if (!check_login()) {
     <!--Animation css-->
     <link href="css/animate.css" rel="stylesheet">
 
+    <!-- DataTables -->
+    <link href="assets/datatables/jquery.dataTables.min.css" rel="stylesheet" type="text/css" />
+
     <!--Icon-fonts css-->
     <link href="assets/font-awesome/css/font-awesome.css" rel="stylesheet" />
     <link href="assets/ionicon/css/ionicons.min.css" rel="stylesheet" />
-
 
     <!-- Custom styles for this template -->
     <link href="css/style.css" rel="stylesheet">
@@ -131,14 +133,14 @@ if (!check_login()) {
                 <div class="col-lg-3 col-sm-6">
                     <div class="widget-panel widget-style-2 white-bg">
                         <i class="ion-checkmark text-success" id="vacDaysLeftIcon"></i>
-                        <h2 class="m-0 counter" id="vacDaysLeftPanel">ERR</h2>
+                        <h2 class="m-0 counter" id="vacDaysLeftPanel"><div class="lds-ellipsis"><div></div><div></div><div></div><div></div></div></h2>
                         <div>Vacation days left this year</div>
                     </div>
                 </div>
                 <div class="col-lg-3 col-sm-6">
                     <div class="widget-panel widget-style-2 white-bg">
                         <i class="fa fa-star text-warning"></i>
-                        <h2 class="m-0 counter" id="vacDaysUsedPanel">ERR</h2>
+                        <h2 class="m-0 counter" id="vacDaysUsedPanel"><div class="lds-ellipsis"><div></div><div></div><div></div><div></div></div></h2>
                         <div>Used vacation days this year</div>
                     </div>
                 </div>
@@ -163,7 +165,6 @@ if (!check_login()) {
             </div> <!-- end row -->
 
             <div class="row">
-
                 <div id='calendar' class="col-lg-7"></div>
                 <div class="col-md-5">
                     <div class="panel panel-default">
@@ -176,14 +177,14 @@ if (!check_login()) {
                                     <table class="table table-striped" id="vacationTable">
                                         <thead>
                                             <tr>
-                                                <th>#</th>
-                                                <th>Description</th>
+                                                <th>Title</th>
                                                 <th>Start</th>
                                                 <th>End</th>
                                                 <th>Days</th>
+                                                <th></th>
                                             </tr>
                                         </thead>
-                                        <tbody id="vacList">
+                                        <tbody>
                                         </tbody>
                                     </table>
                                 </div>
@@ -296,10 +297,12 @@ if (!check_login()) {
 
     <script src="assets/fullcalendar/calendar-init.js"></script>
 
+    <script src="assets/datatables/jquery.dataTables.min.js"></script>
+    <script src="assets/datatables/dataTables.bootstrap.js"></script>
+
     <script src="js/jquery.app.js"></script>
 
     <script src="js/getContingent.js"></script>
-    <script src="js/vacationList.js"></script>
 
     <script src="js/addVacation.js"></script>
     <script src="js/index.js"></script>

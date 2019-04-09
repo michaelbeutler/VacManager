@@ -17,6 +17,35 @@ $(document).ready(function () {
             callback(data);
         }
     });
+
+    $('#vacationTable').dataTable({
+        ajax: {
+            url: "./includes/vacation.php?action=getVacationsMinimal",
+            type: "POST"
+        },
+        paging: false,
+        searching: false,
+        info: false,
+        columnDefs: [
+            {
+                targets: 4,
+                render: function (data, type, row) {
+                    switch (data) {
+                        case "0":
+                            data = '<span class="label label-warning">Pending</span>';
+                            break;;
+                        case "1":
+                            data = '<span class="label label-success">Accepted</span>';
+                            break;;
+                        default:
+                            data = '<span class="label label-danger">ERROR</span>';
+                            break;;
+                    }
+                    return data;
+                }
+            }
+        ]
+    });
 });
 
 function refreshDashboard() {

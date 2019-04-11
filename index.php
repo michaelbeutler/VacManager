@@ -139,14 +139,14 @@ if (!check_login()) {
                 </div>
                 <div class="col-lg-3 col-sm-6">
                     <div class="widget-panel widget-style-2 white-bg">
-                        <i class="fa fa-star text-warning"></i>
+                        <i class="ion-star text-warning"></i>
                         <h2 class="m-0 counter" id="vacDaysUsedPanel"><div class="lds-ellipsis"><div></div><div></div><div></div><div></div></div></h2>
                         <div>Used vacation days this year</div>
                     </div>
                 </div>
                 <div class="col-lg-3 col-sm-6">
                     <div class="widget-panel widget-style-2 white-bg">
-                        <i class="fa fa-building text-info"></i>
+                        <i class="ion-briefcase text-info"></i>
                         <h2 class="m-0 counter">
                             <?php echo $_SESSION['employer_shortname'];?>
                         </h2>

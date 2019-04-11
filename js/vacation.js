@@ -58,6 +58,7 @@ $(document).ready(function () {
             type: "POST"
         },
         paging: true,
+        responsiv: true,
         searching: true,
         info: true,
         columnDefs: [

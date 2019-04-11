@@ -99,5 +99,3 @@ if (isset(
 }
 
 echo json_encode($response);
-
-?>

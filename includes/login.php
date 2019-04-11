@@ -67,5 +67,3 @@ if (isset($_GET['username'], $_GET['password'])) {
 }
 
 echo json_encode($response);
-
-?>

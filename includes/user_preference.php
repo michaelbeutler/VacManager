@@ -75,4 +75,3 @@ if (!check_login()) {
 }
 
 echo json_encode($response);
-?>

@@ -82,4 +82,3 @@ function check_employer_privileges($employer_id, Priv $priv) {
         return false;
     }
 }
-?>

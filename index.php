@@ -79,9 +79,11 @@ if (!check_login()) {
                     echo '<li><a href="employer.php"><i class="fa fa-building"></i> <span class="badge badge-warning float-right">NEW</span><span class="nav-label">Employer</span></a></li>';
                 } ?>
                 <li><a href="account.php"><i class="fa fa-lock"></i> <span class="badge badge-warning float-right">NEW</span><span class="nav-label">Account</span></a></li>
-                <?php if ($_SESSION['admin'] == 1) { echo '
+                <?php if ($_SESSION['admin'] == 1) {
+                    echo '
                 <li><a href="admin.php"><i class="fa fa-gavel"></i> <span class="nav-label">Admin</span></a></li>
-                ';}?>
+                ';
+                } ?>
             </ul>
         </nav>
 
@@ -133,14 +135,28 @@ if (!check_login()) {
                 <div class="col-lg-3 col-sm-6">
                     <div class="widget-panel widget-style-2 white-bg">
                         <i class="ion-checkmark text-success" id="vacDaysLeftIcon"></i>
-                        <h2 class="m-0 counter" id="vacDaysLeftPanel"><div class="lds-ellipsis"><div></div><div></div><div></div><div></div></div></h2>
+                        <h2 class="m-0 counter" id="vacDaysLeftPanel">
+                            <div class="lds-ellipsis">
+                                <div></div>
+                                <div></div>
+                                <div></div>
+                                <div></div>
+                            </div>
+                        </h2>
                         <div>Vacation days left this year</div>
                     </div>
                 </div>
                 <div class="col-lg-3 col-sm-6">
                     <div class="widget-panel widget-style-2 white-bg">
                         <i class="ion-star text-warning"></i>
-                        <h2 class="m-0 counter" id="vacDaysUsedPanel"><div class="lds-ellipsis"><div></div><div></div><div></div><div></div></div></h2>
+                        <h2 class="m-0 counter" id="vacDaysUsedPanel">
+                            <div class="lds-ellipsis">
+                                <div></div>
+                                <div></div>
+                                <div></div>
+                                <div></div>
+                            </div>
+                        </h2>
                         <div>Used vacation days this year</div>
                     </div>
                 </div>
@@ -148,7 +164,7 @@ if (!check_login()) {
                     <div class="widget-panel widget-style-2 white-bg">
                         <i class="ion-briefcase text-info"></i>
                         <h2 class="m-0 counter">
-                            <?php echo $_SESSION['employer_shortname'];?>
+                            <?php echo $_SESSION['employer_shortname']; ?>
                         </h2>
                         <div>Employer</div>
                     </div>
@@ -201,17 +217,16 @@ if (!check_login()) {
             </div>
             <!-- page end-->
 
-            <div id="vac-add-modal" class="modal fade" taincludesdex="-1" role="dialog" aria-labelledby="myModalLabel"
-                aria-hidden="true" style="display: none;">
+            <div id="vac-add-modal" class="modal fade" taincludesdex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true" style="display: none;">
                 <div class="modal-dialog">
                     <div class="modal-content">
-                    <form class="form-horizontal" role="form" id="addVacForm" action="#">
-                        <div class="modal-header">
-                            <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
-                            <h4 class="modal-title">Add Vacation</h4>
-                        </div>
-                        <div class="modal-body">
-                            
+                        <form class="form-horizontal" role="form" id="addVacForm" action="#">
+                            <div class="modal-header">
+                                <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+                                <h4 class="modal-title">Add Vacation</h4>
+                            </div>
+                            <div class="modal-body">
+
 
                                 <div class="row">
                                     <div class="col-12 form-group">
@@ -254,12 +269,12 @@ if (!check_login()) {
                                     </div>
                                 </div>
 
-                            
-                        </div>
-                        <div class="modal-footer">
-                            <button type="button" class="btn btn-white" data-dismiss="modal">Close</button>
-                            <button type="submit" class="btn btn-info">Save changes</button>
-                        </div>
+
+                            </div>
+                            <div class="modal-footer">
+                                <button type="button" class="btn btn-white" data-dismiss="modal">Close</button>
+                                <button type="submit" class="btn btn-info">Save changes</button>
+                            </div>
                         </form>
                     </div>
                 </div>
@@ -313,7 +328,10 @@ if (!check_login()) {
     <script async src="https://www.googletagmanager.com/gtag/js?id=UA-136503205-1"></script>
     <script>
         window.dataLayer = window.dataLayer || [];
-        function gtag(){dataLayer.push(arguments);}
+
+        function gtag() {
+            dataLayer.push(arguments);
+        }
         gtag('js', new Date());
 
         gtag('config', 'UA-136503205-1');

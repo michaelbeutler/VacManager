@@ -68,11 +68,12 @@ if (!check_login()) {
                 <?php if (check_employer_privileges($_SESSION['user_employer_id'], new Priv(Priv::GENERAL))) {
                     echo '<li><a href="employer.php"><i class="fa fa-building"></i> <span class="badge badge-warning float-right">NEW</span><span class="nav-label">Employer</span></a></li>';
                 } ?>
-                <li><a href="account.php"><i class="fa fa-lock"></i> <span class="badge badge-warning float-right">NEW</span><span
-                            class="nav-label">Account</span></a></li>
-                <?php if ($_SESSION['admin'] == 1) { echo '
+                <li><a href="account.php"><i class="fa fa-lock"></i> <span class="badge badge-warning float-right">NEW</span><span class="nav-label">Account</span></a></li>
+                <?php if ($_SESSION['admin'] == 1) {
+                    echo '
                 <li><a href="admin.php"><i class="fa fa-gavel"></i> <span class="nav-label">Admin</span></a></li>
-                ';}?>
+                ';
+                } ?>
             </ul>
         </nav>
 
@@ -101,8 +102,7 @@ if (!check_login()) {
                         <span class="username">
                             <?php echo $_SESSION['user_username']; ?></span> <span class="caret"></span>
                     </a>
-                    <ul class="dropdown-menu extended pro-menu fadeInUp animated" taincludesdex="5003"
-                        style="overflow: hidden; outline: none;">
+                    <ul class="dropdown-menu extended pro-menu fadeInUp animated" taincludesdex="5003" style="overflow: hidden; outline: none;">
                         <!-- <li><a href="profile.html"><i class="fa fa-briefcase"></i>Profile</a></li>
                             <li><a href="#"><i class="fa fa-cog"></i> Settings</a></li>
                             <li><a href="#"><i class="fa fa-bell"></i> Friends <span class="label label-info pull-right mail-info">5</span></a></li> -->
@@ -127,7 +127,9 @@ if (!check_login()) {
                             <h3 class="panel-title">Charts</h3>
                         </div>
                         <div class="panel-body">
-                            <canvas id="doughnut" data-type="Doughnut" height="250" width="631" style="width: 631px; height: 250px;"></canvas>
+                            <div id="canvas-holder" class="col-md-5">
+                                <canvas id="chart-area"></canvas>
+                            </div>
                         </div>
                     </div>
                 </div>
@@ -159,32 +161,71 @@ if (!check_login()) {
     <script src="js/jquery.nicescroll.js" type="text/javascript"></script>
     <script src="js/jquery.app.js"></script>
     <script src="assets/chartjs/chart.min.js"></script>
-    <script src="js/sha512.js"></script>
+    <script src="js/getContingent.js"></script>
 
     <script>
-    var ctx = document.getElementById('doughnut').getContext('2d');
-    var doughnutChart = new Chart(ctx, {
-        type: 'doughnut',
-        data = {
-            datasets: [{
-                data: [20, 20, 30]
-            }],
+        window.chartColors = {
+            red: 'rgb(255, 99, 132)',
+            orange: 'rgb(255, 159, 64)',
+            yellow: 'rgb(255, 205, 86)',
+            green: 'rgb(75, 192, 192)',
+            blue: 'rgb(54, 162, 235)',
+            purple: 'rgb(153, 102, 255)',
+            grey: 'rgb(201, 203, 207)'
+        };
+        var randomScalingFactor = function() {
+            return Math.round(Math.random() * 100);
+        };
 
-            // These labels appear in the legend and in the tooltips when hovering different arcs
-            labels: [
-                'Red',
-                'Yellow',
-                'Blue'
-            ]
-        }
-    });
+        $(document).ready(function() {
+            getContingent(<?php echo date('Y'); ?>, function(vacation) {
+                var config = {
+                    type: 'pie',
+                    data: {
+                        datasets: [{
+                            data: [
+                                vacation.used,
+                                vacation.left
+                            ],
+                            backgroundColor: [
+                                window.chartColors.blue,
+                                window.chartColors.green
+                            ],
+                            label: 'Vacations'
+                        }],
+                        labels: [
+                            'Used Days',
+                            'Left Days'
+                        ]
+                    },
+                    options: {
+                        responsive: true
+                    }
+                };
+                var ctx = document.getElementById('chart-area').getContext('2d');
+                window.myPie = new Chart(ctx, config);
+
+                var colorNames = Object.keys(window.chartColors);
+                var newDataset = {
+                    backgroundColor: [],
+                    data: [],
+                    label: 'New dataset ' + config.data.datasets.length,
+                };
+
+                config.data.datasets.push(newDataset);
+                window.myPie.update();
+            });
+        })
     </script>
 
     <!-- Global site tag (gtag.js) - Google Analytics -->
     <script async src="https://www.googletagmanager.com/gtag/js?id=UA-136503205-1"></script>
     <script>
         window.dataLayer = window.dataLayer || [];
-        function gtag() { dataLayer.push(arguments); }
+
+        function gtag() {
+            dataLayer.push(arguments);
+        }
         gtag('js', new Date());
 
         gtag('config', 'UA-136503205-1');

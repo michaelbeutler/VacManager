@@ -42,4 +42,3 @@ if (!check_login(true)) {
 }
 
 echo json_encode($response);
-?>

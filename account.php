@@ -72,11 +72,12 @@ if (!check_login()) {
                 <?php if (check_employer_privileges($_SESSION['user_employer_id'], new Priv(Priv::GENERAL))) {
                     echo '<li><a href="employer.php"><i class="fa fa-building"></i> <span class="badge badge-warning float-right">NEW</span><span class="nav-label">Employer</span></a></li>';
                 } ?>
-                <li class="active"><a href="account.php"><i class="fa fa-lock"></i> <span class="badge badge-warning float-right">NEW</span><span
-                            class="nav-label">Account</span></a></li>
-                <?php if ($_SESSION['admin'] == 1) { echo '
+                <li class="active"><a href="account.php"><i class="fa fa-lock"></i> <span class="badge badge-warning float-right">NEW</span><span class="nav-label">Account</span></a></li>
+                <?php if ($_SESSION['admin'] == 1) {
+                    echo '
                 <li><a href="admin.php"><i class="fa fa-gavel"></i> <span class="nav-label">Admin</span></a></li>
-                ';}?>
+                ';
+                } ?>
             </ul>
         </nav>
 
@@ -105,8 +106,7 @@ if (!check_login()) {
                         <span class="username">
                             <?php echo $_SESSION['user_username']; ?></span> <span class="caret"></span>
                     </a>
-                    <ul class="dropdown-menu extended pro-menu fadeInUp animated" taincludesdex="5003"
-                        style="overflow: hidden; outline: none;">
+                    <ul class="dropdown-menu extended pro-menu fadeInUp animated" taincludesdex="5003" style="overflow: hidden; outline: none;">
                         <!-- <li><a href="profile.html"><i class="fa fa-briefcase"></i>Profile</a></li>
                             <li><a href="#"><i class="fa fa-cog"></i> Settings</a></li>
                             <li><a href="#"><i class="fa fa-bell"></i> Friends <span class="label label-info pull-right mail-info">5</span></a></li> -->
@@ -203,7 +203,10 @@ if (!check_login()) {
     <script async src="https://www.googletagmanager.com/gtag/js?id=UA-136503205-1"></script>
     <script>
         window.dataLayer = window.dataLayer || [];
-        function gtag() { dataLayer.push(arguments); }
+
+        function gtag() {
+            dataLayer.push(arguments);
+        }
         gtag('js', new Date());
 
         gtag('config', 'UA-136503205-1');

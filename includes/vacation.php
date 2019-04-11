@@ -12,37 +12,38 @@ if (isset($_GET['action'])) {
     switch ($_GET['action']) {
         case 'getMinimal':
             getVacations(0);
-        break;
+            break;
         case 'get':
             getVacations(1);
-        break;
+            break;
         case 'delete':
             deleteVacation($_GET['id']);
-        break;
+            break;
         case 'accept':
             acceptVacation($_GET['id']);
-        break;
+            break;
         case 'refuse':
             refuseVacation($_GET['id']);
-        break;
+            break;
     }
 }
 
-function deleteVacation($id) {
+function deleteVacation($id)
+{
     $response = (object)array();
     if (isset($id)) {
 
         include_once('dbconnect.php');
         $conn = openConnection();
-    
-        $sql = "SELECT `id`, `user_id` FROM `vacation` WHERE `user_id`=". $_SESSION['user_id'] ." AND `id`=". $id . " LIMIT 1;";
+
+        $sql = "SELECT `id`, `user_id` FROM `vacation` WHERE `user_id`=" . $_SESSION['user_id'] . " AND `id`=" . $id . " LIMIT 1;";
         $result = $conn->query($sql);
-        
+
         if ($result->num_rows == 1) {
 
-            $sql = "DELETE FROM `vacation` WHERE `vacation`.`id` = ". $id .";";
+            $sql = "DELETE FROM `vacation` WHERE `vacation`.`id` = " . $id . ";";
             $result = $conn->query($sql);
-        
+
             if ($conn->query($sql)) {
                 $response->code = 200;
                 $response->description = 'success';
@@ -59,7 +60,6 @@ function deleteVacation($id) {
         }
 
         $conn->close();
-    
     } else {
         // Parameters missing
         $response->code = 900;
@@ -68,51 +68,53 @@ function deleteVacation($id) {
     }
 }
 
-function getVacations($view = 0) {
+function getVacations($view = 0)
+{
     $response = (object)array();
     $response->data = array();
 
     include_once('dbconnect.php');
     $conn = openConnection();
-    
-    $sql = "SELECT `vacation`.`id` AS VID, `vacation`.`title`, `vacation`.`description`, `vacation`.`start`, `vacation`.`end`, `vacation`.`days`, `vacation`.`user_id`, `vacation`.`accepted`, `vacation`.`user_id_accepted`, `vacation`.`vacation_type_id`, `user`.`id`, `user`.`username`, `vacation_type`.`id`, `vacation_type`.`name` FROM `vacation` LEFT JOIN `user` ON `vacation`.`user_id_accepted` = `user`.`id` LEFT JOIN `vacation_type` ON `vacation`.`vacation_type_id`=`vacation_type`.`id` WHERE `user_id`=". $_SESSION['user_id'] . " ORDER BY `start` DESC";
+
+    $sql = "SELECT `vacation`.`id` AS VID, `vacation`.`title`, `vacation`.`description`, `vacation`.`start`, `vacation`.`end`, `vacation`.`days`, `vacation`.`user_id`, `vacation`.`accepted`, `vacation`.`user_id_accepted`, `vacation`.`vacation_type_id`, `user`.`id`, `user`.`username`, `vacation_type`.`id`, `vacation_type`.`name` FROM `vacation` LEFT JOIN `user` ON `vacation`.`user_id_accepted` = `user`.`id` LEFT JOIN `vacation_type` ON `vacation`.`vacation_type_id`=`vacation_type`.`id` WHERE `user_id`=" . $_SESSION['user_id'] . " ORDER BY `start` DESC";
     $result = $conn->query($sql);
 
     if ($result->num_rows > 0) {
         // output data of each row
-        while($row = $result->fetch_assoc()) {
+        while ($row = $result->fetch_assoc()) {
             switch ($view) {
-                case 0: 
+                case 0:
                     $event = array();
                     $event[] = $row['title'];
-                    $event[] = date_format(date_create($row['start']),"d.m.Y");;
-                    $event[] = date_format(date_create($row['end']),"d.m.Y");;
+                    $event[] = date_format(date_create($row['start']), "d.m.Y");;
+                    $event[] = date_format(date_create($row['end']), "d.m.Y");;
                     $event[] = $row['days'];
                     $event[] = $row['accepted'];
                     $response->data[] = $event;
-                break;
-                case 1: 
+                    break;
+                case 1:
                     // normal view
                     $event = array();
                     $event[] = $row['title'];
                     $event[] = $row['description'];
-                    $event[] = date_format(date_create($row['start']),"d.m.Y");;
-                    $event[] = date_format(date_create($row['end']),"d.m.Y");;
+                    $event[] = date_format(date_create($row['start']), "d.m.Y");;
+                    $event[] = date_format(date_create($row['end']), "d.m.Y");;
                     $event[] = $row['days'];
                     $event[] = $row['accepted'];
                     $event[] = $row['username'];
                     $event[] = $row['name']; // vacation type
                     $event[] = $row['VID'];
                     $response->data[] = $event;
-                break;
-            }      
+                    break;
+            }
         }
     }
 
     echo json_encode($response);
 }
 
-function acceptVacation($id) {
+function acceptVacation($id)
+{
     require('check_employer_privileges.php');
     if (!check_employer_privileges($_SESSION['user_employer_id'], new Priv(Priv::CAN_ACCEPT))) {
         $response->code = 403;
@@ -120,23 +122,23 @@ function acceptVacation($id) {
         echo json_encode($response);
         die();
     }
-    
+
     if (isset($id)) {
-    
+
         include_once('dbconnect.php');
         $conn = openConnection();
-    
-        $sql = "UPDATE `vacation` SET `accepted`=1, `user_id_accepted`=". $_SESSION['user_id'] ." WHERE `id`=". $id .";";
+
+        $sql = "UPDATE `vacation` SET `accepted`=1, `user_id_accepted`=" . $_SESSION['user_id'] . " WHERE `id`=" . $id . ";";
         $result = $conn->query($sql);
-    
+
         if ($conn->query($sql)) {
             include_once('mail.php');
-    
-            $sql = "SELECT * FROM `vacation` LEFT JOIN `user` ON `vacation`.`user_id` = `user`.`id` WHERE `vacation`.`id`=". $id .";";
+
+            $sql = "SELECT * FROM `vacation` LEFT JOIN `user` ON `vacation`.`user_id` = `user`.`id` WHERE `vacation`.`id`=" . $id . ";";
             $result = $conn->query($sql);
-    
+
             if ($result->num_rows > 0) {
-                while($row = $result->fetch_assoc()) {
+                while ($row = $result->fetch_assoc()) {
                     if (sendAcceptedVacationMail($row['email'], $row['firstname'], $row['lastname'], $row['start'], $row['end'], $_SESSION['user_username'])) {
                         $response->code = 200;
                         $response->description = 'success';
@@ -152,17 +154,16 @@ function acceptVacation($id) {
             $response->description = "Execute failed";
         }
         $conn->close();
-    
     } else {
         // Parameters missing
         $response->code = 900;
         $response->description = 'parameters missing';
     }
     echo json_encode($response);
-    
 }
 
-function refuseVacation($id) {
+function refuseVacation($id)
+{
     require('check_employer_privileges.php');
     if (!check_employer_privileges($_SESSION['user_employer_id'], new Priv(Priv::CAN_ACCEPT))) {
         $response->code = 403;
@@ -176,7 +177,7 @@ function refuseVacation($id) {
         include_once('dbconnect.php');
         $conn = openConnection();
 
-        $sql = "DELETE FROM `vacation` WHERE `vacation`.`id` = ". $id .";";
+        $sql = "DELETE FROM `vacation` WHERE `vacation`.`id` = " . $id . ";";
         $conn->query($sql);
 
         if ($conn->query($sql)) {
@@ -188,7 +189,6 @@ function refuseVacation($id) {
             $response->description = "Execute failed";
         }
         $conn->close();
-
     } else {
         // Parameters missing
         $response->code = 900;

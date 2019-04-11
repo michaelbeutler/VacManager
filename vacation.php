@@ -157,9 +157,9 @@ if (isset($_GET['id'])) {
                                     </tbody>
                                 </table>
                             </div>
-                <button class="btn btn-default m-b-5" data-toggle="modal" data-target="#vac-add-modal">
-                    <i class="ion-plus"></i> <span style="margin-left: 10px;">Add
-                        Vacation</span> </button>
+                            <button class="btn btn-default m-b-5" data-toggle="modal" data-target="#vac-add-modal">
+                                <i class="ion-plus"></i> <span style="margin-left: 10px;">Add
+                                    Vacation</span> </button>
                         </div>
                     </div>
                 </div>

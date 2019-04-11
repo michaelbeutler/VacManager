@@ -59,4 +59,3 @@ function check_login($check_admin = NULL) {
         return false;
     }
 }
-?>

@@ -8,4 +8,3 @@ if (!check_login()) {
     header("Location: ../login.html");
     die();
 }
-?>

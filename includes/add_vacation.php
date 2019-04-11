@@ -65,5 +65,3 @@ if (isset($_GET['title'], $_GET['start'], $_GET['end'], $_GET['numDays'],  $_GET
 }
 
 echo json_encode($response);
-
-?>

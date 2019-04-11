@@ -20,7 +20,7 @@ $(document).ready(function () {
 
     $('#vacationTable').dataTable({
         ajax: {
-            url: "./includes/vacation.php?action=getVacationsMinimal",
+            url: "./includes/vacation.php?action=getMinimal",
             type: "POST"
         },
         paging: false,

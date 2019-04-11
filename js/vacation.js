@@ -34,7 +34,7 @@ $(document).ready(function () {
                     url: "./includes/vacation.php",
                     async: true,
                     data: {
-                        "action": "deleteVacation",
+                        "action": "delete",
                         "id": id
                     },
                     contentType: "application/json; charset=utf-8",
@@ -54,7 +54,7 @@ $(document).ready(function () {
         });
     }).dataTable({
         ajax: {
-            url: "./includes/vacation.php?action=getVacations",
+            url: "./includes/vacation.php?action=get",
             type: "POST"
         },
         paging: true,

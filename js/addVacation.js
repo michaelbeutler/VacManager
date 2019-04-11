@@ -12,8 +12,6 @@ $(document).ready(function () {
             switch (data.code) {
                 case 200:
                     // success
-                    //refreshDashboard();
-                    $('#calendar').fullCalendar('refetchEvents');
                     $('#vac-add-modal').modal('hide');
                     break;
                 default:

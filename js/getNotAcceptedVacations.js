@@ -32,16 +32,22 @@ function acceptVacation(id) {
         $.ajax({
             type: "GET",
             dataType: 'json',
-            url: "./includes/accept_vacation.php",
+            url: "./includes/vacation.php",
             async: true,
             data: {
-                "request_id": id
+                "action": "accept",
+                "id": id
             },
             contentType: "application/json; charset=utf-8",
             success: function (data) {
                 switch (data.code) {
                     case 200:
                         // success
+                        swal("Success", "You accepted the request!", "success");
+                        $('#request' + id).fadeOut();
+                        break;
+                    case 201:
+                        // success but cant send mail
                         swal("Success", "You accepted the request!", "success");
                         $('#request' + id).fadeOut();
                         break;
@@ -67,10 +73,11 @@ function refuseVacation(id) {
         $.ajax({
             type: "GET",
             dataType: 'json',
-            url: "./includes/refuse_vacation.php",
+            url: "./includes/vacation.php",
             async: true,
             data: {
-                "request_id": id
+                "action": "refuse",
+                "id": id
             },
             contentType: "application/json; charset=utf-8",
             success: function (data) {

@@ -219,7 +219,7 @@ function monthdata()
             }
         }
 
-        $sql = "SELECT MONTH(`start`) AS 'm', SUM(`days`) AS 'c' FROM `vacation` WHERE `accepted`=0 AND `user_id`=" . $_SESSION['user_id'] . " GROUP BY MONTH(`start`);";
+        $sql = "SELECT MONTH(`start`) AS 'm', SUM(`days`) AS 'c' FROM `vacation` WHERE YEAR(`start`)=". date('Y') ." AND `accepted`=0 AND `user_id`=" . $_SESSION['user_id'] . " GROUP BY MONTH(`start`);";
 
         $response->pending[] = array();
         for ($i = 0; $i < 12; $i++) {

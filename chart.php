@@ -127,9 +127,28 @@ if (!check_login()) {
                             <h3 class="panel-title">Charts</h3>
                         </div>
                         <div class="panel-body">
-                            <div id="canvas-holder" class="col-md-5">
-                                <canvas id="chart-area"></canvas>
+                            <div class="row">
+                                <div id="canvas-holder" class="col-md-8">
+                                    <canvas id="canvas-area-bar"></canvas>
+                                </div>
+                                <div class="col-md-4">
+                                    <div class="row">
+                                        <div id="canvas-holder" class="col-md-12">
+                                            <canvas id="chart-area"></canvas>
+                                        </div>
+                                    </div>
+                                    <br>
+                                    <div class="row">
+                                        <div id="canvas-holder" class="col-md-12">
+                                            <canvas id="chart-area2"></canvas>
+                                        </div>
+                                    </div>
+                                </div>
                             </div>
+                            <br>
+                            <hr>
+
+
                         </div>
                     </div>
                 </div>
@@ -173,9 +192,6 @@ if (!check_login()) {
             purple: 'rgb(153, 102, 255)',
             grey: 'rgb(201, 203, 207)'
         };
-        var randomScalingFactor = function() {
-            return Math.round(Math.random() * 100);
-        };
 
         $(document).ready(function() {
             getContingent(<?php echo date('Y'); ?>, function(vacation) {
@@ -202,20 +218,146 @@ if (!check_login()) {
                         responsive: true
                     }
                 };
+
+
+                getNotAccepted(function(notAccepted) {
+                    var config2 = {
+                        type: 'pie',
+                        data: {
+                            datasets: [{
+                                data: [
+                                    vacation.used,
+                                    notAccepted.requests.length
+                                ],
+                                backgroundColor: [
+                                    window.chartColors.blue,
+                                    window.chartColors.green
+                                ],
+                                label: 'Vacations'
+                            }],
+                            labels: [
+                                'Accepted',
+                                'Pending'
+                            ]
+                        },
+                        options: {
+                            responsive: true
+                        }
+                    };
+
+                    var ctx2 = document.getElementById('chart-area2').getContext('2d');
+                    window.myPie = new Chart(ctx2, config2);
+                })
+
+
                 var ctx = document.getElementById('chart-area').getContext('2d');
                 window.myPie = new Chart(ctx, config);
 
                 var colorNames = Object.keys(window.chartColors);
-                var newDataset = {
-                    backgroundColor: [],
-                    data: [],
-                    label: 'New dataset ' + config.data.datasets.length,
+            })
+
+            var colorNames = Object.keys(window.chartColors);
+
+            getMonthData(function(data) {
+                var MONTHS = ['January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December'];
+                var color = Chart.helpers.color;
+                var barChartData = {
+                    labels: MONTHS,
+                    datasets: [{
+                        label: '<?php echo date('Y'); ?> accepted',
+                        backgroundColor: color(window.chartColors.green).alpha(0.5).rgbString(),
+                        borderColor: window.chartColors.green,
+                        borderWidth: 1,
+                        data: [
+                            data.accepted[0],
+                            data.accepted[1],
+                            data.accepted[2],
+                            data.accepted[3],
+                            data.accepted[4],
+                            data.accepted[5],
+                            data.accepted[6],
+                            data.accepted[7],
+                            data.accepted[8],
+                            data.accepted[9],
+                            data.accepted[10],
+                            data.accepted[11]
+                        ]
+                    }, {
+                        label: '<?php echo date('Y'); ?> pending',
+                        backgroundColor: color(window.chartColors.red).alpha(0.5).rgbString(),
+                        borderColor: window.chartColors.red,
+                        borderWidth: 1,
+                        data: [
+                            data.pending[0],
+                            data.pending[1],
+                            data.pending[2],
+                            data.pending[3],
+                            data.pending[4],
+                            data.pending[5],
+                            data.pending[6],
+                            data.pending[7],
+                            data.pending[8],
+                            data.pending[9],
+                            data.pending[10],
+                            data.pending[11]
+                        ]
+                    }]
+
                 };
 
-                config.data.datasets.push(newDataset);
-                window.myPie.update();
+
+                var ctx3 = document.getElementById('canvas-area-bar').getContext('2d');
+                window.myBar = new Chart(ctx3, {
+                    type: 'bar',
+                    data: barChartData,
+                    options: {
+                        responsive: true,
+                        scales: {
+                            xAxes: [{
+                                stacked: true,
+                            }],
+                            yAxes: [{
+                                stacked: true
+                            }]
+                        },
+                        legend: {
+                            position: 'top',
+                        },
+                        title: {
+                            display: true,
+                            text: 'Vacations per Month'
+                        }
+                    }
+                });
+
             });
-        })
+        });
+
+        function getNotAccepted(callback) {
+            $.ajax({
+                type: "GET",
+                dataType: 'json',
+                url: "./includes/get_not_accepted_vacations.php",
+                async: true,
+                contentType: "application/json; charset=utf-8",
+                success: function(data) {
+                    callback(data);
+                }
+            });
+        }
+
+        function getMonthData(callback) {
+            $.ajax({
+                type: "GET",
+                dataType: 'json',
+                url: "./includes/vacation.php?action=monthdata",
+                async: true,
+                contentType: "application/json; charset=utf-8",
+                success: function(data) {
+                    callback(data);
+                }
+            });
+        }
     </script>
 
     <!-- Global site tag (gtag.js) - Google Analytics -->

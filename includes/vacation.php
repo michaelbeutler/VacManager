@@ -25,6 +25,9 @@ if (isset($_GET['action'])) {
         case 'refuse':
             refuseVacation($_GET['id']);
             break;
+        case 'monthdata':
+            monthdata();
+            break;
     }
 }
 
@@ -196,3 +199,48 @@ function refuseVacation($id)
     }
     echo json_encode($response);
 }
+
+function monthdata()
+{
+    include_once('dbconnect.php');
+    $conn = openConnection();
+
+    $sql = "SELECT MONTH(`start`) AS 'm', SUM(`days`) AS 'c' FROM `vacation` WHERE `accepted`=1 AND `user_id`=" . $_SESSION['user_id'] . " GROUP BY MONTH(`start`);";
+
+    $response->accepted[] = array();
+    for ($i = 0; $i < 12; $i++) {
+        $response->accepted[$i] = 0;
+    }
+
+    if ($result = $conn->query($sql)) {
+        if ($result->num_rows > 0) {
+            while ($row = $result->fetch_assoc()) {
+                $response->accepted[($row['m'] - 1)] = $row['c'];
+            }
+        }
+
+        $sql = "SELECT MONTH(`start`) AS 'm', SUM(`days`) AS 'c' FROM `vacation` WHERE `accepted`=0 AND `user_id`=" . $_SESSION['user_id'] . " GROUP BY MONTH(`start`);";
+
+        $response->pending[] = array();
+        for ($i = 0; $i < 12; $i++) {
+            $response->pending[$i] = 0;
+        }
+
+        if ($result = $conn->query($sql)) {
+            if ($result->num_rows > 0) {
+                while ($row = $result->fetch_assoc()) {
+                    $response->pending[($row['m'] - 1)] = $row['c'];
+                }
+            }
+        }
+        $response->code = 200;
+        $response->description = 'success';
+    } else {
+        // error while executing query
+        $response->code = 953;
+        $response->description = "Execute failed";
+    }
+    $conn->close();
+
+    echo json_encode($response);
+};

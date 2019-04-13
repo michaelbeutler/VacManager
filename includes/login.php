@@ -1,5 +1,5 @@
 <?php
-require('../class/Autoload.php')
+require('../class/Autoload.php');
 
 $response = (object)array();
 $response->code = 500;

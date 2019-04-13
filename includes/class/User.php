@@ -66,8 +66,7 @@ class User
         $result = $database->select("SELECT * FROM `user` WHERE `username`='" . $username . "' LIMIT 1;");
         if ($result->num_rows == 1) {
             if ($row = $result->fetch_assoc()) {
-                //if ($row['password'] ==  hash('sha512', $password . $row['salt'])) {
-                if ($row['password'] == $password) {
+                if ($row['password'] ==  hash('sha512', $password . $row['salt'])) {
                     Session::start();
                     Session::assing(self::construct_id($database, $row['id']));
                     return true;

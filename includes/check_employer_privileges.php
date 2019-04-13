@@ -27,7 +27,7 @@ class Priv extends Enum {
 function check_employer_privileges($employer_id, Priv $priv) {
 
     // check if user is logged in
-    if (isset($_SESSION['user_id'], $_SESSION['user_employer_id'], $priv, $employer_id)) {
+    if (isset($_SESSION['user_id'], $_SESSION['employer_id'], $priv, $employer_id)) {
 
         // connect to database
         include_once('dbconnect.php');

@@ -1,7 +1,8 @@
 <?php
-require('includes/check_login.php');
+require('includes/class/Autoload.php');
 require('includes/check_employer_privileges.php');
-if (!check_login() || !check_employer_privileges($_SESSION['user_employer_id'], new Priv(Priv::GENERAL))) {
+Session::start();
+if (!User::check_login(new Database()) || !check_employer_privileges($_SESSION['employer_id'], new Priv(Priv::GENERAL))) {
     header("Location: login.html?next=index.php");
     die();
 }
@@ -69,11 +70,11 @@ if (!check_login() || !check_employer_privileges($_SESSION['user_employer_id'], 
                 <li><a href="calendar.php"><i class="ion-calendar"></i> <span class="badge badge-warning float-right">NEW</span><span class="nav-label">Calendar</span></a></li>
                 <li><a href="vacation.php"><i class="fa fa-star"></i> <span class="nav-label">Vacation</span></a></li>
                 <li><a href="chart.php"><i class="ion-stats-bars"></i> <span class="badge badge-warning float-right">NEW</span><span class="nav-label">Charts</span></a></li>
-                <?php if (check_employer_privileges($_SESSION['user_employer_id'], new Priv(Priv::GENERAL))) {
+                <?php if (check_employer_privileges($_SESSION['employer_id'], new Priv(Priv::GENERAL))) {
                     echo '<li class="active"><a href="employer.php"><i class="fa fa-building"></i> <span class="badge badge-warning float-right">NEW</span><span class="nav-label">Employer</span></a></li>';
                 } ?>
                 <li><a href="account.php"><i class="fa fa-lock"></i> <span class="badge badge-warning float-right">NEW</span><span class="nav-label">Account</span></a></li>
-                <?php if ($_SESSION['admin'] == 1) {
+                <?php if ($_SESSION['user_is_admin'] == 1) {
                     echo '
                 <li><a href="admin.php"><i class="fa fa-gavel"></i> <span class="nav-label">Admin</span></a></li>
                 ';
@@ -131,7 +132,7 @@ if (!check_login() || !check_employer_privileges($_SESSION['user_employer_id'], 
                             <h3 class="panel-title">Employer</h3>
                         </div>
                         <div class="panel-body" style="min-height: 500px;">
-                            <?php if (check_employer_privileges($_SESSION['user_employer_id'], new Priv(Priv::CAN_ACCEPT))) echo '
+                            <?php if (check_employer_privileges($_SESSION['employer_id'], new Priv(Priv::CAN_ACCEPT))) echo '
                                 <br>
                                 <h4>' . $_SESSION['employer_name'] . ' - Vacation requests</h4>
                                 <table class="table table-striped table-bordered" id="tableVacationRequests">
@@ -184,7 +185,7 @@ if (!check_login() || !check_employer_privileges($_SESSION['user_employer_id'], 
     <script src="assets/sweet-alert/sweet-alert.min.js"></script>
     <script src="assets/sweet-alert/sweet-alert.init.js"></script>
 
-    <?php if (check_employer_privileges($_SESSION['user_employer_id'], new Priv(Priv::CAN_ACCEPT))) echo '
+    <?php if (check_employer_privileges($_SESSION['employer_id'], new Priv(Priv::CAN_ACCEPT))) echo '
         <script src="js/getNotAcceptedVacations.js"></script>
     '; ?>
 

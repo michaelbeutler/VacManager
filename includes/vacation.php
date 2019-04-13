@@ -1,6 +1,7 @@
 <?php
-require('check_login.php');
-if (!check_login()) {
+require('./class/Autoload.php');
+Session::start();
+if (!User::check_login(new Database())) {
     $response = (object)array();
     $response->code = 403;
     $response->description = 'not allowed';
@@ -118,8 +119,10 @@ function getVacations($view = 0)
 
 function acceptVacation($id)
 {
+    $response = (object)array();
+
     require('check_employer_privileges.php');
-    if (!check_employer_privileges($_SESSION['user_employer_id'], new Priv(Priv::CAN_ACCEPT))) {
+    if (!check_employer_privileges($_SESSION['employer_id'], new Priv(Priv::CAN_ACCEPT))) {
         $response->code = 403;
         $response->description = 'not allowed';
         echo json_encode($response);
@@ -135,20 +138,20 @@ function acceptVacation($id)
         $result = $conn->query($sql);
 
         if ($conn->query($sql)) {
-            include_once('mail.php');
+            //include_once('mail.php');
 
             $sql = "SELECT * FROM `vacation` LEFT JOIN `user` ON `vacation`.`user_id` = `user`.`id` WHERE `vacation`.`id`=" . $id . ";";
             $result = $conn->query($sql);
 
             if ($result->num_rows > 0) {
                 while ($row = $result->fetch_assoc()) {
-                    if (sendAcceptedVacationMail($row['email'], $row['firstname'], $row['lastname'], $row['start'], $row['end'], $_SESSION['user_username'])) {
+                    //if (sendAcceptedVacationMail($row['email'], $row['firstname'], $row['lastname'], $row['start'], $row['end'], $_SESSION['user_username'])) {
                         $response->code = 200;
                         $response->description = 'success';
-                    } else {
+                    /*} else {
                         $response->code = 201;
                         $response->description = 'cant send mail';
-                    }
+                    }*/
                 }
             }
         } else {
@@ -168,7 +171,7 @@ function acceptVacation($id)
 function refuseVacation($id)
 {
     require('check_employer_privileges.php');
-    if (!check_employer_privileges($_SESSION['user_employer_id'], new Priv(Priv::CAN_ACCEPT))) {
+    if (!check_employer_privileges($_SESSION['employer_id'], new Priv(Priv::CAN_ACCEPT))) {
         $response->code = 403;
         $response->description = 'not allowed';
         echo json_encode($response);

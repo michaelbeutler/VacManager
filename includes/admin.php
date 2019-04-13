@@ -1,11 +1,13 @@
 <?php
-require('check_login.php');
+require('./class/Autoload.php');
+require_once('dbconnect.php');
 
 $response = (object)array();
 $response->code = 500;
 $response->description = 'internal server error';
 
-if (!check_login(true)) {
+Session::start();
+if (!User::check_login(new Database(), 1)) {
     $response->code = 403;
     $response->description = 'not allowed'; 
 } else {

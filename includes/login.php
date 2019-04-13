@@ -1,5 +1,5 @@
 <?php
-require('../class/Autoload.php');
+require('./class/Autoload.php');
 
 $response = (object)array();
 $response->code = 500;
@@ -17,7 +17,7 @@ if (isset($_GET['username'], $_GET['password'])) {
     $username = htmlspecialchars($_GET['username']);
     $password = htmlspecialchars($_GET['password']);
 
-    if ($User::login($database, $username, $password)) {
+    if (User::login($database, $username, $password)) {
         $response->code = 200;
         $response->description = 'success';
     } else {

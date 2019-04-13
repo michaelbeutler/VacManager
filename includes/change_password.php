@@ -1,12 +1,13 @@
 <?php
-require('check_login.php');
-
 $response = (object)array();
 $response->code = 500;
 $response->description = 'internal server error';
 
-if (!check_login()) {
-    header("Location: ./login.html");
+require('./class/Autoload.php');
+
+Session::start();
+if (!User::check_login(new Database())) {
+    header("Location: login.html");
     die();
 } else {
     if (isset($_GET['password'], $_GET['repeat'])) {

@@ -1,11 +1,12 @@
 <?php
-require('check_login.php');
+require('./class/Autoload.php');
 
 $response = (object)array();
 $response->code = 500;
 $response->description = 'internal server error';
 
-if (!check_login(true)) {
+Session::start();
+if (!check_login(new Database(), 1)) {
     $response = (object)array();
     $response->code = 403;
     $response->description = 'not allowed'; 
@@ -25,10 +26,10 @@ if (!check_login(true)) {
                 $_SESSION['user_id'] = $row['user_id'];
                 $_SESSION['user_username'] = $row['username'];
                 $_SESSION['user_hash'] = $row['password'];
-                $_SESSION['user_employer_id'] = $row['employer_id'];
+                $_SESSION['employer_id'] = $row['employer_id'];
                 $_SESSION['employer_name'] = $row['name'];
                 $_SESSION['employer_shortname'] = $row['shortname'];
-                $_SESSION['admin'] = $row['admin'];
+                $_SESSION['user_is_admin'] = $row['admin'];
             }
         
             $response->code = 200;

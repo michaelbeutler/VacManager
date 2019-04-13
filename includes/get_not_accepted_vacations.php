@@ -3,9 +3,10 @@ $response = (object)array();
 $response->code = 500;
 $response->description = 'internal server error';
 
-require('check_login.php');
+require('./class/Autoload.php');
 require('check_employer_privileges.php');
-if (!check_login() || !check_employer_privileges($_SESSION['user_employer_id'], new Priv(Priv::CAN_ACCEPT))) {
+Session::start();
+if (!User::check_login(new Database()) || !check_employer_privileges($_SESSION['employer_id'], new Priv(Priv::CAN_ACCEPT))) {
     $response->code = 403;
     $response->description = 'not allowed';
     echo json_encode($response);
@@ -15,7 +16,7 @@ if (!check_login() || !check_employer_privileges($_SESSION['user_employer_id'], 
 include_once('dbconnect.php');
 $conn = openConnection();
 
-$sql = "SELECT `user`.`id`, `user`.`username`, `user`.`employer_id`, `vacation`.`id` AS 'VID', `vacation`.`title`, `vacation`.`start`, `vacation`.`end`, `vacation`.`days`, `vacation`.`create_date` FROM `user` LEFT JOIN `vacation` ON `user`.`id` = `vacation`.`user_id` WHERE `user`.`employer_id`=". $_SESSION['user_employer_id'] ." AND `vacation`.`accepted` = 0;";
+$sql = "SELECT `user`.`id`, `user`.`username`, `user`.`employer_id`, `vacation`.`id` AS 'VID', `vacation`.`title`, `vacation`.`start`, `vacation`.`end`, `vacation`.`days`, `vacation`.`create_date` FROM `user` LEFT JOIN `vacation` ON `user`.`id` = `vacation`.`user_id` WHERE `user`.`employer_id`=". $_SESSION['employer_id'] ." AND `vacation`.`accepted` = 0;";
 $result = $conn->query($sql);
 
 $requests = array();

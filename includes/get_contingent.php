@@ -1,6 +1,7 @@
 <?php
-require('check_login.php');
-if (!check_login()) {
+require('./class/Autoload.php');
+Session::start();
+if (!User::check_login(new Database())) {
     die();
 }
 

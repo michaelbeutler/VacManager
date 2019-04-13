@@ -5,6 +5,8 @@ $response = (object)array();
 $response->code = 500;
 $response->description = 'internal server error';
 
+$database = new Database();
+
 // Check if all parameters given
 if (isset($_GET['username'], $_GET['password'])) {
 

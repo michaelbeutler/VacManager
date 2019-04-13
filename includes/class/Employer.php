@@ -33,9 +33,7 @@ class Employer
 
     static function construct_id(Database $database, $id)
     {
-        $database->open();
         $employer = self::construct_mysql($database->select('SELECT * FROM `employer` WHERE `id`=' . $id . ';'));
-        $database->close();
         return $employer;
     }
 

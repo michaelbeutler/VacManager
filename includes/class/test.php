@@ -1,34 +1,30 @@
 <?php
 require('Database.php');
 require('Vacation.php');
+require('Session.php');
 require('User.php');
 require('Employer.php');
 
 // echo open connection
 $database = new Database();
-echo 'open database: ' . $database->open() . '<br>';
 
-$result = $database->select('SELECT * FROM `vacation` LIMIT 1;');
+//$result = $database->select('SELECT * FROM `vacation` LIMIT 1;');
 
-if (is_bool($result) === true) {
+/*if (is_bool($result) === true) {
     echo $result;
+}*/
+
+
+
+$login = User::login($database, 'michael.beutler', '1c22a5319c98fe6424f576757b177137d555b36da59beccc2d8ea1f75d164496685ece72b94ad11e655bd4aa13537e4d9f8263786fb6fcd7cdc980d1a9aff9c1');
+if ($login) {
+    echo 'login successfull<br>';
+    echo Vacation::create($database, 'Test', 'Test2', '2019-04-13', '2019-04-13', 1, User::getCurrentUser($database), 1);
 }
 
-$user = User::login($database, 'michael.beutler', '08fd26a2ee91615c13c8cc634e72dbe56db307a703097dbb699f333002a0acf50cc9fe89af62e0b9e36e523fcf785abe4b91c6b6a0b4ed3f2ac8e3a7831bbc5f');
-if (is_bool($user) && !$user) {
-    echo 'wrong credentials';
-} else {
-    echo $user->to_json();
-}
+//echo User::getCurrentUser($database)->username;
 
-
-$vacation = Vacation::construct_mysql($result);
-echo $vacation->title . '<br>';
-
-$vacation = Vacation::construct_id($database, 12);
-echo $vacation->title . '<br>';
-
-echo $vacation->to_json();
+//echo json_encode(Vacation::getAll($database, User::getCurrentUser($database)));
 
 //if ($result->num_rows < 1) {
 
@@ -36,4 +32,4 @@ echo $vacation->to_json();
 
 
 
-echo 'close database: ' . $database->close() . '<br>';
+//echo 'close database: ' . $database->close() . '<br>';

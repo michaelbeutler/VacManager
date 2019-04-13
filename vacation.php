@@ -1,7 +1,8 @@
 <?php
-require('includes/check_login.php');
+require('includes/class/Autoload.php');
 require('includes/check_employer_privileges.php');
-if (!check_login()) {
+Session::start();
+if (!User::check_login(new Database())) {
     header("Location: login.html?next=vacation.php");
     die();
 }

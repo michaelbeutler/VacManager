@@ -53,10 +53,8 @@ class User
     }
 
     static function construct_id(Database $database, $id)
-    {
-        $database->open();
-        $user = self::construct_mysql($database->select('SELECT * FROM `user` WHERE `id`=' . $id . ';'));
-        $database->close();
+    {  
+        $user = self::construct_mysql($database->select("SELECT * FROM `user` WHERE `id`=" . $id . ";"));
         return $user;
     }
 
@@ -65,22 +63,40 @@ class User
             return false;
         }
 
-        $database->open();
         $result = $database->select("SELECT * FROM `user` WHERE `username`='" . $username . "' LIMIT 1;");
         if ($result->num_rows == 1) {
             if ($row = $result->fetch_assoc()) {
                 //if ($row['password'] ==  hash('sha512', $password . $row['salt'])) {
                 if ($row['password'] == $password) {
-                    return User::construct_id($database, $row['id']);
-                } else {
-                    return false;
+                    Session::start();
+                    Session::assing(self::construct_id($database, $row['id']));
+                    return true;
                 }
-            } else {
-                return false;
             }
-        } else {
-            return false;
         }
+        return false;
+    }
+
+    static function logout() {
+        return Session::destroy();
+    }
+
+    static function check_login($database, $check_if_admin = 0) {
+        if (isset($_SESSION['user_id'], $_SESSION['user_password'], $_SESSION['user_is_admin'])) {
+            $user = User::construct_id($database, $_SESSION['user_id']);
+            if ($user->password == $_SESSION['user_password'] && $user->is_banned != 1) {
+                if ($check_if_admin == 1 && $user->admin != 1) {return false;}
+                return true;
+            }
+        }
+        return false;
+    }
+
+    static function getCurrentUser($database) {
+        if (self::check_login($database)) {
+            return User::construct_id($database, $_SESSION['user_id']);
+        }
+        return false;
     }
 
     function to_json()

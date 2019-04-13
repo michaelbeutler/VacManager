@@ -1,7 +1,8 @@
 <?php
-require('includes/check_login.php');
+require('includes/class/Autoload.php');
 require('includes/check_employer_privileges.php');
-if (!check_login()) {
+Session::start();
+if (!User::check_login(new Database())) {
     header("Location: login.html?next=chart.php");
     die();
 }
@@ -350,11 +351,15 @@ if (!check_login()) {
             $.ajax({
                 type: "GET",
                 dataType: 'json',
-                url: "./includes/vacation.php?action=monthdata",
+                url: "./includes/new/vacation.inc.php",
+                data: {
+                    action: 'GET_ALL_VACATIONS',
+                    view: 'MONTH_STATISTIC'
+                },
                 async: true,
                 contentType: "application/json; charset=utf-8",
                 success: function(data) {
-                    callback(data);
+                    callback(data.data);
                 }
             });
         }

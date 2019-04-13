@@ -30,22 +30,38 @@ class Database
 
     function select($query)
     {
+        $this->open();
         if ($result = $this->conn->query($query)) {
+            $this->close();
             return $result;
         } else {
-            throw new Exception($this->conn->error);
+            throw new Exception($this->conn->error . '-----' . $query);
             $this->close();
             return false;
         }
     }
 
+    function insert($query) {
+        $this->open();  
+        $result = $this->conn->query($query);
+        $this->close();
+        return $result;
+    }
+
     function update($query)
     {
-        return $this->conn->query($query);
+        $this->open();
+        $result = $this->conn->query($query);
+        $this->close();
+        return $result;
     }
 
     function delete($query)
     {
-        return $this->conn->query($query);
+
+        $this->open();
+        $result = $this->conn->query($query);
+        $this->close();
+        return $result;
     }
 }

@@ -6,7 +6,7 @@ $response->code = 500;
 $response->description = 'internal server error';
 
 Session::start();
-if (!check_login(new Database(), 1)) {
+if (!User::check_login(new Database(), 1)) {
     $response = (object)array();
     $response->code = 403;
     $response->description = 'not allowed';

@@ -68,6 +68,22 @@ if (isset($_GET['action'])) {
                             }
                         }
 
+                        if ($result = $database->select("SELECT COUNT(*) AS 'c' FROM `vacation` WHERE `status`='Refused' AND YEAR(`start`)='" . date("Y") . "' AND `user_id`=" . User::getCurrentUser($database)->id . ";")) {
+                            if ($result->num_rows > 0) {
+                                while ($row = $result->fetch_assoc()) {
+                                    $response->data->refused = $row['c'];
+                                }
+                            }
+                        }
+
+                        if ($result = $database->select("SELECT COUNT(*) AS 'c' FROM `vacation` WHERE `status`='Canceled' AND YEAR(`start`)='" . date("Y") . "' AND `user_id`=" . User::getCurrentUser($database)->id . ";")) {
+                            if ($result->num_rows > 0) {
+                                while ($row = $result->fetch_assoc()) {
+                                    $response->data->canceled = $row['c'];
+                                }
+                            }
+                        }
+
                         break;
                     case 'MIN':
                         $response->code = 200;
@@ -173,7 +189,7 @@ if (isset($_GET['action'])) {
                 $background_color = 'orange';
                 if ($vacation->status == 'Accepted') {
                     $background_color = 'green';
-                } else if ($vacation->status == 'Canceled') {
+                } else if ($vacation->status == 'Canceled' || $vacation->status == 'Refused') {
                     $background_color = 'red';
                 }
 

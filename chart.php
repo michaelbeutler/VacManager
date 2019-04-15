@@ -228,21 +228,31 @@ if (!User::check_login(new Database())) {
                             datasets: [{
                                 data: [
                                     data.accepted,
-                                    data.pending
+                                    data.pending,
+                                    data.refused,
+                                    data.canceled
                                 ],
                                 backgroundColor: [
                                     window.chartColors.blue,
-                                    window.chartColors.green
+                                    window.chartColors.green,
+                                    window.chartColors.red,
+                                    window.chartColors.yellow
                                 ],
                                 label: 'Vacations'
                             }],
                             labels: [
                                 'Accepted',
-                                'Pending'
+                                'Pending',
+                                'Refused',
+                                'Canceled'
                             ]
                         },
                         options: {
-                            responsive: true
+                            responsive: true,
+                            legend: {
+                                display: true,
+                                position: 'right'
+                            }
                         }
                     };
 
@@ -342,7 +352,7 @@ if (!User::check_login(new Database())) {
                 data: {
                     action: 'GET_ALL_VACATIONS',
                     view: 'PENDING'
-                }, 
+                },
                 async: true,
                 contentType: "application/json; charset=utf-8",
                 success: function(data) {

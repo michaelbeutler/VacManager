@@ -12,7 +12,7 @@ $(document).ready(function () {
             { data: 'start' },
             { data: 'end' },
             { data: 'days' },
-            { data: 'accepted' }
+            { data: 'status' }
         ],
         paging: false,
         searching: false,
@@ -22,11 +22,17 @@ $(document).ready(function () {
                 targets: 4,
                 render: function (data, type, row) {
                     switch (data) {
-                        case "0":
+                        case "Pending":
                             data = '<span class="label label-warning">Pending</span>';
                             break;;
-                        case "1":
+                        case "Accepted":
                             data = '<span class="label label-success">Accepted</span>';
+                            break;;
+                        case "Refused":
+                            data = '<span class="label label-danger">Refused</span>';
+                            break;;
+                        case "Canceled":
+                            data = '<span class="label label-danger">Canceled</span>';
                             break;;
                         default:
                             data = '<span class="label label-danger">ERROR</span>';

@@ -149,7 +149,7 @@ if (isset($_GET['id'])) {
                                             <th>End</th>
                                             <th>Days</th>
                                             <th></th>
-                                            <th>Accepted by</th>
+                                            <th>Status changed by</th>
                                             <th>Type</th>
                                             <th></th>
                                         </tr>

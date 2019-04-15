@@ -8,13 +8,13 @@ class Vacation
     var $end;
     var $days;
     var $user;
-    var $accepted = false;
-    var $user_accepted = null;
+    var $status = 'Pending';
+    var $user_status = null;
     var $vacation_type;
     var $create_date;
     var $update_date;
 
-    function __construct($id, $title, $description, $start, $end, $days, User $user, $accepted, $user_accepted, $vacation_type, $create_date, $update_date)
+    function __construct($id, $title, $description, $start, $end, $days, User $user, $status, $user_status, $vacation_type, $create_date, $update_date)
     {
         $this->id = $id;
         $this->title = $title;
@@ -23,8 +23,8 @@ class Vacation
         $this->end = $end;
         $this->days = $days;
         $this->user = $user;
-        $this->accepted = $accepted;
-        $this->user_accepted = $user_accepted;
+        $this->status = $status;
+        $this->user_status = $user_status;
         $this->vacation_type = $vacation_type;
         $this->create_date = $create_date;
         $this->update_date = $update_date;
@@ -34,11 +34,11 @@ class Vacation
     {
         if ($result->num_rows == 1) {
             $row = $result->fetch_assoc();
-            $user_id_accepted = null;
-            if ($row['user_id_accepted'] != null) {
-                $user_id_accepted = User::construct_id(new Database(), $row['user_id_accepted']);
+            $user_id_status = null;
+            if ($row['user_id_status'] != null) {
+                $user_id_status = User::construct_id(new Database(), $row['user_id_status']);
             } else {
-                $user_id_accepted = array("id" => null, "username" => "");
+                $user_id_status = array("id" => null, "username" => "");
             }
             $instance = new self(
                 $row['id'],
@@ -48,8 +48,8 @@ class Vacation
                 $row['end'],
                 $row['days'],
                 User::construct_id(new Database(), $row['user_id']),
-                $row['accepted'],
-                $user_id_accepted,
+                $row['status'],
+                $user_id_status,
                 VacationType::construct_id(new Database(), $row['vacation_type_id']),
                 $row['create_date'],
                 $row['update_date']
@@ -91,17 +91,17 @@ class Vacation
 
     function accept(Database $database, User $user)
     {
-        $this->accepted = 1;
-        $this->user_accepted = $user;
-        return $database->update("UPDATE `vacation` SET `accepted`=1, `user_id_accepted`=$user->id WHERE `id`=$this->id;");
+        $this->status = 'Accepted';
+        $this->user_status = $user;
+        return $database->update("UPDATE `vacation` SET `status`='Accepted', `user_id_status`=$user->id WHERE `id`=$this->id;");
     }
 
     function refuse(Database $database, User $user)
     {
-        //$this->refused = 1;
-        //$this->user_refused = $user;
-        //return $database->update("UPDATE `vacation` SET `refused`=1, `user_id_refused`=$user->id WHERE `id`=$this->id;");
-        return $database->delete("DELETE FROM `vacation` WHERE `id`=$this->id;");
+        $this->status = 'Refused';
+        $this->user_status = $user;
+        return $database->update("UPDATE `vacation` SET `status`='Refused', `user_id_status`=$user->id WHERE `id`=$this->id;");
+        //return $database->delete("DELETE FROM `vacation` WHERE `id`=$this->id;");
     }
 
     function cancel(Database $database, User $user)
@@ -109,10 +109,10 @@ class Vacation
         if ($this->user != $user) {
             return false;
         }
-        //$this->canceled = 1;
-        //$this->user_canceled = $user;
-        //return $database->update("UPDATE `vacation` SET `canceled`=1, `user_id_canceled`=$user->id WHERE `id`=$this->id;");
-        return $database->delete("DELETE FROM `vacation` WHERE `id`=$this->id;");
+        $this->status = 'Canceled';
+        $this->user_status = $user;
+        return $database->update("UPDATE `vacation` SET `status`='Canceled', `user_id_status`=$user->id WHERE `id`=$this->id;");
+        //return $database->delete("DELETE FROM `vacation` WHERE `id`=$this->id;");
     }
 
     function to_json()

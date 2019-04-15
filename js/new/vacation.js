@@ -96,8 +96,8 @@ function setVacationTable(table) {
             { data: 'start' },
             { data: 'end' },
             { data: 'days' },
-            { data: 'accepted' },
-            { data: 'user_accepted.username' },
+            { data: 'status' },
+            { data: 'user_status.username' },
             { data: 'vacation_type.name' },
             { data: 'id' }
         ],
@@ -110,11 +110,17 @@ function setVacationTable(table) {
                 targets: 5,
                 render: function (data, type, row) {
                     switch (data) {
-                        case "0":
+                        case "Pending":
                             data = '<span class="label label-warning">Pending</span>';
                             break;;
-                        case "1":
+                        case "Accepted":
                             data = '<span class="label label-success">Accepted</span>';
+                            break;;
+                        case "Refused":
+                            data = '<span class="label label-danger">Refused</span>';
+                            break;;
+                        case "Canceled":
+                            data = '<span class="label label-danger">Canceled</span>';
                             break;;
                         default:
                             data = '<span class="label label-danger">ERROR</span>';

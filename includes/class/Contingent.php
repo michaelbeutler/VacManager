@@ -52,7 +52,7 @@ class Contingent
     {
         $contingent = self::construct_from_user_id($database, $user->id);
 
-        $result = $database->select("SELECT SUM(`days`) AS 'USED DAYS' FROM `vacation` WHERE `vacation_type_id`=1 AND YEAR(`start`)='" . $year . "' AND `accepted`=1 AND `user_id`=" . $user->id . ";");
+        $result = $database->select("SELECT SUM(`days`) AS 'USED DAYS' FROM `vacation` WHERE `vacation_type_id`=1 AND YEAR(`start`)='" . $year . "' AND `status`='Accepted' AND `user_id`=" . $user->id . ";");
         while ($row = $result->fetch_assoc()) {
             $contingent->used_days = floatval($row['USED DAYS']);
             $contingent->left_days = ($contingent->contingent - $contingent->used_days);

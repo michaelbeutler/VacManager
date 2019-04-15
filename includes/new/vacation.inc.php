@@ -25,7 +25,7 @@ if (isset($_GET['action'])) {
                             $response->data->accepted[$i] = 0;
                         }
 
-                        if ($result = $database->select("SELECT MONTH(`start`) AS 'm', SUM(`days`) AS 'c' FROM `vacation` WHERE `accepted`=1 AND YEAR(`start`)='" . date("Y") . "' AND `user_id`=" . User::getCurrentUser($database)->id . " GROUP BY MONTH(`start`);")) {
+                        if ($result = $database->select("SELECT MONTH(`start`) AS 'm', SUM(`days`) AS 'c' FROM `vacation` WHERE `status`='Accepted' AND YEAR(`start`)='" . date("Y") . "' AND `user_id`=" . User::getCurrentUser($database)->id . " GROUP BY MONTH(`start`);")) {
                             if ($result->num_rows > 0) {
                                 while ($row = $result->fetch_assoc()) {
                                     $response->data->accepted[($row['m'] - 1)] = $row['c'];
@@ -38,7 +38,7 @@ if (isset($_GET['action'])) {
                             $response->data->pending[$i] = 0;
                         }
 
-                        if ($result = $database->select("SELECT MONTH(`start`) AS 'm', SUM(`days`) AS 'c' FROM `vacation` WHERE `accepted`=0 AND YEAR(`start`)='" . date("Y") . "' AND `user_id`=" . User::getCurrentUser($database)->id . " GROUP BY MONTH(`start`);")) {
+                        if ($result = $database->select("SELECT MONTH(`start`) AS 'm', SUM(`days`) AS 'c' FROM `vacation` WHERE `status`='Pending' AND YEAR(`start`)='" . date("Y") . "' AND `user_id`=" . User::getCurrentUser($database)->id . " GROUP BY MONTH(`start`);")) {
                             if ($result->num_rows > 0) {
                                 while ($row = $result->fetch_assoc()) {
                                     $response->data->pending[($row['m'] - 1)] = $row['c'];
@@ -52,7 +52,7 @@ if (isset($_GET['action'])) {
                         $response->data->accepted = 0;
                         $response->data->pending = 0;
 
-                        if ($result = $database->select("SELECT COUNT(*) AS 'c' FROM `vacation` WHERE `accepted`=1 AND YEAR(`start`)='" . date("Y") . "' AND `user_id`=" . User::getCurrentUser($database)->id . ";")) {
+                        if ($result = $database->select("SELECT COUNT(*) AS 'c' FROM `vacation` WHERE `status`='Accepted' AND YEAR(`start`)='" . date("Y") . "' AND `user_id`=" . User::getCurrentUser($database)->id . ";")) {
                             if ($result->num_rows > 0) {
                                 while ($row = $result->fetch_assoc()) {
                                     $response->data->accepted = $row['c'];
@@ -60,7 +60,7 @@ if (isset($_GET['action'])) {
                             }
                         }
 
-                        if ($result = $database->select("SELECT COUNT(*) AS 'c' FROM `vacation` WHERE `accepted`=0 AND YEAR(`start`)='" . date("Y") . "' AND `user_id`=" . User::getCurrentUser($database)->id . ";")) {
+                        if ($result = $database->select("SELECT COUNT(*) AS 'c' FROM `vacation` WHERE `status`='Pending' AND YEAR(`start`)='" . date("Y") . "' AND `user_id`=" . User::getCurrentUser($database)->id . ";")) {
                             if ($result->num_rows > 0) {
                                 while ($row = $result->fetch_assoc()) {
                                     $response->data->pending = $row['c'];
@@ -73,7 +73,7 @@ if (isset($_GET['action'])) {
                         $response->code = 200;
                         $response->description = 'success';
 
-                        if ($result = $database->select("SELECT `title`, `description`, `start`, `end`, `days`, `accepted` FROM `vacation` WHERE `user_id`=" . User::getCurrentUser($database)->id . ";")) {
+                        if ($result = $database->select("SELECT `title`, `description`, `start`, `end`, `days`, `status` FROM `vacation` WHERE `user_id`=" . User::getCurrentUser($database)->id . ";")) {
                             if ($result->num_rows > 0) {
                                 while ($row = $result->fetch_assoc()) {
                                     $row['start'] = date_format(date_create($row['start']), 'd.m.Y');
@@ -171,8 +171,10 @@ if (isset($_GET['action'])) {
                 date_add($end, date_interval_create_from_date_string("1 days"));
 
                 $background_color = 'orange';
-                if ($vacation->accepted == 1) {
+                if ($vacation->status == 'Accepted') {
                     $background_color = 'green';
+                } else if ($vacation->status == 'Canceled') {
+                    $background_color = 'red';
                 }
 
                 $event = array(

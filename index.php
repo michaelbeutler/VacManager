@@ -218,10 +218,10 @@ if (!User::check_login(new Database())) {
             </div>
             <!-- page end-->
 
-            <div id="vac-add-modal" class="modal fade" taincludesdex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true" style="display: none;">
+            <div class="modal fade add-vacation-modal" taincludesdex="-1" role="dialog" aria-hidden="true" style="display: none;">
                 <div class="modal-dialog">
                     <div class="modal-content">
-                        <form class="form-horizontal" role="form" id="addVacForm" action="#">
+                        <form class="form-horizontal add-vacation-form" role="form" action="#">
                             <div class="modal-header">
                                 <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
                                 <h4 class="modal-title">Add Vacation</h4>
@@ -232,7 +232,7 @@ if (!User::check_login(new Database())) {
                                     <div class="col-12 form-group">
                                         <label class="col-md-2 control-label">Title</label>
                                         <div class="col-md-10">
-                                            <input id="addVacTitle" type="text" class="form-control" value="">
+                                            <input type="text" class="form-control add-vacation-title" value="">
                                         </div>
                                     </div>
                                 </div>
@@ -240,7 +240,7 @@ if (!User::check_login(new Database())) {
                                     <div class="col-12 form-group">
                                         <label class="col-md-2 control-label">Description</label>
                                         <div class="col-md-10">
-                                            <input id="addVacDescription" type="text" class="form-control" value="">
+                                            <input type="text" class="form-control add-vacation-description" value="">
                                         </div>
                                     </div>
                                 </div>
@@ -248,13 +248,13 @@ if (!User::check_login(new Database())) {
                                     <div class="col-6 form-group">
                                         <label class="col-md-2 control-label">Start</label>
                                         <div class="col-md-10">
-                                            <input id="addVacStart" type="date" class="form-control" value="">
+                                            <input type="date" class="form-control add-vacation-start" value="">
                                         </div>
                                     </div>
                                     <div class="col-6 form-group">
                                         <label class="col-md-2 control-label">End</label>
                                         <div class="col-md-10">
-                                            <input id="addVacEnd" type="date" class="form-control" value="">
+                                            <input type="date" class="form-control add-vacation-end" value="">
                                         </div>
                                     </div>
                                 </div>
@@ -262,7 +262,7 @@ if (!User::check_login(new Database())) {
                                     <div class="col-12 form-group">
                                         <label class="col-md-2 control-label">Number of Days</label>
                                         <div class="col-md-10">
-                                            <input id="addVacNumDay" type="number" class="form-control" step="any">
+                                            <input type="number" class="form-control add-vacation-days" step="any">
                                         </div>
                                     </div>
                                 </div>
@@ -270,7 +270,7 @@ if (!User::check_login(new Database())) {
                                     <div class="col-12 form-group">
                                         <label class="col-md-2 control-label">Type</label>
                                         <div class="col-md-10">
-                                            <select class="form-control" id="vacationTypeSelection">
+                                            <select class="form-control add-vacation-type">
                                             </select>
 
                                         </div>
@@ -327,7 +327,8 @@ if (!User::check_login(new Database())) {
 
     <script src="js/getContingent.js"></script>
 
-    <script src="js/addVacation.js"></script>
+    <script src="js/new/vacationType.js"></script>
+    <script src="js/new/vacation.js"></script>
     <script src="js/index.js"></script>
 
     <script src="https://unpkg.com/lodash"></script>
@@ -335,6 +336,15 @@ if (!User::check_login(new Database())) {
     <!-- Global site tag (gtag.js) - Google Analytics -->
     <script async src="https://www.googletagmanager.com/gtag/js?id=UA-136503205-1"></script>
     <script>
+        $(document).ready(function() {
+            // set vacation types
+            setVacationTypeInput($('.add-vacation-type'));
+
+            // set vacation modal
+            setAddVacationForm($('.add-vacation-form'));
+
+            setVacationTable($('.table-vacation'));
+        });
         window.dataLayer = window.dataLayer || [];
 
         function gtag() {

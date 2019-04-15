@@ -140,7 +140,7 @@ if (isset($_GET['id'])) {
                         </div>
                         <div class="panel-body">
                             <div class="col-md-12 col-sm-12 col-xs-12">
-                                <table class="table table-hover" id="vacationTable">
+                                <table class="table table-hover table-vacation">
                                     <thead>
                                         <tr>
                                             <th>Title</th>
@@ -158,7 +158,7 @@ if (isset($_GET['id'])) {
                                     </tbody>
                                 </table>
                             </div>
-                            <button class="btn btn-default m-b-5" data-toggle="modal" data-target="#vac-add-modal">
+                            <button class="btn btn-default m-b-5" data-toggle="modal" data-target=".add-vacation-modal">
                                 <i class="ion-plus"></i> <span style="margin-left: 10px;">Add
                                     Vacation</span> </button>
                         </div>
@@ -167,10 +167,10 @@ if (isset($_GET['id'])) {
             </div>
             <!-- page end-->
 
-            <div id="vac-add-modal" class="modal fade" taincludesdex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true" style="display: none;">
+            <div class="modal fade add-vacation-modal" taincludesdex="-1" role="dialog" aria-hidden="true" style="display: none;">
                 <div class="modal-dialog">
                     <div class="modal-content">
-                        <form class="form-horizontal" role="form" id="addVacForm" action="#">
+                        <form class="form-horizontal add-vacation-form" role="form" action="#">
                             <div class="modal-header">
                                 <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
                                 <h4 class="modal-title">Add Vacation</h4>
@@ -181,7 +181,7 @@ if (isset($_GET['id'])) {
                                     <div class="col-12 form-group">
                                         <label class="col-md-2 control-label">Title</label>
                                         <div class="col-md-10">
-                                            <input id="addVacTitle" type="text" class="form-control" value="">
+                                            <input type="text" class="form-control add-vacation-title" value="">
                                         </div>
                                     </div>
                                 </div>
@@ -189,7 +189,7 @@ if (isset($_GET['id'])) {
                                     <div class="col-12 form-group">
                                         <label class="col-md-2 control-label">Description</label>
                                         <div class="col-md-10">
-                                            <textarea id="addVacDescription" type="text" class="form-control" value=""></textarea>
+                                            <textarea type="text" class="form-control add-vacation-description" value=""></textarea>
                                         </div>
                                     </div>
                                 </div>
@@ -197,13 +197,13 @@ if (isset($_GET['id'])) {
                                     <div class="col-6 form-group">
                                         <label class="col-md-2 control-label">Start</label>
                                         <div class="col-md-10">
-                                            <input id="addVacStart" type="date" class="form-control" value="">
+                                            <input type="date" class="form-control add-vacation-start" value="">
                                         </div>
                                     </div>
                                     <div class="col-6 form-group">
                                         <label class="col-md-2 control-label">End</label>
                                         <div class="col-md-10">
-                                            <input id="addVacEnd" type="date" class="form-control" value="">
+                                            <input type="date" class="form-control add-vacation-end" value="">
                                         </div>
                                     </div>
                                 </div>
@@ -211,7 +211,7 @@ if (isset($_GET['id'])) {
                                     <div class="col-12 form-group">
                                         <label class="col-md-2 control-label">Number of Days</label>
                                         <div class="col-md-10">
-                                            <input id="addVacNumDay" type="number" class="form-control" step="any">
+                                            <input type="number" class="form-control add-vacation-days" step="any">
                                         </div>
                                     </div>
                                 </div>
@@ -219,13 +219,11 @@ if (isset($_GET['id'])) {
                                     <div class="col-12 form-group">
                                         <label class="col-md-2 control-label">Type</label>
                                         <div class="col-md-10">
-                                            <select class="form-control" id="vacationTypeSelection">
+                                            <select class="form-control add-vacation-type">
                                             </select>
-
                                         </div>
                                     </div>
                                 </div>
-
 
                             </div>
                             <div class="modal-footer">
@@ -266,18 +264,24 @@ if (isset($_GET['id'])) {
     <script src="assets/datatables/jquery.dataTables.min.js"></script>
     <script src="assets/datatables/dataTables.bootstrap.js"></script>
 
-    <script src="assets/notifications/notify.min.js"></script>
-    <script src="assets/notifications/notify-metro.js"></script>
-    <script src="assets/notifications/notifications.js"></script>
     <script src="assets/sweet-alert/sweet-alert.min.js"></script>
     <script src="assets/sweet-alert/sweet-alert.init.js"></script>
 
-    <script src="js/vacation.js"></script>
-    <script src="js/addVacation.js"></script>
+    <script src="js/new/vacationType.js"></script>
+    <script src="js/new/vacation.js"></script>
 
     <!-- Global site tag (gtag.js) - Google Analytics -->
     <script async src="https://www.googletagmanager.com/gtag/js?id=UA-136503205-1"></script>
     <script>
+        $(document).ready(function() {
+            // set vacation types
+            setVacationTypeInput($('.add-vacation-type'));
+
+            // set vacation modal
+            setAddVacationForm($('.add-vacation-form'));
+
+            setVacationTable($('.table-vacation'));
+        });
         window.dataLayer = window.dataLayer || [];
 
         function gtag() {

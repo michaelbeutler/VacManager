@@ -1,22 +1,52 @@
-$(document).ready(function () {
-    function callback(data) {
-        $('#vacationTypeSelection').html('');
-        $(data.types).each(function (index, type) {
-            $('#vacationTypeSelection').append('<option value="' + type.id + '">' + type.name + '</option>');
-        });
-    };
+function setAddVacationForm(form) {
+    var title = $(form).find('.add-vacation-title');
+    var description = $(form).find('.add-vacation-description');
+    var start = $(form).find('.add-vacation-start');
+    var end = $(form).find('.add-vacation-end');
+    var days = $(form).find('.add-vacation-days');
+    var type = $(form).find('.add-vacation-type');
 
-    $.ajax({
-        type: "GET",
-        dataType: 'json',
-        url: "./includes/get_vacation_type.php",
-        async: true,
-        contentType: "application/json; charset=utf-8",
-        success: function (data) {
-            callback(data);
+    $(form).on('submit', function (e) {
+        e.preventDefault();
+
+        function callback(data) {
+            switch (data.code) {
+                case 200:
+                    // success
+                    $('.add-vacation-modal').modal('hide');
+                    break;
+                default:
+                    console.error(data.description);
+                    break;
+            }
         }
+
+        $.ajax({
+            type: "GET",
+            dataType: 'json',
+            url: "./includes/new/vacation.inc.php",
+            async: true,
+            data: {
+                "action": "CREATE_VACATION",
+                "title": $(title).val(),
+                "description": $(description).val(),
+                "start": $(start).val(),
+                "end": $(end).val(),
+                "days": $(days).val(),
+                "vacation_type_id": $(type).val()
+            },
+            contentType: "application/json; charset=utf-8",
+            success: function (data) {
+                callback(data);
+            }
+        });
+
+        return false;
     });
-    var table = $('#vacationTable').on('init.dt', function () {
+}
+
+function setVacationTable(table) {
+    var table = $(table).on('init.dt', function () {
         $('.btn-vacation-delete').click(function () {
             var btn = $(this);
             var id = $(this).data('id');
@@ -119,4 +149,4 @@ $(document).ready(function () {
             }
         ]
     });
-})
+}

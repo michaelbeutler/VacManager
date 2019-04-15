@@ -30,4 +30,19 @@ class VacationType
         $vacation = self::construct_mysql($database->select('SELECT * FROM `vacation_type` WHERE `id`=' . $id . ';'));
         return $vacation;
     }
+
+    static function getAll(Database $database)
+    {
+        $vacation_type_array = (array)null;
+        $result = $database->select("SELECT * FROM `vacation_type`;");
+
+        if ($result->num_rows > 0) {
+            while ($row = $result->fetch_assoc()) {
+                $vacation_type = self::construct_id($database, $row['id']);
+                $vacation_type_array[] = $vacation_type;
+            }
+        }
+
+        return $vacation_type_array;
+    }
 }

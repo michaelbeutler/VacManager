@@ -169,7 +169,7 @@ if (isset($_GET['action'])) {
                 $end = date_create($vacation->end);
 
                 date_add($end, date_interval_create_from_date_string("1 days"));
-                
+
                 $background_color = 'orange';
                 if ($vacation->accepted == 1) {
                     $background_color = 'green';
@@ -180,7 +180,8 @@ if (isset($_GET['action'])) {
                     'start' => $start,
                     'end' => date_format($end, 'Y-m-d'),
                     'allDay' => true,
-                    'backgroundColor' => $background_color
+                    'backgroundColor' => $background_color,
+                    'url' => 'vacation.php?id=' . $vacation->id
                 );
                 $response[] = $event;
             }

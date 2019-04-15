@@ -1,22 +1,5 @@
 $(document).ready(function () {
     refreshDashboard();
-    function callback(data) {
-        $('#vacationTypeSelection').html('');
-        $(data.types).each(function (index, type) {
-            $('#vacationTypeSelection').append('<option value="' + type.id + '">' + type.name + '</option>');
-        });
-    };
-
-    $.ajax({
-        type: "GET",
-        dataType: 'json',
-        url: "./includes/get_vacation_type.php",
-        async: true,
-        contentType: "application/json; charset=utf-8",
-        success: function (data) {
-            callback(data);
-        }
-    });
 
     $('#vacationTable').dataTable({
         ajax: {

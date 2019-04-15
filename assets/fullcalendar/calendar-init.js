@@ -62,7 +62,7 @@
 
                     // your event source
                     {
-                        url: './includes/get_vacations.php', // use the `url` property
+                        url: './includes/new/vacation.inc.php?action=FULLCALENDAR', // use the `url` property
                     }
 
                 ]

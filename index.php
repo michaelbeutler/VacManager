@@ -240,7 +240,7 @@ if (!User::check_login(new Database())) {
                                     <div class="col-12 form-group">
                                         <label class="col-md-2 control-label">Description</label>
                                         <div class="col-md-10">
-                                            <input type="text" class="form-control add-vacation-description" value="">
+                                            <textarea type="text" class="form-control add-vacation-description" value=""></textarea>
                                         </div>
                                     </div>
                                 </div>

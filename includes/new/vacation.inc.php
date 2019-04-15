@@ -161,6 +161,30 @@ if (isset($_GET['action'])) {
                 $response->description = 'parameters missing';
             }
             break;
+        case 'FULLCALENDAR':
+            $response = (array)null;
+            $vacations = Vacation::getAll($database, User::getCurrentUser($database));
+            foreach ($vacations as $key => $vacation) {
+                $start = date_format(date_create($vacation->start), 'Y-m-d');
+                $end = date_create($vacation->end);
+
+                date_add($end, date_interval_create_from_date_string("1 days"));
+                
+                $background_color = 'orange';
+                if ($vacation->accepted == 1) {
+                    $background_color = 'green';
+                }
+
+                $event = array(
+                    'title' => $vacation->title . ' - ' . $vacation->days . ' Day(s)',
+                    'start' => $start,
+                    'end' => date_format($end, 'Y-m-d'),
+                    'allDay' => true,
+                    'backgroundColor' => $background_color
+                );
+                $response[] = $event;
+            }
+            break;
         default:
             # code...
             break;

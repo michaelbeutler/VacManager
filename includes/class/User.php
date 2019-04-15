@@ -53,12 +53,13 @@ class User
     }
 
     static function construct_id(Database $database, $id)
-    {  
+    {
         $user = self::construct_mysql($database->select("SELECT * FROM `user` WHERE `id`=" . $id . ";"));
         return $user;
     }
 
-    static function login(Database $database, $username, $password) {
+    static function login(Database $database, $username, $password)
+    {
         if (!isset($database, $username, $password)) {
             return false;
         }
@@ -76,22 +77,27 @@ class User
         return false;
     }
 
-    static function logout() {
+    static function logout()
+    {
         return Session::destroy();
     }
 
-    static function check_login($database, $check_if_admin = 0) {
+    static function check_login($database, $check_if_admin = 0)
+    {
         if (isset($_SESSION['user_id'], $_SESSION['user_password'], $_SESSION['user_is_admin'])) {
             $user = User::construct_id($database, $_SESSION['user_id']);
             if ($user->password == $_SESSION['user_password'] && $user->is_banned != 1) {
-                if ($check_if_admin == 1 && $user->admin != 1) {return false;}
+                if ($check_if_admin == 1 && $user->admin != 1) {
+                    return false;
+                }
                 return true;
             }
         }
         return false;
     }
 
-    static function getCurrentUser($database) {
+    static function getCurrentUser($database)
+    {
         if (self::check_login($database)) {
             return User::construct_id($database, $_SESSION['user_id']);
         }

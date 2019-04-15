@@ -228,7 +228,14 @@ if (!User::check_login(new Database())) {
                             </div>
                             <div class="modal-body">
 
-
+                                <div class="row">
+                                    <div class="col-12 form-group">
+                                        <label class="col-md-2 control-label">Title</label>
+                                        <div class="col-md-10">
+                                            <input id="addVacTitle" type="text" class="form-control" value="">
+                                        </div>
+                                    </div>
+                                </div>
                                 <div class="row">
                                     <div class="col-12 form-group">
                                         <label class="col-md-2 control-label">Description</label>
@@ -255,7 +262,7 @@ if (!User::check_login(new Database())) {
                                     <div class="col-12 form-group">
                                         <label class="col-md-2 control-label">Number of Days</label>
                                         <div class="col-md-10">
-                                            <input id="addVacNumDay" type="number" class="form-control" value="1.0">
+                                            <input id="addVacNumDay" type="number" class="form-control" step="any">
                                         </div>
                                     </div>
                                 </div>

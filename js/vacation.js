@@ -18,6 +18,7 @@ $(document).ready(function () {
     });
     var table = $('#vacationTable').on('init.dt', function () {
         $('.btn-vacation-delete').click(function () {
+            var btn = $(this);
             var id = $(this).data('id');
             swal({
                 title: "Are you sure?",
@@ -42,7 +43,7 @@ $(document).ready(function () {
                         switch (data.code) {
                             case 200:
                                 // success
-                                $(this).fadeOut();
+                                $(btn).parent().parent().fadeOut();
                                 swal("Vacation/Request canceled", "Your vacations are canceled now!", "success");
                                 break;
                             default:
@@ -67,7 +68,8 @@ $(document).ready(function () {
             { data: 'days' },
             { data: 'accepted' },
             { data: 'user_accepted.username' },
-            { data: 'vacation_type.name' }
+            { data: 'vacation_type.name' },
+            { data: 'id' }
         ],
         paging: true,
         responsiv: true,

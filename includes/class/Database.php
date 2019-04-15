@@ -41,8 +41,9 @@ class Database
         }
     }
 
-    function insert($query) {
-        $this->open();  
+    function insert($query)
+    {
+        $this->open();
         $result = $this->conn->query($query);
         $this->close();
         return $result;

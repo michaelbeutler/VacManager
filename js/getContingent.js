@@ -2,11 +2,8 @@ function getContingent(year, callback) {
     $.ajax({
         type: "GET",
         dataType: 'json',
-        url: "./includes/get_contingent.php",
+        url: "./includes/new/contingent.inc.php",
         async: true,
-        data: {
-            "year": year
-        },
         contentType: "application/json; charset=utf-8",
         success: function (data) {
             switch (data.code) {

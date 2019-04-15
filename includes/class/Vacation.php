@@ -38,7 +38,7 @@ class Vacation
             if ($row['user_id_accepted'] != null) {
                 $user_id_accepted = User::construct_id(new Database(), $row['user_id_accepted']);
             } else {
-                $user_id_accepted = array("id"=>null,"username"=>"");
+                $user_id_accepted = array("id" => null, "username" => "");
             }
             $instance = new self(
                 $row['id'],
@@ -64,20 +64,25 @@ class Vacation
         return $vacation;
     }
 
-    static function create($database, $title, $description, $start, $end, $days, User $user, $vacation_type_id) {
+    static function create($database, $title, $description, $start, $end, $days, User $user, $vacation_type_id)
+    {
         return $database->insert("
             INSERT INTO `vacation` (`title`, `description`, `start`, `end`, `days`, `user_id`, `vacation_type_id`)
             VALUES ('$title', '$description', '$start', '$end', $days, $user->id, $vacation_type_id);
         ");
     }
 
-    static function getAll(Database $database, User $user) {
+    static function getAll(Database $database, User $user)
+    {
         $vacation_array = (array)null;
         $result = $database->select("SELECT * FROM `vacation` WHERE `user_id`=" . $user->id . ";");
 
         if ($result->num_rows > 0) {
             while ($row = $result->fetch_assoc()) {
-                $vacation_array[] = self::construct_id($database, $row['id']);
+                $vacation = self::construct_id($database, $row['id']);
+                $vacation->start = date_format(date_create($vacation->start), 'd.m.Y');
+                $vacation->end = date_format(date_create($vacation->end), 'd.m.Y');
+                $vacation_array[] = $vacation;
             }
         }
 

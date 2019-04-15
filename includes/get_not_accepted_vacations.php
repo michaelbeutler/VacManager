@@ -26,8 +26,8 @@ if ($result->num_rows < 1) {
     $response->description = 'no vacation request found';
     $response->requests = null;
 } else {
-    $request = (object)array();
     while($row = $result->fetch_assoc()) {
+        $request = (object)array();
         $request->id = $row['VID'];
         $request->username = $row['username'];
         $request->employer_id = $row['employer_id'];

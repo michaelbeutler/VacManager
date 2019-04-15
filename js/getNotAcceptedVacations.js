@@ -32,10 +32,10 @@ function acceptVacation(id) {
         $.ajax({
             type: "GET",
             dataType: 'json',
-            url: "./includes/vacation.php",
+            url: "./includes/new/vacation.inc.php",
             async: true,
             data: {
-                "action": "accept",
+                "action": "ACCEPT_VACATION",
                 "id": id
             },
             contentType: "application/json; charset=utf-8",
@@ -73,10 +73,10 @@ function refuseVacation(id) {
         $.ajax({
             type: "GET",
             dataType: 'json',
-            url: "./includes/vacation.php",
+            url: "./includes/new/vacation.inc.php",
             async: true,
             data: {
-                "action": "refuse",
+                "action": "REFUSE_VACATION",
                 "id": id
             },
             contentType: "application/json; charset=utf-8",

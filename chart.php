@@ -125,7 +125,7 @@ if (!User::check_login(new Database())) {
                 <div class="col-md-12">
                     <div class="panel panel-default">
                         <div class="panel-heading">
-                            <h3 class="panel-title">Charts</h3>
+                            <h3 class="panel-title">Charts for <?php echo date("Y"); ?></h3>
                         </div>
                         <div class="panel-body">
                             <div class="row">
@@ -201,8 +201,8 @@ if (!User::check_login(new Database())) {
                     data: {
                         datasets: [{
                             data: [
-                                vacation.used,
-                                vacation.left
+                                vacation.data.used_days,
+                                vacation.data.left_days
                             ],
                             backgroundColor: [
                                 window.chartColors.blue,
@@ -221,14 +221,14 @@ if (!User::check_login(new Database())) {
                 };
 
 
-                getNotAccepted(function(notAccepted) {
+                getNotAccepted(function(data) {
                     var config2 = {
                         type: 'pie',
                         data: {
                             datasets: [{
                                 data: [
-                                    vacation.used,
-                                    notAccepted.requests.length
+                                    data.accepted,
+                                    data.pending
                                 ],
                                 backgroundColor: [
                                     window.chartColors.blue,
@@ -338,11 +338,15 @@ if (!User::check_login(new Database())) {
             $.ajax({
                 type: "GET",
                 dataType: 'json',
-                url: "./includes/get_not_accepted_vacations.php",
+                url: "./includes/new/vacation.inc.php",
+                data: {
+                    action: 'GET_ALL_VACATIONS',
+                    view: 'PENDING'
+                }, 
                 async: true,
                 contentType: "application/json; charset=utf-8",
                 success: function(data) {
-                    callback(data);
+                    callback(data.data);
                 }
             });
         }

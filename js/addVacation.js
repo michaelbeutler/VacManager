@@ -2,6 +2,7 @@ $(document).ready(function () {
     $('#addVacForm').submit(function (e) {
         e.preventDefault();
 
+        var title = $('#addVacTitle').val();
         var description = $('#addVacDescription').val();
         var start = $('#addVacStart').val();
         var end = $('#addVacEnd').val();
@@ -23,14 +24,16 @@ $(document).ready(function () {
         $.ajax({
             type: "GET",
             dataType: 'json',
-            url: "./includes/add_vacation.php",
+            url: "./includes/new/vacation.inc.php",
             async: true,
             data: {
-                "title": description,
+                "action": "CREATE_VACATION",
+                "title": title,
+                "description": description,
                 "start": start,
                 "end": end,
-                "numDays": numDays,
-                "vacType": vacType
+                "days": numDays,
+                "vacation_type_id": vacType
             },
             contentType: "application/json; charset=utf-8",
             success: function (data) {

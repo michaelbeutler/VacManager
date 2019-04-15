@@ -1,10 +1,12 @@
 <?php
-class VacationType {
+class VacationType
+{
     var $id;
     var $name;
     var $substract_vacation_days;
 
-    public function __construct($id, $name, $substract_vacation_days) {
+    public function __construct($id, $name, $substract_vacation_days)
+    {
         $this->id = $id;
         $this->name = $name;
         $this->substract_vacation_days = $substract_vacation_days;

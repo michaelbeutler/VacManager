@@ -51,8 +51,8 @@ if (isset($_GET['action'])) {
                         $response->description = 'success';
                         $response->data->accepted = 0;
                         $response->data->pending = 0;
-                        
-                        if ($result = $database->select("SELECT COUNT(*) AS 'c' FROM `vacation` WHERE `accepted`=1 AND YEAR(`start`)='" . date("Y") . "' AND `user_id`=" . User::getCurrentUser($database)->id . " GROUP BY MONTH(`start`);")) {
+
+                        if ($result = $database->select("SELECT COUNT(*) AS 'c' FROM `vacation` WHERE `accepted`=1 AND YEAR(`start`)='" . date("Y") . "' AND `user_id`=" . User::getCurrentUser($database)->id . ";")) {
                             if ($result->num_rows > 0) {
                                 while ($row = $result->fetch_assoc()) {
                                     $response->data->accepted = $row['c'];
@@ -60,7 +60,7 @@ if (isset($_GET['action'])) {
                             }
                         }
 
-                        if ($result = $database->select("SELECT COUNT(*) AS 'c' FROM `vacation` WHERE `accepted`=0 AND YEAR(`start`)='" . date("Y") . "' AND `user_id`=" . User::getCurrentUser($database)->id . " GROUP BY MONTH(`start`);")) {
+                        if ($result = $database->select("SELECT COUNT(*) AS 'c' FROM `vacation` WHERE `accepted`=0 AND YEAR(`start`)='" . date("Y") . "' AND `user_id`=" . User::getCurrentUser($database)->id . ";")) {
                             if ($result->num_rows > 0) {
                                 while ($row = $result->fetch_assoc()) {
                                     $response->data->pending = $row['c'];

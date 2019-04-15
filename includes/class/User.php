@@ -87,8 +87,10 @@ class User
         if (isset($_SESSION['user_id'], $_SESSION['user_password'], $_SESSION['user_is_admin'])) {
             $user = User::construct_id($database, $_SESSION['user_id']);
             if ($user->password == $_SESSION['user_password'] && $user->is_banned !== 1) {
-                if ($check_if_admin == 1 && $user->admin !== 1) {
-                    return true;
+                if ($check_if_admin == 1) {
+                    if ($user->admin == 0) {
+                        return false;
+                    }
                 }
                 return true;
             }

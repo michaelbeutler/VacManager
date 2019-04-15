@@ -208,7 +208,7 @@ if (!User::check_login(new Database())) {
                             </div>
                             <br />
                             <div class="row">
-                                <button class="btn btn-default m-b-5" data-toggle="modal" data-target=".vac-add-modal">
+                                <button class="btn btn-default m-b-5" data-toggle="modal" data-target=".add-vacation-modal">
                                     <i class="ion-plus"></i> <span style="margin-left: 10px;">Add
                                         Vacation</span> </button>
                             </div>

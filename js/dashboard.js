@@ -49,7 +49,6 @@ $(document).ready(function () {
 function refreshDashboard() {
     getContingent(new Date().getFullYear(), function (data) {
         if (data.code == 200) {
-            console.log(data);
             $('#vacDaysUsedPanel').text(data.data.used_days);
             $('#vacDaysLeftPanel').text(data.data.left_days);
             if (data.data.left_days <= 0) {

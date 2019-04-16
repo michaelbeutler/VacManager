@@ -1,6 +1,6 @@
 $(document).ready(function () {
     function fillTable(data) {
-        if (data.requests.length > 0) {
+        if (data.request !== null) {
             $('#tableVacationRequests tbody').empty();
         }
         $(data.requests).each(function (index, request) {

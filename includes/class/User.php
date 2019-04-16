@@ -107,6 +107,23 @@ class User
         return false;
     }
 
+    static function getAll(Database $database)
+    {
+        $user_array = (array)null;
+        $result = $database->select("SELECT * FROM `user`;");
+
+        if ($result->num_rows > 0) {
+            while ($row = $result->fetch_assoc()) {
+                $user = self::construct_id($database, $row['id']);
+                $user->create_date = date_format(date_create($user->create_date), 'd.m.Y');
+                $user->update_date = date_format(date_create($user->update_date), 'd.m.Y');
+                $user_array[] = $user;
+            }
+        }
+
+        return $user_array;
+    }
+
     function to_json()
     {
         return json_encode($this);

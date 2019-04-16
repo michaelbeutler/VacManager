@@ -1,5 +1,4 @@
 <?php
-
 abstract class Enum
 {
     final public function __construct($value)

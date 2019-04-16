@@ -1,8 +1,11 @@
 function getEmployerList(callback) {
     $.ajax({
-        type: "POST",
+        type: "GET",
         dataType: 'json',
-        url: "./includes/get_employer_list.php",
+        url: "./includes/new/employer.inc.php",
+        data: {
+            action: 'GET_ALL_EMPLOYERS'
+        },
         async: true,
         contentType: "application/json; charset=utf-8",
         success: function (data) {

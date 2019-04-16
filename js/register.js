@@ -4,7 +4,7 @@ $(document).ready(function () {
         switch (data.code) {
             case 200:
                 $('#selectEmployer').prop('disabled', false);
-                $(data.employer).each(function (index, element) {
+                $(data.data).each(function (index, element) {
                     $('#selectEmployer').append('<option value="' + element.id + '">' + element.name + '</option>')
                 });
                 break;

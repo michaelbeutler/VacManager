@@ -35,13 +35,13 @@ CREATE DATABASE `vac-manager`;
 quit
 
 # import sql to created database
-mysql -u root vac-manager < VacManager/sql/vacation_manager.sql
+mysql -u root vac-manager < VacManager/sql/vacation_manager2.sql
 ```
 
 Now you have to create a user for the app to work.
-Insert the credentials in the [dbconnect.php](https://github.com/MichiBeutler/VacManager/blob/master/includes/dbconnect.php)
+Insert the credentials in the [Database.php](https://github.com/MichiBeutler/VacManager/blob/master/includes/class/Database.php)
 ```
-nano VacManager/includes/dbconfig.php
+nano VacManager/includes/class/Database.php
 ```
 
 ## :books: Built With

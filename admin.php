@@ -156,6 +156,7 @@ if (!User::check_login(new Database(), 1)) {
                                         <th>Email</th>
                                         <th>Firstname</th>
                                         <th>Lastname</th>
+                                        <th>Employer</th>
                                         <th>Registration</th>
                                         <th>Modify</th>
                                     </tr>

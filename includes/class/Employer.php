@@ -37,6 +37,23 @@ class Employer
         return $employer;
     }
 
+    static function getAll(Database $database)
+    {
+        $employer_array = (array)null;
+        $result = $database->select("SELECT * FROM `employer`;");
+
+        if ($result->num_rows > 0) {
+            while ($row = $result->fetch_assoc()) {
+                $employer = self::construct_id($database, $row['id']);
+                $employer->start = date_format(date_create($employer->start), 'd.m.Y');
+                $employer->end = date_format(date_create($employer->end), 'd.m.Y');
+                $employer_array[] = $employer;
+            }
+        }
+
+        return $employer_array;
+    }
+
     function to_json()
     {
         return json_encode($this);

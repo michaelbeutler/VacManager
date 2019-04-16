@@ -6,15 +6,15 @@ $(document).ready(function () {
         switch (data.code) {
             case 200:
                 // success
-                users = data.users;
-                employers = data.employers;
+                users = data.data;
 
-                $(data.users).each(function (index, user) {
+                $(data.data).each(function (index, user) {
                     var content = '<td>' + user.id + '</td>';
                     content += '<td>' + user.username + '</td>';
                     content += '<td><a href="mailto:' + user.email + '">' + user.email + '</a></td>';
                     content += '<td>' + user.firstname + '</td>';
                     content += '<td>' + user.lastname + '</td>';
+                    content += '<td>' + user.employer.name + '</td>';
                     content += '<td>' + user.create_date + '</td>';
                     content += '<td>' + user.update_date + '</td>';
                     var element = $('<tr class="user-entry" onclick="showUser(this);">' + content + '</tr>');
@@ -34,7 +34,7 @@ $(document).ready(function () {
     $.ajax({
         type: "GET",
         dataType: 'json',
-        url: "./includes/admin.php",
+        url: "./includes/new/admin.inc.php",
         async: true,
         contentType: "application/json; charset=utf-8",
         success: function (data) {
@@ -52,7 +52,7 @@ function showUser(element) {
 
     $('.selected-username').text(user.username);
 
-    var employer = employers.find(function (element) { return element.id == user.employer_id });
+    var employer = user.employer;
     $('.selected-employer-name').html('<i class="fa fa-map-marker"> ' + employer.name);
 
     $('#logInAsOtherUser').prop('disabled', false);

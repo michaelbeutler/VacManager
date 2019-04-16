@@ -126,13 +126,23 @@ if (!User::check_login(new Database())) {
 
         <div class="wraper container-fluid">
             <div class="row">
-                <div class="col-md-12">
+                <div class="col-12 col-md-7">
                     <div class="panel panel-default">
                         <div class="panel-heading">
                             <h3 class="panel-title">Calendar</h3>
                         </div>
                         <div class="panel-body">
                             <div id='calendar'></div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-12 col-md-5">
+                    <div class="panel panel-default">
+                        <div class="panel-heading">
+                            <h3 class="panel-title">Add Vacation</h3>
+                        </div>
+                        <div class="panel-body">
+                            
                         </div>
                     </div>
                 </div>
@@ -171,20 +181,6 @@ if (!User::check_login(new Database())) {
 
     <script src="js/getContingent.js"></script>
     <script src="https://unpkg.com/lodash"></script>
-    <script src="js/class.js"></script>
-
-    <script>
-        $(document).ready(function() {
-            <?php if (isset($_SESSION['loadClassEvents'])) {
-                if ($_SESSION['loadClassEvents'] == 1) {
-                    ?>
-                    getClassEvents(<?php echo $_SESSION['user_class']; ?>);
-                <?php
-            }
-        }
-        ?>
-        });
-    </script>
 
     <!-- Global site tag (gtag.js) - Google Analytics -->
     <script async src="https://www.googletagmanager.com/gtag/js?id=UA-136503205-1"></script>
@@ -197,14 +193,6 @@ if (!User::check_login(new Database())) {
         gtag('js', new Date());
 
         gtag('config', 'UA-136503205-1');
-    </script>
-
-    <script async src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
-    <script>
-        (adsbygoogle = window.adsbygoogle || []).push({
-            google_ad_client: "ca-pub-9786069099496281",
-            enable_page_level_ads: true
-        });
     </script>
 
 </body>

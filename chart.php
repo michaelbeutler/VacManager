@@ -63,7 +63,7 @@ if (!User::check_login(new Database())) {
         <nav class="navigation">
             <ul class="list-unstyled">
                 <li><a href="index.php"><i class="ion-home"></i> <span class="nav-label">Dashboard</span></a></li>
-                <li><a href="calendar.php"><i class="ion-calendar"></i> <span class="badge badge-warning float-right">NEW</span><span class="nav-label">Calendar</span></a></li>
+                <!--<li><a href="calendar.php"><i class="ion-calendar"></i> <span class="badge badge-warning float-right">NEW</span><span class="nav-label">Calendar</span></a></li>-->
                 <li><a href="vacation.php"><i class="fa fa-star"></i> <span class="nav-label">Vacation</span></a></li>
                 <li class="active"><a href="chart.php"><i class="ion-stats-bars"></i> <span class="badge badge-warning float-right">NEW</span><span class="nav-label">Charts</span></a></li>
                 <?php if (check_employer_privileges($_SESSION['employer_id'], new Priv(Priv::GENERAL))) {
@@ -216,7 +216,11 @@ if (!User::check_login(new Database())) {
                         ]
                     },
                     options: {
-                        responsive: true
+                        responsive: true,
+                        legend: {
+                            display: true,
+                            position: 'right'
+                        }
                     }
                 };
 
@@ -236,7 +240,7 @@ if (!User::check_login(new Database())) {
                                     window.chartColors.blue,
                                     window.chartColors.green,
                                     window.chartColors.red,
-                                    window.chartColors.yellow
+                                    window.chartColors.orange
                                 ],
                                 label: 'Vacations'
                             }],

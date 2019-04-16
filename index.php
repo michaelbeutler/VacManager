@@ -36,6 +36,7 @@ if (!User::check_login(new Database())) {
 
     <!-- DataTables -->
     <link href="assets/datatables/jquery.dataTables.min.css" rel="stylesheet" type="text/css" />
+    <link href="css/responsive.dataTables.min.css" rel="stylesheet" type="text/css" />
 
     <!--Icon-fonts css-->
     <link href="assets/font-awesome/css/font-awesome.css" rel="stylesheet" />
@@ -73,7 +74,7 @@ if (!User::check_login(new Database())) {
         <nav class="navigation">
             <ul class="list-unstyled">
                 <li class="active"><a href="index.php"><i class="ion-home"></i> <span class="nav-label">Dashboard</span></a></li>
-                <li><a href="calendar.php"><i class="ion-calendar"></i> <span class="badge badge-warning float-right">NEW</span><span class="nav-label">Calendar</span></a></li>
+                <!--<li><a href="calendar.php"><i class="ion-calendar"></i> <span class="badge badge-warning float-right">NEW</span><span class="nav-label">Calendar</span></a></li>-->
                 <li><a href="vacation.php"><i class="fa fa-star"></i> <span class="nav-label">Vacation</span></a></li>
                 <li><a href="chart.php"><i class="ion-stats-bars"></i> <span class="badge badge-warning float-right">NEW</span><span class="nav-label">Charts</span></a></li>
                 <?php if (check_employer_privileges($_SESSION['employer_id'], new Priv(Priv::GENERAL))) {
@@ -182,8 +183,9 @@ if (!User::check_login(new Database())) {
             </div> <!-- end row -->
 
             <div class="row">
-                <div id='calendar' class="col-lg-7"></div>
-                <div class="col-md-5">
+                <div id='calendar' class="col-lg-7 col-12"></div>
+                <br>
+                <div class="col-lg-5 col-12">
                     <div class="panel panel-default">
                         <div class="panel-heading">
                             <h3 class="panel-title">Vacation</h3>
@@ -316,12 +318,12 @@ if (!User::check_login(new Database())) {
 
     <script src="assets/fullcalendar/moment.min.js"></script>
     <script src="assets/fullcalendar/fullcalendar.min.js"></script>
-    <!--dragging calendar event-->
 
     <script src="assets/fullcalendar/calendar-init.js"></script>
 
     <script src="assets/datatables/jquery.dataTables.min.js"></script>
     <script src="assets/datatables/dataTables.bootstrap.js"></script>
+    <script src="js/dataTables.responsive.min.js"></script>
 
     <script src="js/jquery.app.js"></script>
 
@@ -329,7 +331,7 @@ if (!User::check_login(new Database())) {
 
     <script src="js/new/vacationType.js"></script>
     <script src="js/new/vacation.js"></script>
-    <script src="js/index.js"></script>
+    <script src="js/dashboard.js"></script>
 
     <script src="https://unpkg.com/lodash"></script>
 

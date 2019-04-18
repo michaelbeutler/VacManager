@@ -49,7 +49,7 @@
                 },
                 editable: false,
                 weekNumbers: true,
-                eventLimit: true, // allow "more" link when too many events
+                eventLimit: false, // allow "more" link when too many events
                 droppable: false, // this allows things to be dropped onto the calendar !!!
                 eventClick: function (info) {
                     info.jsEvent.preventDefault(); // don't let the browser navigate

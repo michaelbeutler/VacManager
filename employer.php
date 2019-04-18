@@ -163,6 +163,7 @@ $employerPriv = EmployerPriv::construct_user($database, $user, $user->employer);
                                         <th>Start</th>
                                         <th>End</th>
                                         <th>Days</th>
+                                        <th>Type</th>
                                         <th>Status</th>
                                         <th>Request date</th>
                                         <th></th>

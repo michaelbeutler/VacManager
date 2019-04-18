@@ -79,6 +79,7 @@ class Employer
                     $vacation = Vacation::construct_id($database, $row['id']);
                     $vacation->start = date_format(date_create($vacation->start), 'd.m.Y');
                     $vacation->end = date_format(date_create($vacation->end), 'd.m.Y');
+                    $vacation->create_date = date_format(date_create($vacation->create_date), 'd.m.Y H:m');
                     $vacation->employer = null;
                     $vacation->user->password = null;
                     $vacation->user->salt = null;

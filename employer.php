@@ -134,12 +134,23 @@ $employerPriv = EmployerPriv::construct_user($database, $user, $user->employer);
 
         <div class="wraper container-fluid">
             <div class="row">
-                <div class="col-md-12">
-                    <div class="panel panel-default">
-                        <div class="panel-heading">
-                            <h3 class="panel-title">Employer</h3>
-                        </div>
-                        <div class="panel-body">
+                <div class="col-lg-12">
+                    <ul class="nav nav-tabs">
+                        <li class="">
+                            <a href="#list-tab" data-toggle="tab" aria-expanded="false">
+                                <span class="visible-xs"><i class="fa fa-home"></i></span>
+                                <span class="hidden-xs">List</span>
+                            </a>
+                        </li>
+                        <li class="active">
+                            <a href="#calendar-tab" data-toggle="tab" aria-expanded="true">
+                                <span class="visible-xs"><i class="fa fa-user"></i></span>
+                                <span class="hidden-xs">Calendar</span>
+                            </a>
+                        </li>
+                    </ul>
+                    <div class="tab-content">
+                        <div class="tab-pane" id="list-tab">
                             <?php if (EmployerPriv::check_employer_priv(new Database(), User::getCurrentUser(new Database())->employer, new Priv(Priv::CAN_ACCEPT))) echo '
                                 <br>
                                 <h4>' . $_SESSION['employer_name'] . ' - Vacation requests</h4>
@@ -163,29 +174,42 @@ $employerPriv = EmployerPriv::construct_user($database, $user, $user->employer);
                                 <br>
                             '; ?>
                         </div>
-                    </div>
-                </div>
-                <div class="row">
-                    <div class="col-md-12">
-                        <div class="panel panel-default">
-                            <div class="panel-body">
-                                <?php if (EmployerPriv::check_employer_priv(new Database(), User::getCurrentUser(new Database())->employer, new Priv(Priv::CAN_ACCEPT))) echo '
-                                <div id="calendar" class="col-12"></div>
-                            '; ?>
+                        <div class="tab-pane active" id="calendar-tab">
+                            <div class="row">
+                                <div id="calendar" class="col-lg-7 col-sm-12"></div>
+                                <div class="col-lg-5 col-sm-12">
+                                    <table class="table table-striped table-bordered" id="tableVacationRequests1">
+                                        <thead>
+                                            <tr>
+                                                <th>Username</th>
+                                                <th>Date</th>
+                                                <th>Days</th>
+                                                <th></th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            <tr>
+                                                <td colspan="4">no requests pending</td>
+                                            </tr>
+                                        </tbody>
+                                    </table>
+                                </div>
                             </div>
                         </div>
                     </div>
                 </div>
-                <!-- page end-->
             </div>
-            <!-- Page Content Ends -->
-            <!-- ================== -->
+        </div>
+        <!-- page end-->
+        </div>
+        <!-- Page Content Ends -->
+        <!-- ================== -->
 
-            <!-- Footer Start -->
-            <footer class="footer">
-                <?php echo date('Y'); ?> © iperka.com.
-            </footer>
-            <!-- Footer Ends -->
+        <!-- Footer Start -->
+        <footer class="footer">
+            <?php echo date('Y'); ?> © iperka.com.
+        </footer>
+        <!-- Footer Ends -->
 
 
 

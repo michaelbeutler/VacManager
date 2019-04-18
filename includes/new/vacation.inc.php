@@ -133,7 +133,7 @@ if (isset($_GET['action'])) {
             }
             break;
         case 'ACCEPT_VACATION':
-            if (isset($_GET['id'])) {
+            if (isset($_GET['id']) && EmployerPriv::check_employer_priv(new Database(), User::getCurrentUser(new Database())->employer, new Priv(Priv::CAN_ACCEPT))) {
                 if (Vacation::construct_id($database, $_GET['id'])->accept($database, User::getCurrentUser($database))) {
                     $response->code = 200;
                     $response->description = 'success';
@@ -148,7 +148,7 @@ if (isset($_GET['action'])) {
             }
             break;
         case 'REFUSE_VACATION':
-            if (isset($_GET['id'])) {
+            if (isset($_GET['id']) && EmployerPriv::check_employer_priv(new Database(), User::getCurrentUser(new Database())->employer, new Priv(Priv::CAN_ACCEPT))) {
                 if (Vacation::construct_id($database, $_GET['id'])->refuse($database, User::getCurrentUser($database))) {
                     $response->code = 200;
                     $response->description = 'success';
@@ -179,7 +179,16 @@ if (isset($_GET['action'])) {
             break;
         case 'FULLCALENDAR':
             $response = (array)null;
-            $vacations = Vacation::getAll($database, User::getCurrentUser($database));
+            $vacations = (array)null;
+            if (isset($_GET['view']) && $_GET['view'] == 'EMPLOYER') {
+                $users = Employer::getAllEmployee($database, User::getCurrentUser($database)->employer);
+                foreach ($users as $key => $user) {
+                    $vacations = array_merge($vacations, Vacation::getAll($database, $user));
+                }
+            } else {
+                $vacations = Vacation::getAll($database, User::getCurrentUser($database));
+            }
+
             foreach ($vacations as $key => $vacation) {
                 $start = date_format(date_create($vacation->start), 'Y-m-d');
                 $end = date_create($vacation->end);
@@ -193,14 +202,27 @@ if (isset($_GET['action'])) {
                     $background_color = 'red';
                 }
 
-                $event = array(
-                    'title' => $vacation->title . ' - ' . $vacation->days . ' Day(s)',
-                    'start' => $start,
-                    'end' => date_format($end, 'Y-m-d'),
-                    'allDay' => true,
-                    'backgroundColor' => $background_color,
-                    'url' => 'vacation.php?id=' . $vacation->id
-                );
+                if (isset($_GET['view']) && $_GET['view'] == 'EMPLOYER') {
+                    $event = array(
+                        'title' => $vacation->user->username . ': ' . $vacation->days . ' Day(s)',
+                        'start' => $start,
+                        'end' => date_format($end, 'Y-m-d'),
+                        'allDay' => true,
+                        'backgroundColor' => $background_color,
+                        'url' => 'vacation.php?id=' . $vacation->id
+                    );
+                } else {
+                    $event = array(
+                        'title' => $vacation->title . ' - ' . $vacation->days . ' Day(s)',
+                        'start' => $start,
+                        'end' => date_format($end, 'Y-m-d'),
+                        'allDay' => true,
+                        'backgroundColor' => $background_color,
+                        'url' => 'vacation.php?id=' . $vacation->id
+                    );
+                }
+
+                
                 $response[] = $event;
             }
             break;

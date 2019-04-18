@@ -4,9 +4,9 @@ $response->code = 500;
 $response->description = 'internal server error';
 
 require('./class/Autoload.php');
-require('check_employer_privileges.php');
+
 Session::start();
-if (!User::check_login(new Database()) || !check_employer_privileges($_SESSION['employer_id'], new Priv(Priv::CAN_ACCEPT))) {
+if (!User::check_login(new Database()) || !EmployerPriv::check_employer_priv(new Database(), User::getCurrentUser(new Database())->employer, new Priv(Priv::CAN_ACCEPT))) {
     $response->code = 403;
     $response->description = 'not allowed';
     echo json_encode($response);

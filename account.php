@@ -1,6 +1,6 @@
 <?php
 require('includes/class/Autoload.php');
-require('includes/check_employer_privileges.php');
+
 Session::start();
 if (!User::check_login(new Database())) {
     header("Location: login.html?next=account.php");
@@ -70,7 +70,7 @@ if (!User::check_login(new Database())) {
                 <!--<li><a href="calendar.php"><i class="ion-calendar"></i> <span class="badge badge-warning float-right">NEW</span><span class="nav-label">Calendar</span></a></li>-->
                 <li><a href="vacation.php"><i class="fa fa-star"></i> <span class="nav-label">Vacation</span></a></li>
                 <li><a href="chart.php"><i class="ion-stats-bars"></i> <span class="badge badge-warning float-right">NEW</span><span class="nav-label">Charts</span></a></li>
-                <?php if (check_employer_privileges($_SESSION['employer_id'], new Priv(Priv::GENERAL))) {
+                <?php if (EmployerPriv::check_employer_priv(new Database(), User::getCurrentUser(new Database())->employer, new Priv(Priv::GENERAL))) {
                     echo '<li><a href="employer.php"><i class="fa fa-building"></i> <span class="badge badge-warning float-right">NEW</span><span class="nav-label">Employer</span></a></li>';
                 } ?>
                 <li class="active"><a href="account.php"><i class="fa fa-lock"></i> <span class="badge badge-warning float-right">NEW</span><span class="nav-label">Account</span></a></li>

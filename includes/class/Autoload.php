@@ -12,3 +12,4 @@ require('VacationType.php');
 require('Session.php');
 require('User.php');
 require('Employer.php');
+require('EmployerPriv.php');

@@ -17,9 +17,10 @@ if (!User::check_login($database)) {
 if (isset($_GET['action'])) {
     switch ($_GET['action']) {
         case 'GET_PRIVILEGES':
+            $user = User::getCurrentUser($database);
             $response->code = 200;
             $response->description = 'success';
-            $response->data = Employer::getAll($database);
+            $response->data = EmployerPriv::construct_user($database, $user, $user->employer);
             break;
     }
 } else {

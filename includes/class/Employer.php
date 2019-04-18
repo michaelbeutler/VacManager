@@ -54,6 +54,21 @@ class Employer
         return $employer_array;
     }
 
+    static function getAllEmployee(Database $database, Employer $employer)
+    {
+        $user_array = (array)null;
+        $result = $database->select("SELECT * FROM `user` WHERE `employer_id`=". $employer->id .";");
+
+        if ($result->num_rows > 0) {
+            while ($row = $result->fetch_assoc()) {
+                $user = User::construct_id($database, $row['id']);
+                $user_array[] = $user;
+            }
+        }
+
+        return $user_array;
+    }
+
     function to_json()
     {
         return json_encode($this);

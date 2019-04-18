@@ -204,12 +204,12 @@ if (isset($_GET['action'])) {
 
                 if (isset($_GET['view']) && $_GET['view'] == 'EMPLOYER') {
                     $event = array(
+                        'id' => $vacation->id,
                         'title' => $vacation->user->username . ': ' . $vacation->days . ' Day(s)',
                         'start' => $start,
                         'end' => date_format($end, 'Y-m-d'),
                         'allDay' => true,
-                        'backgroundColor' => $background_color,
-                        'url' => 'vacation.php?id=' . $vacation->id
+                        'backgroundColor' => $background_color
                     );
                 } else {
                     $event = array(

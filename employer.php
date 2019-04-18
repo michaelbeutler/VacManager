@@ -53,7 +53,6 @@ $employerPriv = EmployerPriv::construct_user($database, $user, $user->employer);
           <script src="js/html5shiv.js"></script>
           <script src="js/respond.min.js"></script>
         <![endif]-->
-
 </head>
 
 
@@ -178,7 +177,7 @@ $employerPriv = EmployerPriv::construct_user($database, $user, $user->employer);
                             <div class="row">
                                 <div id="calendar" class="col-lg-7 col-sm-12"></div>
                                 <div class="col-lg-5 col-sm-12">
-                                    <table class="table table-striped table-bordered" id="tableVacationRequests1">
+                                    <table class="table table-bordered" id="tableVacationRequests1">
                                         <thead>
                                             <tr>
                                                 <th>Username</th>

@@ -6,7 +6,7 @@ $(document).ready(function () {
         }
         $(data.requests).each(function (index, request) {
             $('#tableVacationRequests').find('tbody').append('<tr id="request' + request.id + '"><td>' + request.username + '</td><td>' + request.title + '</td><td>' + request.start + ' - ' + request.end + '</td><td>' + request.days + '</td><td>' + request.create_date + '</td><td><button onclick="acceptVacation(' + request.id + ')" class="btn btn-success">Accept</button> <button onclick="refuseVacation(' + request.id + ')" class="btn btn-danger">Refuse</button></td></tr>');
-            $('#tableVacationRequests1').find('tbody').append('<tr id="request' + request.id + '"><td>' + request.username + '</td><td>' + request.start + ' - ' + request.end + '</td><td>' + request.days + '</td><td><button onclick="acceptVacation(' + request.id + ')" class="btn btn-success">Accept</button> <button onclick="refuseVacation(' + request.id + ')" class="btn btn-danger">Refuse</button></td></tr>');
+            $('#tableVacationRequests1').find('tbody').append('<tr id="crequest' + request.id + '"><td>' + request.username + '</td><td>' + request.start + ' - ' + request.end + '</td><td>' + request.days + '</td><td><button onclick="acceptVacation(' + request.id + ')" class="btn btn-success">Accept</button> <button onclick="refuseVacation(' + request.id + ')" class="btn btn-danger">Refuse</button></td></tr>');
         });
     }
     $.ajax({

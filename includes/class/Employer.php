@@ -69,6 +69,29 @@ class Employer
         return $user_array;
     }
 
+    function getAllVacations($database) {
+        if (EmployerPriv::check_employer_priv($database, $this, new Priv(Priv::CAN_ACCEPT))) {
+            $vacation_array = (array)null;
+            $result = $database->select("SELECT `vacation`.`id` FROM `vacation` LEFT JOIN `user` ON `vacation`.`user_id`=`user`.`id` WHERE `status`='Pending' AND `employer_id`=" . $this->id . ";");
+    
+            if ($result->num_rows > 0) {
+                while ($row = $result->fetch_assoc()) {
+                    $vacation = Vacation::construct_id($database, $row['id']);
+                    $vacation->start = date_format(date_create($vacation->start), 'd.m.Y');
+                    $vacation->end = date_format(date_create($vacation->end), 'd.m.Y');
+                    $vacation->employer = null;
+                    $vacation->user->password = null;
+                    $vacation->user->salt = null;
+                    $vacation_array[] = $vacation;
+                }
+            }
+    
+            return $vacation_array;
+        } else {
+            return false;
+        }  
+    } 
+
     function to_json()
     {
         return json_encode($this);

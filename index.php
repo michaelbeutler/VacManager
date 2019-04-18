@@ -193,7 +193,7 @@ if (!User::check_login(new Database())) {
                         <div class="panel-body">
                             <div class="row">
                                 <div class="col-md-12 col-sm-12 col-xs-12">
-                                    <table class="table table-striped" id="vacationTable">
+                                    <table class="table table-striped table-responsiv" id="vacationTable">
                                         <thead>
                                             <tr>
                                                 <th>Title</th>

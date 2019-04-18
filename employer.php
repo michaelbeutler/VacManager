@@ -35,6 +35,10 @@ $employerPriv = EmployerPriv::construct_user($database, $user, $user->employer);
     <!--Animation css-->
     <link href="css/animate.css" rel="stylesheet">
 
+    <!-- DataTables -->
+    <link href="assets/datatables/jquery.dataTables.min.css" rel="stylesheet" type="text/css" />
+
+
     <!--Icon-fonts css-->
     <link href="assets/font-awesome/css/font-awesome.css" rel="stylesheet" />
     <link href="assets/ionicon/css/ionicons.min.css" rel="stylesheet" />
@@ -150,46 +154,40 @@ $employerPriv = EmployerPriv::construct_user($database, $user, $user->employer);
                     </ul>
                     <div class="tab-content">
                         <div class="tab-pane" id="list-tab">
-                            <?php if (EmployerPriv::check_employer_priv(new Database(), User::getCurrentUser(new Database())->employer, new Priv(Priv::CAN_ACCEPT))) echo '
-                                <br>
-                                <h4>' . $_SESSION['employer_name'] . ' - Vacation requests</h4>
-                                <table class="table table-striped table-bordered" id="tableVacationRequests">
-                                    <thead>
-                                        <tr>
-                                            <th>Username</th>
-                                            <th>Title</th>
-                                            <th>Date</th>
-                                            <th>Days</th>
-                                            <th>Request date</th>
-                                            <th></th>
-                                        </tr>
-                                    </thead>
-                                    <tbody>
-                                        <tr>
-                                            <td colspan="6">no requests pending</td>
-                                        </tr>
-                                    </tbody>
-                                </table>
-                                <br>
-                            '; ?>
+
+                            <br>
+                            <table class="table table-striped table-bordered table-responsiv" id="table-vacation-detail" style="min-height: 500px;">
+                                <thead>
+                                    <tr>
+                                        <th>Username</th>
+                                        <th>Start</th>
+                                        <th>End</th>
+                                        <th>Days</th>
+                                        <th>Status</th>
+                                        <th>Request date</th>
+                                        <th></th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                </tbody>
+                            </table>
+                            <br>
                         </div>
                         <div class="tab-pane active" id="calendar-tab">
                             <div class="row">
                                 <div id="calendar" class="col-lg-7 col-sm-12"></div>
                                 <div class="col-lg-5 col-sm-12">
-                                    <table class="table table-bordered" id="tableVacationRequests1">
+                                    <table class="table table-bordered table-responsiv" id="table-vacation" style="min-height: 500px;">
                                         <thead>
                                             <tr>
                                                 <th>Username</th>
-                                                <th>Date</th>
+                                                <th>Start</th>
+                                                <th>End</th>
                                                 <th>Days</th>
                                                 <th></th>
                                             </tr>
                                         </thead>
                                         <tbody>
-                                            <tr>
-                                                <td colspan="4">no requests pending</td>
-                                            </tr>
                                         </tbody>
                                     </table>
                                 </div>
@@ -226,13 +224,18 @@ $employerPriv = EmployerPriv::construct_user($database, $user, $user->employer);
     <script src="assets/sweet-alert/sweet-alert.min.js"></script>
     <script src="assets/sweet-alert/sweet-alert.init.js"></script>
 
-    <?php if (EmployerPriv::check_employer_priv(new Database(), User::getCurrentUser(new Database())->employer, new Priv(Priv::GENERAL))) echo '
-        <script src="assets/fullcalendar/moment.min.js"></script>
-        <script src="assets/fullcalendar/fullcalendar.min.js"></script>
-        <script src="assets/fullcalendar/calendar-employer-init.js"></script>
-        <script src="js/getNotAcceptedVacations.js"></script>
-    '; ?>
 
+    <script src="assets/datatables/jquery.dataTables.min.js"></script>
+    <script src="assets/datatables/dataTables.bootstrap.js"></script>
+    <script src="assets/fullcalendar/moment.min.js"></script>
+    <script src="assets/fullcalendar/fullcalendar.min.js"></script>
+    <script src="assets/fullcalendar/calendar-employer-init.js"></script>
+    <script src="js/new/employer.js"></script>
+
+    <script>
+        setVacationTable($('#table-vacation'));
+        setVacationTableDetail($('#table-vacation-detail'));
+    </script>
 
     <!-- Global site tag (gtag.js) - Google Analytics -->
     <script async src="https://www.googletagmanager.com/gtag/js?id=UA-136503205-1"></script>

@@ -140,7 +140,7 @@ if (isset($_GET['id'])) {
                         </div>
                         <div class="panel-body">
                             <div class="col-md-12 col-sm-12 col-xs-12">
-                                <table class="table table-hover table-vacation">
+                                <table class="table table-hover table-vacation table-responsiv">
                                     <thead>
                                         <tr>
                                             <th>Title</th>

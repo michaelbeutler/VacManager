@@ -99,6 +99,12 @@ if (isset($_GET['action'])) {
                             }
                         }
                         break;
+                    case 'NOT_ACCEPTED':
+                        $response->code = 200;
+                        $response->description = 'success';
+                        $response->data = (array)null;
+                        $response->data = User::getCurrentUser($database)->employer->getAllVacations($database);
+                        break;
                 }
             } else {
                 $response->code = 200;
@@ -222,7 +228,7 @@ if (isset($_GET['action'])) {
                     );
                 }
 
-                
+
                 $response[] = $event;
             }
             break;

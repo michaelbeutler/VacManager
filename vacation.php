@@ -228,13 +228,49 @@ if (isset($_GET['id'])) {
                             </div>
                             <div class="modal-footer">
                                 <button type="button" class="btn btn-white" data-dismiss="modal">Close</button>
-                                <button type="submit" class="btn btn-info">Save changes</button>
+                                <button type="submit" class="btn btn-info">Add</button>
                             </div>
                         </form>
                     </div>
                 </div>
             </div><!-- /.modal -->
 
+
+            <div class="modal fade edit-vacation-modal" taincludesdex="-1" role="dialog" aria-hidden="true" style="display: none;">
+                <div class="modal-dialog">
+                    <div class="modal-content">
+                        <form class="form-horizontal edit-vacation-form" role="form" action="#">
+                            <div class="modal-header">
+                                <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+                                <h4 class="modal-title">Edit Vacation</h4>
+                            </div>
+                            <div class="modal-body">
+
+                                <div class="row">
+                                    <div class="col-12 form-group">
+                                        <label class="col-md-2 control-label">Title</label>
+                                        <div class="col-md-10">
+                                            <input type="text" class="form-control edit-vacation-title" value="">
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="col-12 form-group">
+                                        <label class="col-md-2 control-label">Description</label>
+                                        <div class="col-md-10">
+                                            <textarea type="text" class="form-control edit-vacation-description" value=""></textarea>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="modal-footer">
+                                <button type="button" class="btn btn-white" data-dismiss="modal">Close</button>
+                                <button type="submit" class="btn btn-info">Save</button>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div><!-- /.modal -->
         </div>
         <!-- Page Content Ends -->
         <!-- ================== -->
@@ -279,6 +315,7 @@ if (isset($_GET['id'])) {
 
             // set vacation modal
             setAddVacationForm($('.add-vacation-form'));
+            setEditVacationForm($('.edit-vacation-form'));
 
             setVacationTable($('.table-vacation'));
         });

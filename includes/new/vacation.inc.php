@@ -138,6 +138,21 @@ if (isset($_GET['action'])) {
                 $response->description = 'parameters missing';
             }
             break;
+        case 'EDIT_VACATION':
+            if (isset($_GET['id'], $_GET['title'], $_GET['description'])) {
+                if (Vacation::construct_id($database, $_GET['id'])->update($database, htmlspecialchars($_GET['title']), htmlspecialchars($_GET['description']))) {
+                    $response->code = 200;
+                    $response->description = 'success';
+                } else {
+                    $response->code = 953;
+                    $response->description = 'Execute failed';
+                }
+            } else {
+                // Parameters missing
+                $response->code = 900;
+                $response->description = 'parameters missing';
+            }
+            break;
         case 'ACCEPT_VACATION':
             if (isset($_GET['id']) && EmployerPriv::check_employer_priv(new Database(), User::getCurrentUser(new Database())->employer, new Priv(Priv::CAN_ACCEPT))) {
                 if (Vacation::construct_id($database, $_GET['id'])->accept($database, User::getCurrentUser($database))) {

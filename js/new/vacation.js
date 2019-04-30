@@ -1,3 +1,4 @@
+var editVacationForm;
 function setAddVacationForm(form) {
     var title = $(form).find('.add-vacation-title');
     var description = $(form).find('.add-vacation-description');
@@ -45,6 +46,86 @@ function setAddVacationForm(form) {
     });
 }
 
+function setEditVacationForm(form) {
+    editVacationForm = $(form);
+    var title = $(form).find('.edit-vacation-title');
+    var description = $(form).find('.edit-vacation-description');
+
+    $(form).on('submit', function (e) {
+        e.preventDefault();
+
+        function callback(data) {
+            switch (data.code) {
+                case 200:
+                    // success
+                    $('.edit-vacation-modal').modal('hide');
+                    swal("Vacation/Request changed", "Your vacation is now updated!", "success");
+                    break;
+                default:
+                    console.error(data.description);
+                    break;
+            }
+        }
+
+        var id = $(form).data('id');
+
+        swal({
+            title: "Are you sure?",
+            text: "Do you want to save the changes this vacation/request?",
+            type: "warning",
+            showCancelButton: true,
+            confirmButtonColor: "#DD6B55",
+            confirmButtonText: "Yes",
+            closeOnConfirm: false
+        }, function () {
+            $.ajax({
+                type: "GET",
+                dataType: 'json',
+                url: "./includes/new/vacation.inc.php",
+                async: true,
+                data: {
+                    "action": "EDIT_VACATION",
+                    "id": id,
+                    "title": $(title).val(),
+                    "description": $(description).val()
+                },
+                contentType: "application/json; charset=utf-8",
+                success: function (data) {
+                    callback(data);
+                }
+            });
+        });
+
+    return false;
+});
+}
+
+function fillEditVacationForm(form, id) {
+    $.ajax({
+        type: "GET",
+        dataType: 'json',
+        url: "./includes/new/vacation.inc.php",
+        async: true,
+        data: {
+            "action": "GET_VACATION",
+            "id": id
+        },
+        contentType: "application/json; charset=utf-8",
+        success: function (data) {
+            var vacation = data.data;
+            $(form).data('id', id);
+
+            var title = $(form).find('.edit-vacation-title');
+            var description = $(form).find('.edit-vacation-description');
+
+            title.val(vacation.title);
+            description.val(vacation.description);
+
+            $(form).parent().parent().parent().modal('show')
+        }
+    });
+}
+
 function setVacationTable(table) {
     var table = $(table).on('init.dt', function () {
         $('.btn-vacation-delete').click(function () {
@@ -83,6 +164,11 @@ function setVacationTable(table) {
                     }
                 });
             });
+        });
+        $('.btn-vacation-edit').click(function (e) {
+            var btn = $(this);
+            var id = $(this).data('id');
+            fillEditVacationForm($(editVacationForm), id);
         });
     }).dataTable({
         ajax: {
@@ -150,7 +236,7 @@ function setVacationTable(table) {
                 orderData: false,
                 searchable: false,
                 render: function (data, type, row) {
-                    return '<button data-id="' + data + '" type="button" class="btn btn-secondary btn-bordered waves-effect btn-sm btn-vacation-delete"> <i class="fa fa-trash"></i> </button>';
+                    return '<button data-id="' + data + '" type="button" class="btn btn-secondary btn-bordered waves-effect btn-sm btn-vacation-edit"><i class="fa fa-edit"></i></button> <button data-id="' + data + '" type="button" class="btn btn-danger btn-bordered waves-effect btn-sm btn-vacation-delete"><i class="fa fa-trash"></i></button>';
                 }
             }
         ]

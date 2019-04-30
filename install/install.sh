@@ -8,6 +8,12 @@ echo " \___/  \__,_| \___| \_|  |_/ \__,_||_| |_| \__,_| \__, | \___||_|"
 echo "                                                   __/ |"            
 echo "                                                  |___/"      
 
+read -n1 -r -p "Press any key to continue..." key
+
+cat ./LICENSE
+
+read -n1 -r -p "Press any key to accept..." key
+
 DIR="$( cd "$( dirname "${BASH_SOURCE[0]}" )" >/dev/null 2>&1 && pwd )"
 
 read -p 'Mysql Username: ' username

@@ -4,18 +4,16 @@ $response->code = 500;
 $response->description = 'internal server error';
 
 // Check if all parameters given
-if (isset(
-    $_GET['firstname'], $_GET['lastname'], 
-    $_GET['username'], $_GET['email'],
-    $_GET['password'], $_GET['repeat'], 
-    $_GET['employerId'], 
-    $_GET['vacDays']
-    )) {
+if (isset($_GET['firstname'], $_GET['lastname'],
+$_GET['username'], $_GET['email'],
+$_GET['password'], $_GET['repeat'],
+$_GET['employerId'],
+$_GET['vacDays'])) {
 
     // personal data
     $firstname = htmlspecialchars($_GET['firstname']);
     $lastname = htmlspecialchars($_GET['lastname']);
-    
+
     // credentials
     $username = htmlspecialchars($_GET['username']);
     $email = htmlspecialchars($_GET['email']);
@@ -45,12 +43,12 @@ if (isset(
             } else {
                 // Generate random salt
                 $salt = hash('sha512', uniqid(openssl_random_pseudo_bytes(16), TRUE));
-                    
+
                 // set parameters and execute
                 $password = hash('sha512', $password . $salt);
 
                 // get accounts with same username
-                $sql = "SELECT * FROM `user` WHERE `username`='" . $username ."'";
+                $sql = "SELECT * FROM `user` WHERE `username`='" . $username . "'";
                 $result = $conn->query($sql);
 
                 // check if username already exists
@@ -61,7 +59,7 @@ if (isset(
                         $response->description = "Execute failed: (" . $stmt->errno . ") " . $stmt->error;
                     } else {
                         // get user id
-                        $sql = "SELECT `id`, `username` FROM `user` WHERE `username`='" . $username ."'";
+                        $sql = "SELECT `id`, `username` FROM `user` WHERE `username`='" . $username . "'";
                         if (!$result = $conn->query($sql)) {
                             // error while executing query
                             $response->code = 953;
@@ -72,7 +70,6 @@ if (isset(
                                 $row = $result->fetch_assoc();
                                 $sql = "INSERT INTO `contingent` (`year`, `contingent`, `user_id`) VALUES (" . date('Y') . "," . $vac_days . "," . $row['id'] . ")";
                                 $result = $conn->query($sql);
-                                
                             }
                             $stmt->close();
                             $conn->close();
@@ -86,12 +83,9 @@ if (isset(
                     $stmt->close();
                     $conn->close();
                 }
-                
             }
         }
     }
-
-   
 } else {
     // Parameters missing
     $response->code = 900;

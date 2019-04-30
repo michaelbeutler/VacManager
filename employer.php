@@ -156,7 +156,7 @@ $employerPriv = EmployerPriv::construct_user($database, $user, $user->employer);
                         <div class="tab-pane" id="list-tab">
 
                             <br>
-                            <table class="table table-striped table-bordered table-responsiv" id="table-vacation-detail" style="min-height: 500px;">
+                            <table class="table table-striped table-bordered table-responsiv" id="table-vacation-detail" style="min-height: 500px; max-height: 500px;">
                                 <thead>
                                     <tr>
                                         <th>Username</th>
@@ -178,7 +178,7 @@ $employerPriv = EmployerPriv::construct_user($database, $user, $user->employer);
                             <div class="row">
                                 <div id="calendar" class="col-lg-7 col-sm-12"></div>
                                 <div class="col-lg-5 col-sm-12">
-                                    <table class="table table-bordered table-responsiv" id="table-vacation" style="min-height: 500px;">
+                                    <table class="table table-bordered table-responsiv" id="table-vacation" style="min-height: 500px; max-height: 500px;">
                                         <thead>
                                             <tr>
                                                 <th>Username</th>

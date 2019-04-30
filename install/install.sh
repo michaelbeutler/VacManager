@@ -11,6 +11,7 @@ echo "                                                  |___/"
 DIR="$( cd "$( dirname "${BASH_SOURCE[0]}" )" >/dev/null 2>&1 && pwd )"
 
 read -p 'Mysql Username: ' username
-#mysql -u $username -p < $DIR/sql/vacation_manager2.sql
+mysql -u $username -p < $DIR/sql/vacation_manager2.sql
 
 echo "done"
+echo "no just adjust your database credentials in ./includes/class/Database.php"

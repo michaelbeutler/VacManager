@@ -4,6 +4,7 @@ class Session {
         return session_start();
     }
 
+
     static function destroy() {
         return session_destroy();
     }

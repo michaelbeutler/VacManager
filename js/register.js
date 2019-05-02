@@ -3,31 +3,101 @@ $(document).ready(function () {
     getEmployerList(function (data) {
         switch (data.code) {
             case 200:
-                $('#selectEmployer').prop('disabled', false);
+                $('#employer').prop('disabled', false);
                 $(data.data).each(function (index, element) {
-                    $('#selectEmployer').append('<option value="' + element.id + '">' + element.name + '</option>')
+                    $('#employer').append('<option selected value="">...</option>');
+                    $('#employer').append('<option value="' + element.id + '">' + element.name + '</option>');
                 });
                 break;
             case 201:
                 // 0 results
-                $('#selectEmployer').prop('disabled', true);
+                $('#employer').prop('disabled', true);
                 break;
             default:
-                $('#selectEmployer').prop('disabled', true);
+                $('#employer').prop('disabled', true);
                 console.error(data.description);
                 break;
         }
     });
 
+    $("#firstname").rules("add", {
+        required: true,
+        minlength: 2,
+        maxlength: 45,
+        messages: {
+            required: "Please provide a firstname",
+            minlength: "Your firstname must be at least 2 characters long",
+            maxlength: "Your firstname can be max 45 characters long"
+        }
+    });
+
+    $("#lastname").rules("add", {
+        required: true,
+        minlength: 2,
+        maxlength: 45,
+        messages: {
+            required: "Please provide a lastname",
+            minlength: "Your lastname must be at least 2 characters long",
+            maxlength: "Your lastname can be max 45 characters long"
+        }
+    });
+
+    $("#email").rules("add", {
+        required: true,
+        minlength: 6,
+        maxlength: 45,
+        messages: {
+            required: "Please provide a email",
+            minlength: "Your email must be at least 2 characters long",
+            maxlength: "Your email can be max 45 characters long"
+        }
+    });
+
+    $("#password").rules("add", {
+        required: true,
+        minlength: 5,
+        maxlength: 30,
+        messages: {
+            required: "Please provide a password",
+            minlength: "Your password must be at least 2 characters long",
+            maxlength: "Your password can be max 45 characters long"
+        }
+    });
+
+    $("#confirm_password").rules("add", {
+        required: true,
+        messages: {
+            required: "Please confirm your password"
+        }
+    });
+
+    $("#employer").rules("add", {
+        required: true,
+        messages: {
+            required: "Please provide a employer"
+        }
+    });
+
+    $("#agree").rules("add", {
+        required: true,
+        messages: {
+            required: "Please accept our term's"
+        }
+    });
+
+    // validate signup form on keyup and submit
+    $('#formRegister').validate({
+    });
+
     $('#formRegister').submit(function (e) {
         e.preventDefault();
 
-        var firstname = $('#inputFirstname').val();
-        var lastname = $('#inputLastname').val();
-        var email = $('#inputEmail').val();
-        var password1 = $('#inputPassword').val();
-        var password2 = $('#inputRepeatPassword').val();
-        var employer = $('#selectEmployer').val();
+        var firstname = $('#firstname').val();
+        var lastname = $('#lastname').val();
+        var email = $('#email').val();
+        var password1 = $('#password').val();
+        var password2 = $('#confirm_password').val();
+        var employer = $('#employer').val();
         //var currentVacDays = $('#currentVacDays').val();
 
         function callback(data) {

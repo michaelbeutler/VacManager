@@ -11,14 +11,42 @@ $_GET['employerId'],
 $_GET['vacDays'])) {
 
     // personal data
-    $firstname = htmlspecialchars($_GET['firstname']);
-    $lastname = htmlspecialchars($_GET['lastname']);
+    $firstname = trim(htmlspecialchars($_GET['firstname']));
+    $lastname = trim(htmlspecialchars($_GET['lastname']));
 
     // credentials
-    $username = htmlspecialchars($_GET['username']);
-    $email = htmlspecialchars($_GET['email']);
-    $password = htmlspecialchars($_GET['password']);
-    $repeat = htmlspecialchars($_GET['repeat']);
+    $username = preg_replace('/\s+/', ' ', trim(htmlspecialchars($_GET['username'])));
+    $email = trim(htmlspecialchars($_GET['email']));
+    $password = trim(htmlspecialchars($_GET['password']));
+    $repeat = trim(htmlspecialchars($_GET['repeat']));
+
+    if (strlen($firstname) > 45 || strlen($firstname) < 2) {
+        $response->code = 902;
+        $response->description = 'firstname length invalid';
+        echo json_encode($response);
+        die();
+    }
+
+    if (strlen($lastname) > 45 || strlen($lastname) < 2) {
+        $response->code = 902;
+        $response->description = 'lastname length invalid';
+        echo json_encode($response);
+        die();
+    }
+
+    if (strlen($username) > 91 || strlen($username) < 3) {
+        $response->code = 902;
+        $response->description = 'username length invalid';
+        echo json_encode($response);
+        die();
+    }
+
+    if (strlen($email) > 45 || strlen($firstname) < 6) {
+        $response->code = 902;
+        $response->description = 'email length invalid';
+        echo json_encode($response);
+        die();
+    }
 
     if ($password !== $repeat) {
         $response->code = 901;

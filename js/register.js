@@ -48,7 +48,7 @@ $(document).ready(function () {
         maxlength: 45,
         messages: {
             required: "Please provide a email",
-            minlength: "Your email must be at least 2 characters long",
+            minlength: "Your email must be at least 6 characters long",
             maxlength: "Your email can be max 45 characters long"
         }
     });
@@ -59,15 +59,17 @@ $(document).ready(function () {
         maxlength: 30,
         messages: {
             required: "Please provide a password",
-            minlength: "Your password must be at least 2 characters long",
+            minlength: "Your password must be at least 5 characters long",
             maxlength: "Your password can be max 45 characters long"
         }
     });
 
     $("#confirm_password").rules("add", {
         required: true,
+        equalTo: "#password",
         messages: {
-            required: "Please confirm your password"
+            required: "Please confirm your password",
+            equalTo: "Password's do not match"
         }
     });
 

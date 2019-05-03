@@ -66,7 +66,7 @@ class User
 
         Session::start();
 
-        $result = $database->select("SELECT * FROM `user` WHERE `username`='" . $username . "' LIMIT 1;");
+        $result = $database->select("SELECT * FROM `user` WHERE `username`='" . $username . "' OR `email`='" . $username . "' LIMIT 1;");
         if ($result->num_rows == 1) {
             if ($row = $result->fetch_assoc()) {
                 if ($row['password'] ==  hash('sha512', $password . $row['salt'])) {
@@ -89,7 +89,7 @@ class User
             $user = User::construct_id($database, $_SESSION['user_id']);
             if ($user->password == $_SESSION['user_password'] && $user->is_banned !== 1) {
                 if ($check_if_admin == 1) {
-                    if ($user->admin == 0) {        
+                    if ($user->admin == 0) {
                         return false;
                     }
                 }

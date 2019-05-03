@@ -64,21 +64,29 @@ class Vacation
         return $vacation;
     }
 
-    static function create($database, $title, $description, $start, $end, $days, User $user, $vacation_type_id)
+    static function create(Database $database, $title, $description, $start, $end, $days, User $user, $vacation_type_id)
     {
-        return $database->insert("
-            INSERT INTO `vacation` (`title`, `description`, `start`, `end`, `days`, `user_id`, `vacation_type_id`)
-            VALUES ('$title', '$description', '$start', '$end', $days, $user->id, $vacation_type_id);
-        ");
+        return $database->insert(
+            "vacation",
+            array(
+                'title' => $title, 'description' => $description, 'start' => $start, 'end' => $end,
+                'days' => $days, 'user_id' => $user->id, 'vacation_type_id' => $vacation_type_id
+            ),
+            array('%s', '%s', '%s', '%s', '%d', '%i', '%i')
+        );
     }
 
     function update($database, $title, $description)
     {
         $this->title = $title;
         $this->description = $description;
-        return $database->update("
-            UPDATE `vacation` SET `title`='$title', `description`='$description' WHERE `id`=$this->id;
-        ");
+        return $database->update(
+            'vacation',
+            array('title' => $title, 'description' => $description),
+            array('%s', '%s'),
+            array('ID' => $this->id),
+            array('%i')
+        );
     }
 
 
@@ -103,15 +111,26 @@ class Vacation
     {
         $this->status = 'Accepted';
         $this->user_status = $user;
-        return $database->update("UPDATE `vacation` SET `status`='Accepted', `user_id_status`=$user->id WHERE `id`=$this->id;");
+        return $database->update(
+            'vacation',
+            array('status' => 'Accepted', 'user_id_status' => $user->id),
+            array('%s', '%i'),
+            array('ID' => $this->id),
+            array('%i')
+        );
     }
 
     function refuse(Database $database, User $user)
     {
         $this->status = 'Refused';
         $this->user_status = $user;
-        return $database->update("UPDATE `vacation` SET `status`='Refused', `user_id_status`=$user->id WHERE `id`=$this->id;");
-        //return $database->delete("DELETE FROM `vacation` WHERE `id`=$this->id;");
+        return $database->update(
+            'vacation',
+            array('status' => 'Refused', 'user_id_status' => $user->id),
+            array('%s', '%i'),
+            array('ID' => $this->id),
+            array('%i')
+        );
     }
 
     function cancel(Database $database, User $user)
@@ -121,8 +140,13 @@ class Vacation
         }
         $this->status = 'Canceled';
         $this->user_status = $user;
-        return $database->update("UPDATE `vacation` SET `status`='Canceled', `user_id_status`=$user->id WHERE `id`=$this->id;");
-        //return $database->delete("DELETE FROM `vacation` WHERE `id`=$this->id;");
+        return $database->update(
+            'vacation',
+            array('status' => 'Canceled', 'user_id_status' => $user->id),
+            array('%s', '%i'),
+            array('ID' => $this->id),
+            array('%i')
+        );
     }
 
     function to_json()

@@ -3,6 +3,8 @@ $response = (object)array();
 $response->code = 500;
 $response->description = 'internal server error';
 
+require('./class/Autoload.php');
+
 // Check if all parameters given
 if (isset($_GET['firstname'], $_GET['lastname'],
 $_GET['username'], $_GET['email'],
@@ -57,61 +59,32 @@ $_GET['vacDays'])) {
         $employer_id = htmlspecialchars($_GET['employerId']);
 
         // open db connection
-        include_once('dbconnect.php');
-        $conn = openConnection();
+        $database = new Database();
 
-        // prepare and bind
-        if (!$stmt = $conn->prepare("INSERT INTO `user` (`firstname`, `lastname`, `username`, `email`, `password`, `salt`, `employer_id`) VALUES (?, ?, ?, ?, ?, ?, ?)")) {
-            $response->code = 951;
-            $response->description = "prepare failed: (" . $conn->errno . ") " . $conn->error;
-        } else {
-            if (!$stmt->bind_param("ssssssi", $firstname, $lastname, $username, $email, $password, $salt, $employer_id)) {
-                $response->code = 952;
-                $response->description = "binding parameters failed: (" . $stmt->errno . ") " . $stmt->error;
+        // check if user already exiists
+        $result = $database->select("SELECT * FROM `user` WHERE `username`='" . $username . "' OR `email`='" . $email . "';");
+        if ($result->num_rows < 1) {
+            // Generate random salt
+            $salt = hash('sha512', uniqid(openssl_random_pseudo_bytes(16), TRUE));
+
+            // set parameters and execute
+            $password = hash('sha512', $password . $salt);
+
+            $result = $database->insert("user", array('firstname' => $firstname, 'lastname' => $lastname, 'username' => $username, 'email' => $email, 'password' => $password, 'salt' => $salt, 'employer_id' => $employer_id), array('%s', '%s', '%s', '%s', '%s', '%s', '%i'));
+            if ($result) {
+                $result = $database->select("SELECT * FROM `user` WHERE `username`='" . $username . "' OR `email`='" . $email . "' LIMIT 1;");
+                $row = $result->fetch_assoc();
+                $database->insert("contingent", array('year' => date('Y'), 'contingent' => $vac_days, 'user_id' => $row['id']), array('%s', '%d', '%i'));
+
+                $response->code = 200;
+                $response->description = 'success';
             } else {
-                // Generate random salt
-                $salt = hash('sha512', uniqid(openssl_random_pseudo_bytes(16), TRUE));
-
-                // set parameters and execute
-                $password = hash('sha512', $password . $salt);
-
-                // get accounts with same username
-                $sql = "SELECT * FROM `user` WHERE `username`='" . $username . "'";
-                $result = $conn->query($sql);
-
-                // check if username already exists
-                if ($result->num_rows < 1) {
-                    if (!$stmt->execute()) {
-                        // error while executing query
-                        $response->code = 953;
-                        $response->description = "Execute failed: (" . $stmt->errno . ") " . $stmt->error;
-                    } else {
-                        // get user id
-                        $sql = "SELECT `id`, `username` FROM `user` WHERE `username`='" . $username . "'";
-                        if (!$result = $conn->query($sql)) {
-                            // error while executing query
-                            $response->code = 953;
-                            $response->description = "Execute failed: (" . $conn->errno . ") " . $conn->error;
-                        } else {
-                            if ($result->num_rows == 1) {
-                                // create contingent
-                                $row = $result->fetch_assoc();
-                                $sql = "INSERT INTO `contingent` (`year`, `contingent`, `user_id`) VALUES (" . date('Y') . "," . $vac_days . "," . $row['id'] . ")";
-                                $result = $conn->query($sql);
-                            }
-                            $stmt->close();
-                            $conn->close();
-                            $response->code = 200;
-                            $response->description = 'success';
-                        }
-                    }
-                } else {
-                    $response->code = 210;
-                    $response->description = "username already taken";
-                    $stmt->close();
-                    $conn->close();
-                }
+                $response->code = 953;
+                $response->description = "Execute failed";
             }
+        } else {
+            $response->code = 210;
+            $response->description = "username already taken";
         }
     }
 } else {

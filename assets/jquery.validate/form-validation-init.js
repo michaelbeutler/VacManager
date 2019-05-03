@@ -10,12 +10,36 @@
 
     var FormValidator = function () {
         this.$signupForm = $("#formRegister"),
-            this.$loginForm = $('#formLogin')
+            this.$loginForm = $('#formLogin'),
+            this.$addVacationForm = $('#add-vacation-form')
     };
 
     //init
     FormValidator.prototype.init = function () {
         // validate the comment form when it is submitted
+        this.$addVacationForm.validate({
+            rules: {
+                title: {
+                    required: true
+                },
+                start: {
+                    required: true,
+                    date: true
+                },
+                end: {
+                    required: true,
+                    date: true
+                },
+                days: {
+                    required: true,
+                    digits: true
+                },
+                type: {
+                    required: true
+                }
+            }
+        })
+
         this.$signupForm.validate({
             rules: {
                 email: {

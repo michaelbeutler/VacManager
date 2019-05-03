@@ -10,6 +10,11 @@ function setAddVacationForm(form) {
     $(form).on('submit', function (e) {
         e.preventDefault();
 
+        console.log($(this).valid());
+        if (!$(this).valid()) {
+            return;
+        }
+
         function callback(data) {
             switch (data.code) {
                 case 200:
@@ -96,8 +101,8 @@ function setEditVacationForm(form) {
             });
         });
 
-    return false;
-});
+        return false;
+    });
 }
 
 function fillEditVacationForm(form, id) {

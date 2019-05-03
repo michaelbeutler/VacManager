@@ -181,7 +181,7 @@ if (isset($_GET['id'])) {
                                     <div class="col-12 form-group">
                                         <label class="col-md-2 control-label">Title</label>
                                         <div class="col-md-10">
-                                            <input type="text" class="form-control add-vacation-title" value="">
+                                            <input type="text" class="form-control add-vacation-title" required="" value="" name="title">
                                         </div>
                                     </div>
                                 </div>
@@ -189,7 +189,7 @@ if (isset($_GET['id'])) {
                                     <div class="col-12 form-group">
                                         <label class="col-md-2 control-label">Description</label>
                                         <div class="col-md-10">
-                                            <textarea type="text" class="form-control add-vacation-description" value=""></textarea>
+                                            <textarea type="text" class="form-control add-vacation-description" value="" name="description"></textarea>
                                         </div>
                                     </div>
                                 </div>
@@ -197,13 +197,13 @@ if (isset($_GET['id'])) {
                                     <div class="col-6 form-group">
                                         <label class="col-md-2 control-label">Start</label>
                                         <div class="col-md-10">
-                                            <input type="date" class="form-control add-vacation-start" value="">
+                                            <input type="date" class="form-control add-vacation-start" value="" required="" name="start">
                                         </div>
                                     </div>
                                     <div class="col-6 form-group">
                                         <label class="col-md-2 control-label">End</label>
                                         <div class="col-md-10">
-                                            <input type="date" class="form-control add-vacation-end" value="">
+                                            <input type="date" class="form-control add-vacation-end" value="" required="" name="end">
                                         </div>
                                     </div>
                                 </div>
@@ -211,7 +211,7 @@ if (isset($_GET['id'])) {
                                     <div class="col-12 form-group">
                                         <label class="col-md-2 control-label">Number of Days</label>
                                         <div class="col-md-10">
-                                            <input type="number" class="form-control add-vacation-days" step="any">
+                                            <input type="number" class="form-control add-vacation-days" step="any" required="" name="days">
                                         </div>
                                     </div>
                                 </div>
@@ -219,7 +219,7 @@ if (isset($_GET['id'])) {
                                     <div class="col-12 form-group">
                                         <label class="col-md-2 control-label">Type</label>
                                         <div class="col-md-10">
-                                            <select class="form-control add-vacation-type">
+                                            <select class="form-control add-vacation-type" required="" name="type">
                                             </select>
                                         </div>
                                     </div>
@@ -250,7 +250,7 @@ if (isset($_GET['id'])) {
                                     <div class="col-12 form-group">
                                         <label class="col-md-2 control-label">Title</label>
                                         <div class="col-md-10">
-                                            <input type="text" class="form-control edit-vacation-title" value="">
+                                            <input type="text" class="form-control edit-vacation-title" required="" value="" name="title">
                                         </div>
                                     </div>
                                 </div>
@@ -258,7 +258,7 @@ if (isset($_GET['id'])) {
                                     <div class="col-12 form-group">
                                         <label class="col-md-2 control-label">Description</label>
                                         <div class="col-md-10">
-                                            <textarea type="text" class="form-control edit-vacation-description" value=""></textarea>
+                                            <textarea type="text" class="form-control edit-vacation-description" required="" value="" name="description"></textarea>
                                         </div>
                                     </div>
                                 </div>

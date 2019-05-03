@@ -203,17 +203,6 @@ if (!User::check_login(new Database())) {
     <!-- Global site tag (gtag.js) - Google Analytics -->
     <script async src="https://www.googletagmanager.com/gtag/js?id=UA-136503205-1"></script>
     <script>
-        $(document).ready(function() {
-            if (document.addEventListener) {
-                document.addEventListener('contextmenu', function(e) {
-                    e.preventDefault();
-                }, false);
-            } else {
-                document.attachEvent('oncontextmenu', function() {
-                    window.event.returnValue = false;
-                });
-            }
-        })
         window.dataLayer = window.dataLayer || [];
 
         function gtag() {

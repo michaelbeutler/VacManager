@@ -20,77 +20,6 @@ $(document).ready(function () {
         }
     });
 
-    $("#firstname").rules("add", {
-        required: true,
-        minlength: 2,
-        maxlength: 45,
-        messages: {
-            required: "Please provide a firstname",
-            minlength: "Your firstname must be at least 2 characters long",
-            maxlength: "Your firstname can be max 45 characters long"
-        }
-    });
-
-    $("#lastname").rules("add", {
-        required: true,
-        minlength: 2,
-        maxlength: 45,
-        messages: {
-            required: "Please provide a lastname",
-            minlength: "Your lastname must be at least 2 characters long",
-            maxlength: "Your lastname can be max 45 characters long"
-        }
-    });
-
-    $("#email").rules("add", {
-        required: true,
-        minlength: 6,
-        maxlength: 45,
-        messages: {
-            required: "Please provide a email",
-            minlength: "Your email must be at least 6 characters long",
-            maxlength: "Your email can be max 45 characters long"
-        }
-    });
-
-    $("#password").rules("add", {
-        required: true,
-        minlength: 5,
-        maxlength: 30,
-        messages: {
-            required: "Please provide a password",
-            minlength: "Your password must be at least 5 characters long",
-            maxlength: "Your password can be max 45 characters long"
-        }
-    });
-
-    $("#confirm_password").rules("add", {
-        required: true,
-        equalTo: "#password",
-        messages: {
-            required: "Please confirm your password",
-            equalTo: "Password's do not match"
-        }
-    });
-
-    $("#employer").rules("add", {
-        required: true,
-        messages: {
-            required: "Please provide a employer"
-        }
-    });
-
-    $("#agree").rules("add", {
-        required: true,
-        messages: {
-            required: "Please accept our term's"
-        }
-    });
-
-    // validate signup form on keyup and submit
-    $('#formRegister').validate({
-    });
-
     $('#formRegister').submit(function (e) {
         e.preventDefault();
 
@@ -100,7 +29,7 @@ $(document).ready(function () {
         var password1 = $('#password').val();
         var password2 = $('#confirm_password').val();
         var employer = $('#employer').val();
-        //var currentVacDays = $('#currentVacDays').val();
+        var currentVacDays = $('#currentVacDays').val();
 
         function callback(data) {
             switch (data.code) {
@@ -143,7 +72,7 @@ $(document).ready(function () {
                     "password": SHA512(password1),
                     "repeat": SHA512(password2),
                     "employerId": employer,
-                    "vacDays": 25
+                    "vacDays": currentVacDays
                 },
                 contentType: "application/json; charset=utf-8",
                 success: function (data) {

@@ -303,6 +303,12 @@ if (isset($_GET['id'])) {
     <script src="assets/sweet-alert/sweet-alert.min.js"></script>
     <script src="assets/sweet-alert/sweet-alert.init.js"></script>
 
+    <!--form validation-->
+    <script type="text/javascript" src="assets/jquery.validate/jquery.validate.min.js"></script>
+
+    <!--form validation init-->
+    <script src="assets/jquery.validate/form-validation-init.js"></script>
+
     <script src="js/new/vacationType.js"></script>
     <script src="js/new/vacation.js"></script>
 

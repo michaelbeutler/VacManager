@@ -10,18 +10,15 @@
 
     var FormValidator = function() {
         this.$signupForm = $("#formRegister"),
-        this.$loginForm = $('#formLogin');
+        this.$loginForm = $('#formLogin')
     };
 
     //init
     FormValidator.prototype.init = function() {
-        //validator plugin
-        $.validator.setDefaults({
-            //submitHandler: function() { alert("submitted!"); }
-        });
-
         // validate the comment form when it is submitted
         this.$signupForm.validate();
+
+        this.$addVacationForm.validate();
 
         // validate login form when it is submitted
         this.$loginForm.validate({

@@ -53,6 +53,7 @@
             <form class="form-horizontal m-t-40" action="#" id="formRegister">
                 <div class="form-group">
                     <div class="col-xs-12">
+                        <label for="email">Personal data</label>
                         <input class="form-control" type="email" required="" placeholder="Email" id="email"
                             name="email">
                     </div>
@@ -88,18 +89,19 @@
 
                 <div class="form-group">
                     <div class="col-xs-12">
-                        <select id="employer" class="select2" data-placeholder="Choose your Employer..."
-                            name="employer">
-                            <option value="none">&nbsp;</option>
-                        </select>
-
+                        <input class="form-control " type="number" required=""
+                            placeholder="Vacation Days for current year" id="currentVacDays" name="currentVacDays">
                     </div>
                 </div>
 
                 <div class="form-group">
                     <div class="col-xs-12">
-                        <input class="form-control " type="number" required="" placeholder="Vacation Days for current year"
-                            id="currentVacDays" name="currentVacDays" value="26">
+                        <label for="employer">Employer data</label>
+                        <select value="none" id="employer" class="select2" data-placeholder="Choose your Employer..."
+                            name="employer">
+                            <option value="none">&nbsp;</option>
+                        </select>
+
                     </div>
                 </div>
 

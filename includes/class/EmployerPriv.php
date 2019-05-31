@@ -52,14 +52,14 @@ class EmployerPriv
         if ($result->num_rows == 1) {
             $row = $result->fetch_assoc();
             $instance = new self(
-                $row['id'],
+                trim(htmlspecialchars(utf8_encode($row['id']))),
                 User::construct_id(new Database(), $row['user_id']),
                 Employer::construct_id(new Database(), $row['employer_id']),
-                $row['can_accept'],
-                $row['can_rename'],
-                $row['can_priv'],
-                $row['create_date'],
-                $row['update_date']
+                trim(htmlspecialchars(utf8_encode($row['can_accept']))),
+                trim(htmlspecialchars(utf8_encode($row['can_rename']))),
+                trim(htmlspecialchars(utf8_encode($row['can_priv']))),
+                trim(htmlspecialchars(utf8_encode($row['create_date']))),
+                trim(htmlspecialchars(utf8_encode($row['update_date'])))
             );
             return $instance;
         }

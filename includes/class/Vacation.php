@@ -41,18 +41,18 @@ class Vacation
                 $user_id_status = array("id" => null, "username" => "");
             }
             $instance = new self(
-                $row['id'],
-                $row['title'],
-                $row['description'],
-                $row['start'],
-                $row['end'],
-                $row['days'],
+                trim(htmlspecialchars(utf8_encode($row['id']))),
+                trim(htmlspecialchars(utf8_encode($row['title']))),
+                trim(htmlspecialchars(utf8_encode($row['description']))),
+                trim(htmlspecialchars(utf8_encode($row['start']))),
+                trim(htmlspecialchars(utf8_encode($row['end']))),
+                trim(htmlspecialchars(utf8_encode($row['days']))),
                 User::construct_id(new Database(), $row['user_id']),
-                $row['status'],
+                trim(htmlspecialchars(utf8_encode($row['status']))),
                 $user_id_status,
                 VacationType::construct_id(new Database(), $row['vacation_type_id']),
-                $row['create_date'],
-                $row['update_date']
+                trim(htmlspecialchars(utf8_encode($row['create_date']))),
+                trim(htmlspecialchars(utf8_encode($row['update_date'])))
             );
             return $instance;
         }

@@ -21,11 +21,11 @@ class Employer
         if ($result->num_rows == 1) {
             $row = $result->fetch_assoc();
             $instance = new self(
-                $row['id'],
-                $row['name'],
-                $row['shortname'],
-                $row['create_date'],
-                $row['update_date']
+                trim(htmlspecialchars(utf8_encode($row['id']))),
+                trim(htmlspecialchars(utf8_encode($row['name']))),
+                trim(htmlspecialchars(utf8_encode($row['shortname']))),
+                trim(htmlspecialchars(utf8_encode($row['create_date']))),
+                trim(htmlspecialchars(utf8_encode($row['update_date'])))
             );
             return $instance;
         }

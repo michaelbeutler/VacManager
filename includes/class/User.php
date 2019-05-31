@@ -35,17 +35,17 @@ class User
         if ($result->num_rows == 1) {
             $row = $result->fetch_assoc();
             $instance = new self(
-                $row['id'],
-                $row['username'],
-                $row['email'],
-                $row['firstname'],
-                $row['lastname'],
-                $row['admin'],
-                $row['is_banned'],
+                trim(htmlspecialchars(utf8_encode($row['id']))),
+                trim(htmlspecialchars(utf8_encode($row['username']))),
+                trim(htmlspecialchars(utf8_encode($row['email']))),
+                trim(htmlspecialchars(utf8_encode($row['firstname']))),
+                trim(htmlspecialchars(utf8_encode($row['lastname']))),
+                trim(htmlspecialchars(utf8_encode($row['admin']))),
+                trim(htmlspecialchars(utf8_encode($row['is_banned']))),
                 $row['password'],
                 $row['salt'],
-                $row['create_date'],
-                $row['update_date'],
+                trim(htmlspecialchars(utf8_encode($row['create_date']))),
+                trim(htmlspecialchars(utf8_encode($row['update_date']))),
                 Employer::construct_id(new Database(), $row['employer_id'])
             );
             return $instance;

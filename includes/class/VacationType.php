@@ -17,9 +17,9 @@ class VacationType
         if ($result->num_rows == 1) {
             $row = $result->fetch_assoc();
             $instance = new self(
-                $row['id'],
-                $row['name'],
-                $row['substract_vacation_days']
+                trim(htmlspecialchars(utf8_encode($row['id']))),
+                trim(htmlspecialchars(utf8_encode($row['name']))),
+                trim(htmlspecialchars(utf8_encode($row['substract_vacation_days'])))
             );
             return $instance;
         }

@@ -25,12 +25,12 @@ class Contingent
         if ($result->num_rows == 1) {
             $row = $result->fetch_assoc();
             $instance = new self(
-                $row['id'],
-                $row['contingent'],
-                $row['year'],
+                trim(htmlspecialchars(utf8_encode($row['id']))),
+                trim(htmlspecialchars(utf8_encode($row['contingent']))),
+                trim(htmlspecialchars(utf8_encode($row['year']))),
                 User::construct_id(new Database(), $row['user_id']),
-                $row['create_date'],
-                $row['update_date']
+                trim(htmlspecialchars(utf8_encode($row['create_date']))),
+                trim(htmlspecialchars(utf8_encode($row['update_date'])))
             );
             return $instance;
         }

@@ -89,7 +89,7 @@ if (isset($_GET['action'])) {
                         $response->code = 200;
                         $response->description = 'success';
 
-                        if ($result = $database->select("SELECT `title`, `description`, `start`, `end`, `days`, `status` FROM `vacation` WHERE `user_id`=" . User::getCurrentUser($database)->id . ";")) {
+                        if ($result = $database->select("SELECT `title`, `description`, `start`, `end`, `days`, `status` FROM `vacation` WHERE `status`='Accepted' AND `user_id`=" . User::getCurrentUser($database)->id . ";")) {
                             if ($result->num_rows > 0) {
                                 while ($row = $result->fetch_assoc()) {
                                     $row['start'] = date_format(date_create($row['start']), 'd.m.Y');

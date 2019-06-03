@@ -140,7 +140,7 @@ if (isset($_GET['action'])) {
             break;
         case 'EDIT_VACATION':
             if (isset($_GET['id'], $_GET['title'], $_GET['description'])) {
-                if (Vacation::construct_id($database, $_GET['id'])->update($database, htmlspecialchars($_GET['title']), htmlspecialchars($_GET['description']))) {
+                if (Vacation::construct_id($database, $_GET['id'])->update($database, $_GET['title'], $_GET['description'])) {
                     $response->code = 200;
                     $response->description = 'success';
                 } else {

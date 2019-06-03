@@ -80,8 +80,8 @@ class Vacation
 
     function update($database, $title, $description)
     {
-        $this->title = $title;
-        $this->description = $description;
+        $this->title = trim(htmlspecialchars(utf8_encode($title)));
+        $this->description = trim(htmlspecialchars(utf8_encode($description)));
         return $database->update(
             'vacation',
             array('title' => $title, 'description' => $description),

@@ -66,6 +66,8 @@ class Vacation
 
     static function create(Database $database, $title, $description, $start, $end, $days, User $user, $vacation_type_id)
     {
+        $title = trim(htmlspecialchars(utf8_encode($title)));
+        $description = trim(htmlspecialchars(utf8_encode($description)));
         return $database->insert(
             "vacation",
             array(

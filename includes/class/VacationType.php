@@ -31,6 +31,18 @@ class VacationType
         return $vacation;
     }
 
+    static function create(Database $database, $name, $substract_vacation_days)
+    {
+        $name = trim(htmlspecialchars(utf8_encode($name)));
+        return $database->insert(
+            "vacation",
+            array(
+                'name' => $name, 'substract_vacation_days' => $substract_vacation_days
+            ),
+            array('%s', '%i')
+        );
+    }
+
     static function getAll(Database $database)
     {
         $vacation_type_array = (array)null;

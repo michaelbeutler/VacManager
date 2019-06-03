@@ -69,7 +69,7 @@ class User
         $result = $database->select("SELECT * FROM `user` WHERE `username`='" . $username . "' OR `email`='" . $username . "' LIMIT 1;");
         if ($result->num_rows == 1) {
             if ($row = $result->fetch_assoc()) {
-                if ($row['password'] ==  hash('sha512', $password . $row['salt'])) {
+                if (password_verify($password, $row['password'])) {
                     Session::assing(self::construct_id($database, $row['id']));
                     return true;
                 }

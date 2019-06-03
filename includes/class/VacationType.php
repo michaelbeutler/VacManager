@@ -35,7 +35,7 @@ class VacationType
     {
         $name = trim(htmlspecialchars(utf8_encode($name)));
         return $database->insert(
-            "vacation",
+            "vacation_type",
             array(
                 'name' => $name, 'substract_vacation_days' => $substract_vacation_days
             ),

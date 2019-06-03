@@ -93,7 +93,7 @@ class Vacation
     static function getAll(Database $database, User $user)
     {
         $vacation_array = (array)null;
-        $result = $database->select("SELECT * FROM `vacation` WHERE `user_id`=" . $user->id . " ORDER BY `update_date` DESC;");
+        $result = $database->select("SELECT * FROM `vacation` WHERE `user_id`=" . $user->id . " ORDER BY `status` ASC, `update_date` DESC;");
 
         if ($result->num_rows > 0) {
             while ($row = $result->fetch_assoc()) {

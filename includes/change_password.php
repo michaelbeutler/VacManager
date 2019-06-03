@@ -4,6 +4,7 @@ $response->code = 500;
 $response->description = 'internal server error';
 
 require('./class/Autoload.php');
+$database = new Database();
 
 Session::start();
 if (!User::check_login(new Database())) {
@@ -14,30 +15,24 @@ if (!User::check_login(new Database())) {
         if ($_GET['password'] == $_GET['repeat']) {
             $random_salt = hash('sha512', uniqid(openssl_random_pseudo_bytes(16), TRUE));
 
-            $password = hash('sha512', $_GET['password'] . $random_salt);
+            $password = password_hash($_GET['password'], PASSWORD_DEFAULT);
 
             include_once('dbconnect.php');
             $conn = openConnection();
 
-            if (!$stmt = $conn->prepare("UPDATE `user` SET `password`=?, `salt`=? WHERE `id`=". $_SESSION['user_id'])) {
+            if (!$database->update(
+                'user',
+                array('password' => $password),
+                array('%s'),
+                array('id' => User::getCurrentUser($database)->id),
+                array('%i')
+            )) {
                 $response->code = 951;
                 $response->description = "prepare failed: (" . $conn->errno . ") " . $conn->error;
             } else {
-                if (!$stmt->bind_param("ss", $password, $random_salt)) {
-                    $response->code = 952;
-                    $response->description = "binding parameters failed: (" . $stmt->errno . ") " . $stmt->error;
-                } else {
-                    if (!$stmt->execute()) {
-                        $response->code = 953;
-                        $response->description = "Execute failed: (" . $stmt->errno . ") " . $stmt->error;
-                    } else {
-                        $stmt->close();
-                        $conn->close();
-                        $response->code = 200;
-                        $response->description = 'success';
-                        session_destroy();
-                    }   
-                }
+                $response->code = 200;
+                $response->description = 'success';
+                Session::destroy();
             }
         } else {
             $response->code = 905;
@@ -47,7 +42,7 @@ if (!User::check_login(new Database())) {
         // Parameters missing
         $response->code = 900;
         $response->description = 'parameters missing';
-    }  
+    }
 }
 
 echo json_encode($response);

@@ -59,7 +59,7 @@ $(document).ready(function () {
         }
 
         if ($('#formRegister').valid() && employer !== "none" && $('input[type=checkbox]').prop('checked')) {
-            grecaptcha.execute('6LfM2LYUAAAAAIOaYwCRbxSyu2QG-KAtyTznY0Gu', { action: 'login' }).then(function (token) {
+            grecaptcha.execute('6LfM2LYUAAAAAIOaYwCRbxSyu2QG-KAtyTznY0Gu', { action: 'register' }).then(function (token) {
                 $.ajax({
                     type: "GET",
                     dataType: 'json',

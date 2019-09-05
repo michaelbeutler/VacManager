@@ -1,7 +1,8 @@
 <?php
 require('../class/Autoload.php');
+require('./recaptcha.php');
 
-$response = (object)array();
+$response = (object) array();
 $response->code = 500;
 $response->description = 'internal server error';
 
@@ -14,6 +15,14 @@ if (isset($_GET['username'], $_GET['password'])) {
 
     $username = htmlspecialchars($_GET['username']);
     $password = htmlspecialchars($_GET['password']);
+    $captcha = htmlspecialchars($_GET['token']);
+
+    if (!check_captcha($captcha)) {
+        // Parameters missing
+        $response->code = 905;
+        $response->description = 'captcha invalid';
+        echo json_encode($response);
+    }
 
     if (User::login(new Database(), $username, $password)) {
         // success
@@ -24,7 +33,6 @@ if (isset($_GET['username'], $_GET['password'])) {
         $response->code = 203;
         $response->description = 'Username and/or password incorrect.';
     }
-
 } else {
     // Parameters missing
     $response->code = 900;

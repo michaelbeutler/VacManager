@@ -30,6 +30,7 @@ $_GET['vacDays'])) {
         $response->code = 905;
         $response->description = 'captcha invalid';
         echo json_encode($response);
+        die();
     }
 
     if (strlen($firstname) > 45 || strlen($firstname) < 2) {

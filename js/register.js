@@ -59,25 +59,28 @@ $(document).ready(function () {
         }
 
         if ($('#formRegister').valid() && employer !== "none" && $('input[type=checkbox]').prop('checked')) {
-            $.ajax({
-                type: "GET",
-                dataType: 'json',
-                url: "./includes/register.php",
-                async: true,
-                data: {
-                    "firstname": firstname,
-                    "lastname": lastname,
-                    "username": firstname.toLowerCase() + '.' + lastname.toLowerCase(),
-                    "email": email,
-                    "password": SHA512(password1),
-                    "repeat": SHA512(password2),
-                    "employerId": employer,
-                    "vacDays": currentVacDays
-                },
-                contentType: "application/json; charset=utf-8",
-                success: function (data) {
-                    callback(data);
-                }
+            grecaptcha.execute('6LfM2LYUAAAAAIOaYwCRbxSyu2QG-KAtyTznY0Gu', { action: 'login' }).then(function (token) {
+                $.ajax({
+                    type: "GET",
+                    dataType: 'json',
+                    url: "./includes/register.php",
+                    async: true,
+                    data: {
+                        "firstname": firstname,
+                        "lastname": lastname,
+                        "username": firstname.toLowerCase() + '.' + lastname.toLowerCase(),
+                        "email": email,
+                        "password": SHA512(password1),
+                        "repeat": SHA512(password2),
+                        "employerId": employer,
+                        "vacDays": currentVacDays,
+                        'token': token
+                    },
+                    contentType: "application/json; charset=utf-8",
+                    success: function (data) {
+                        callback(data);
+                    }
+                });
             });
         }
 

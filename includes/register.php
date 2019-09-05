@@ -4,6 +4,7 @@ $response->code = 500;
 $response->description = 'internal server error';
 
 require('./class/Autoload.php');
+require('../includes/new/recaptcha.php');
 
 // Check if all parameters given
 if (isset($_GET['firstname'], $_GET['lastname'],
@@ -21,6 +22,15 @@ $_GET['vacDays'])) {
     $email = trim(htmlspecialchars($_GET['email']));
     $password = trim(htmlspecialchars($_GET['password']));
     $repeat = trim(htmlspecialchars($_GET['repeat']));
+
+    $captcha = htmlspecialchars($_GET['token']);
+
+    if (!check_captcha($captcha)) {
+        // Parameters missing
+        $response->code = 905;
+        $response->description = 'captcha invalid';
+        echo json_encode($response);
+    }
 
     if (strlen($firstname) > 45 || strlen($firstname) < 2) {
         $response->code = 902;

@@ -24,7 +24,7 @@ Install this app like discribed in the manual below, creat an account and get st
 ## :rocket: Installation
 At first you have to clone the git reprository in your web directory:
 ```
-git clone https://github.com/MichiBeutler/VacManager.git
+git clone https://github.com/michaelbeutler/VacManager.git
 ```
 
 After this you have to import the SQL script
@@ -39,7 +39,7 @@ mysql -u root vac-manager < VacManager/sql/vacation_manager2.sql
 ```
 
 Now you have to create a user for the app to work.
-Insert the credentials in the [Database.php](https://github.com/MichiBeutler/VacManager/blob/master/includes/class/Database.php)
+Insert the credentials in the [Database.php](https://github.com/michaelbeutler/VacManager/blob/master/includes/class/Database.php)
 ```
 nano VacManager/includes/class/Database.php
 ```
@@ -49,12 +49,12 @@ nano VacManager/includes/class/Database.php
 * [Bootstrap](https://getbootstrap.com/) - The web framework used
 
 ## :octocat: Authors
-* **Michael Beutler** - *initial work* - [MichiBeutler](https://github.com/MichiBeutler)
+* **Michael Beutler** - *initial work* - [michaelbeutler](https://github.com/michaelbeutler)
 
-See also the list of [contributors](https://github.com/MichiBeutler/VacManager/graphs/contributors) who participated in this project.
+See also the list of [contributors](https://github.com/michaelbeutler/VacManager/graphs/contributors) who participated in this project.
 
 ## :lock: License
-This project is licensed under the MIT License - see the [LICENSE.md](https://github.com/MichiBeutler/VacManager/blob/master/LICENSE) file for details
+This project is licensed under the MIT License - see the [LICENSE.md](https://github.com/michaelbeutler/VacManager/blob/master/LICENSE) file for details
       
 ## :ok_hand: Acknowledgments
 * manage your vacations in your workplace :stuck_out_tongue_closed_eyes:
